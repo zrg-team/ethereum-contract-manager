@@ -1,0 +1,24 @@
+.new-form-step {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+.break-text {
+  word-break: break-word
+}
+.list-container {
+  max-height: 320px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.general-container {
+  max-height: 280px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
