@@ -15,7 +15,7 @@ const handlers = {
   }),
   [actions.removeProject]: (state, action) => {
     const projects = state.projects
-      .filter(item => item.id !== action.payload)
+      .filter(item => item.key !== action.payload)
     return {
       ...state,
       projects: [

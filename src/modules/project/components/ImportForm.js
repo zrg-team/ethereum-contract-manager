@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import {
   Icon,
   Row,
-  Input,
+  // Input,
   Upload,
   Button,
   message
@@ -25,7 +25,7 @@ class ImportForm extends React.Component {
     this.setState({ password: e.target.value })
   }
   handleSubmit () {
-    const { importProject } = this.props
+    const { history, importProject } = this.props
     const { data, password } = this.state
     if (!data) {
       return message.error('File data required!')
@@ -34,6 +34,7 @@ class ImportForm extends React.Component {
     setTimeout(async () => {
       await importProject(data, password)
       loading()
+      history.replace('/dashboard')
     }, 200)
   }
   uploadFile (info) {
@@ -68,6 +69,7 @@ class ImportForm extends React.Component {
           {!data ? <Upload.Dragger
             multiple={false}
             name='files'
+            style={{ paddingLeft: 10, paddingRight: 10 }}
             onChange={this.uploadFile}
           >
             <p className='ant-upload-drag-icon'>
@@ -77,7 +79,7 @@ class ImportForm extends React.Component {
             <p className='ant-upload-hint'>Support for a single</p>
           </Upload.Dragger> : <p><Icon type='file' /> <span>{fileName}</span></p>}
         </Row>
-        <Row
+        {/* <Row
           style={{ marginBottom: 15 }}
           className='center-container'
           justify='center'
@@ -89,7 +91,7 @@ class ImportForm extends React.Component {
             style={{ width: 500 }}
             prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
           />
-        </Row>
+        </Row> */}
         <Row
           style={{ marginBottom: 15 }}
           className='center-container'

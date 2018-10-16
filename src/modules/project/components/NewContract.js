@@ -35,6 +35,8 @@ class NewContract extends React.Component {
           loading()
           message.error('Add contract error!')
         }
+      } else {
+        loading()
       }
     })
   }
@@ -42,10 +44,15 @@ class NewContract extends React.Component {
     const file = e.file
     const reader = new FileReader()
     reader.onload = (upload) => {
-      this.setState({
-        abi: upload.target.result,
-        fileName: file.name
-      })
+      try {
+        const json = JSON.parse(upload.target.result)
+        this.setState({
+          abi: JSON.stringify(json.abi) || upload.target.result,
+          fileName: file.name
+        })
+      } catch (err) {
+        message.error('Read contract error!')
+      }
     }
 
     reader.readAsText(file.originFileObj, 'TF-8')

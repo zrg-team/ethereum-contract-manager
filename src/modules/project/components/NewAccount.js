@@ -36,6 +36,8 @@ class NewAccount extends React.Component {
             loading()
             message.error('Invalid passphare or Wrong password of Keystore!')
           }
+        } else {
+          loading()
         }
       })
     }, 100)

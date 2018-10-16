@@ -70,7 +70,7 @@ class MenuPage extends React.Component {
             theme='dark'
             mode='inline'
             onClick={this.changePage}
-            defaultSelectedKeys={[selectedMenu.key]}
+            selectedKeys={[selectedMenu.key]}
           >
             {MENUS.map(item => (
               <Menu.Item key={item.key}>

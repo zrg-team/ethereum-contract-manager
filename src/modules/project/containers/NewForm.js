@@ -5,7 +5,6 @@ import { store } from '../../../common/utils/database'
 import { encrypt } from '../../../common/utils/encrypt'
 import { loading } from '../../../common/middlewares/effects'
 import { addProject } from '../actions'
-import { setCurrentProject } from '../../dashboard/actions'
 
 const mapDispatchToProps = (dispatch, props) => ({
   saveData: async (data, password) => {
@@ -17,23 +16,20 @@ const mapDispatchToProps = (dispatch, props) => ({
         }
         const defaultData = {
           name: data.general.name,
+          key: new Date().getTime(),
           description: data.general.name
         }
-        const result = await store.setItem('project', {
+        await store.setItem(`project_${defaultData.key}`, {
           ...defaultData,
           encypted
         })
-        console.log('result', result)
         dispatch(addProject(defaultData))
-        dispatch(setCurrentProject({
-          ...defaultData,
-          ...data
-        }))
         const blob = new Blob([JSON.stringify({
           ...defaultData,
           encypted
         })], {type: 'text/plain;charset=utf-8'})
         saveAs(blob, 'export.json')
+        return true
       })
       return result
     } catch (err) {
@@ -42,7 +38,6 @@ const mapDispatchToProps = (dispatch, props) => ({
   }
 })
 
-const mapStateToProps = state => {
-}
+const mapStateToProps = state => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewProject)

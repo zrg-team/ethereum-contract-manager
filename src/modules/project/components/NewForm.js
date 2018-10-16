@@ -70,10 +70,14 @@ class NewForm extends Component {
       }}
       onSubmit={(values) => {
         const { accounts } = this.state
-        accounts.push(values)
-        this.setState({
-          accounts
-        }, () => Modal.hide())
+        if (!accounts.find(item => item.address !== values.address)) {
+          accounts.push(values)
+          this.setState({
+            accounts
+          }, () => Modal.hide())
+        } else {
+          message.error('Exist account !')
+        }
       }}
     />, {
       onOk: () => {
@@ -90,10 +94,14 @@ class NewForm extends Component {
       }}
       onSubmit={(values) => {
         const { contracts } = this.state
-        contracts.push(values)
-        this.setState({
-          contracts
-        }, () => Modal.hide())
+        if (!contracts.find(item => item.address !== values.address)) {
+          contracts.push(values)
+          this.setState({
+            contracts
+          }, () => Modal.hide())
+        } else {
+          message.error('Exist contract !')
+        }
       }}
     />, {
       onOk: () => {

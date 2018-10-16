@@ -6,7 +6,7 @@ import storage from 'redux-persist/lib/storage'
 import { createStore, applyMiddleware, compose } from 'redux'
 import createSaga from './middlewares'
 import commonReducers from './reducers/common'
-import moduleReducers from '../modules'
+import { MODULE_REDUCERS } from '../modules'
 import sessionReducers from './reducers/session'
 
 export const history = createHashHistory()
@@ -38,7 +38,7 @@ const createReducers = reducers => {
   return persistCombineReducers(config, {
     common: commonReducers,
     session: sessionReducers,
-    ...moduleReducers,
+    ...MODULE_REDUCERS,
     ...reducers
   })
 }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { List, Card, Icon } from 'antd'
+import { List, Card, Icon, message } from 'antd'
+import Modal from '../../../common/components/widgets/Modal'
+import ConfirmPassword from './ConfirmPassword'
 import projectBanner from '../../../assets/images/project_banner.png'
 
 const { Meta } = Card
@@ -8,6 +10,32 @@ class Projects extends Component {
   constructor (props) {
     super(props)
     this.renderItem = this.renderItem.bind(this)
+  }
+  startProject (item) {
+    const { startProject, history } = this.props
+    Modal.show(<ConfirmPassword
+      ref={(ref) => {
+        this.modalRef = ref
+      }}
+      onSubmit={async (password) => {
+        await startProject(item, password)
+        Modal.hide()
+        history.replace('/playground')
+      }}
+    />, {
+      onOk: () => {
+        this.modalRef && this.modalRef.handleSubmit()
+      },
+      onCancel: () => Modal.hide()
+    })
+  }
+  async deleteProject (item) {
+    const { deleteProject } = this.props
+    const result = await deleteProject(item)
+    if (result) {
+      return message.success('Deleted.')
+    }
+    message.error('Delete error !')
   }
   renderItem (item) {
     return (
@@ -20,9 +48,19 @@ class Projects extends Component {
             />
           }
           actions={[
+            <Icon
+              type='play-circle'
+              theme='twoTone'
+              twoToneColor='#1890ff'
+              onClick={() => this.startProject(item)}
+            />,
             <Icon type='setting' />,
-            <Icon type='edit' />,
-            <Icon type='ellipsis' />
+            <Icon
+              type='delete'
+              theme='twoTone'
+              twoToneColor='#cf1322'
+              onClick={() => this.deleteProject(item)}
+            />
           ]}
         >
           <Meta
