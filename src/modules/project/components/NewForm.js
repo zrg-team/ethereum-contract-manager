@@ -9,13 +9,16 @@ import {
   Card,
   Icon,
   Steps,
+  Switch,
   message,
+  Tooltip,
   notification,
-  Modal as ModalConirm
+  Modal as ModalCofirm
 } from 'antd'
 import Modal from '../../../common/components/widgets/Modal'
 import NewAccount from './NewAccount'
 import NewContract from './NewContract'
+import RequestConfig from './RequestConfig'
 import '../styles/newForm.css'
 
 const FormItem = Form.Item
@@ -26,7 +29,11 @@ class NewForm extends Component {
       step: 0,
       confirmDirty: false,
       accounts: [],
-      contracts: []
+      contracts: [],
+      connectFullnode: true,
+      transactionRequest: {},
+      nonceRequest: {},
+      ethCallRequest: {}
     }
     this.steps = [
       { key: 0, title: 'General', description: 'Project name, server, etc' },
@@ -38,8 +45,10 @@ class NewForm extends Component {
     this.backStep = this.backStep.bind(this)
     this.renderStep = this.renderStep.bind(this)
     this.addAccount = this.addAccount.bind(this)
+    this.openSetting = this.openSetting.bind(this)
     this.addContract = this.addContract.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.onChangeMode = this.onChangeMode.bind(this)
     this.handleConfirmBlur = this.handleConfirmBlur.bind(this)
     this.renderAccountItem = this.renderAccountItem.bind(this)
     this.renderContractItem = this.renderContractItem.bind(this)
@@ -63,6 +72,46 @@ class NewForm extends Component {
     })
   }
 
+  onChangeMode () {
+    const { connectFullnode } = this.state
+    this.setState({
+      connectFullnode: !connectFullnode
+    })
+  }
+
+  openSetting (mode) {
+    Modal.show(<RequestConfig
+      wrappedComponentRef={(ref) => {
+        this.modalRef = ref
+      }}
+      mode={mode}
+      onSubmit={(values) => {
+        Modal.hide()
+        switch (mode) {
+          case 'broadcast':
+            return this.setState({
+              transactionRequest: values
+            })
+          case 'nonce':
+            return this.setState({
+              nonceRequest: values
+            })
+          case 'ethCall':
+            return this.setState({
+              ethCallRequest: values
+            })
+          default:
+            return false
+        }
+      }}
+    />, {
+      onOk: () => {
+        this.modalRef && this.modalRef.handleSubmit()
+      },
+      onCancel: () => Modal.hide()
+    })
+  }
+
   addAccount () {
     Modal.show(<NewAccount
       wrappedComponentRef={(ref) => {
@@ -70,7 +119,7 @@ class NewForm extends Component {
       }}
       onSubmit={(values) => {
         const { accounts } = this.state
-        if (!accounts.find(item => item.address !== values.address)) {
+        if (!accounts.some(item => item.address === values.address)) {
           accounts.push(values)
           this.setState({
             accounts
@@ -94,7 +143,7 @@ class NewForm extends Component {
       }}
       onSubmit={(values) => {
         const { contracts } = this.state
-        if (!contracts.find(item => item.address !== values.address)) {
+        if (!contracts.some(item => item.address === values.address)) {
           contracts.push(values)
           this.setState({
             contracts
@@ -126,14 +175,26 @@ class NewForm extends Component {
 
   handleSubmit () {
     const { history, saveData, form: { getFieldValue } } = this.props
-    const { values, accounts, contracts } = this.state
+    const {
+      values,
+      accounts,
+      contracts,
+      transactionRequest,
+      nonceRequest,
+      ethCallRequest
+    } = this.state
     const password = getFieldValue('password')
-    ModalConirm.confirm({
+    ModalCofirm.confirm({
       title: 'Do you want to save this project ?',
       content: `Project ${values.name} have ${accounts.length} accounts and ${contracts.length} contracts .`,
       onOk () {
         const data = {
-          general: values,
+          general: {
+            ...values,
+            transactionRequest,
+            nonceRequest,
+            ethCallRequest
+          },
           accounts,
           contracts
         }
@@ -218,7 +279,7 @@ class NewForm extends Component {
   }
 
   renderStep (step) {
-    const { contracts, accounts } = this.state
+    const { contracts, accounts, connectFullnode } = this.state
     const { getFieldDecorator, getFieldValue } = this.props.form
     const formItemLayout = {
       labelCol: {
@@ -273,28 +334,101 @@ class NewForm extends Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label='Fullnode url'
+                label='Connect to Fullnode'
               >
-                {getFieldDecorator('fullnode', {
-                  rules: [{
-                    required: true, message: 'Please input your FullNode url!'
-                  }]
-                })(
-                  <Input />
-                )}
+                <Switch checked={connectFullnode} defaultChecked onChange={this.onChangeMode} />
               </FormItem>
-              <FormItem
-                {...formItemLayout}
-                label='Submit transaction url'
-              >
-                {getFieldDecorator('transactionUrl', {
-                  rules: [{
-                    required: false
-                  }]
-                })(
-                  <Input />
-                )}
-              </FormItem>
+              {connectFullnode
+                ? <Fragment>
+                  <FormItem
+                    {...formItemLayout}
+                    label='Fullnode url'
+                  >
+                    {getFieldDecorator('fullnode', {
+                      rules: [{
+                        required: true, message: 'Please input your FullNode url!'
+                      }]
+                    })(
+                      <Input />
+                    )}
+                  </FormItem>
+                  <FormItem
+                    {...formItemLayout}
+                    label='Submit transaction url'
+                  >
+                    {getFieldDecorator('transactionUrl', {
+                      rules: [{
+                        required: true,
+                        message: 'Please input your Url to broadcast contract!'
+                      }]
+                    })(
+                      <Input
+                        addonAfter={
+                          <Tooltip title='Url you can call function. Including "to=", "data="'>
+                            <Icon type='setting' theme='outlined' onClick={() => this.openSetting('broadcast')} />
+                          </Tooltip>}
+                      />
+                    )}
+                  </FormItem>
+                </Fragment>
+                : <Fragment>
+                  <FormItem
+                    {...formItemLayout}
+                    label='Submit transaction url'
+                  >
+                    {getFieldDecorator('transactionUrl', {
+                      rules: [{
+                        required: true,
+                        message: 'Please input your Url to broadcast trancsaction!'
+                      }]
+                    })(
+                      <Input
+                        addonAfter={
+                          <Tooltip title='Url that you push transaction in. Including "hex="'>
+                            <Icon type='setting' theme='outlined' onClick={() => this.openSetting('broadcast')} />
+                          </Tooltip>
+                        }
+                      />
+                    )}
+                  </FormItem>
+                  <FormItem
+                    {...formItemLayout}
+                    label='Call transaction url'
+                  >
+                    {getFieldDecorator('callTransactionUrl', {
+                      rules: [{
+                        required: true,
+                        message: 'Please input your Url to call contract!'
+                      }]
+                    })(
+                      <Input
+                        addonAfter={
+                          <Tooltip title='Url you can call function. Including "to=", "data="'>
+                            <Icon type='setting' theme='outlined' onClick={() => this.openSetting('ethCall')} />
+                          </Tooltip>}
+                      />
+                    )}
+                  </FormItem>
+                  <FormItem
+                    {...formItemLayout}
+                    label='Get nonce transaction url'
+                  >
+                    {getFieldDecorator('nonceTransactionUrl', {
+                      rules: [{
+                        required: true,
+                        message: 'Please input your url to get nonce!'
+                      }]
+                    })(
+                      <Input
+                        addonAfter={
+                          <Tooltip title='Url you can get nonce. Including "address="'>
+                            <Icon type='setting' theme='outlined' onClick={() => this.openSetting('nonce')} />
+                          </Tooltip>}
+                      />
+                    )}
+                  </FormItem>
+                </Fragment>
+              }
             </div>
             <FormItem {...tailFormItemLayout}>
               {getFieldDecorator('agreement', {
@@ -440,7 +574,7 @@ class NewForm extends Component {
   render () {
     const { step } = this.state
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form layout='horizontal' onSubmit={this.handleSubmit}>
         <Row className='new-form-step' justify='center'>
           <Steps current={step}>
             {this.steps.map(item => {

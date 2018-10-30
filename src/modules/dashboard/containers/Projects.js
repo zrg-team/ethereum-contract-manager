@@ -3,6 +3,7 @@ import Projects from '../components/Projects'
 import { descrypt } from '../../../common/utils/encrypt'
 import { removeProject } from '../../project/actions'
 import { setCurrentProject } from '../actions'
+import { fullnodeProcess } from '../../playground/actions'
 import { store } from '../../../common/utils/database'
 import { MODULE_NAME as MODULE_PROJECT } from '../../project/model'
 
@@ -29,6 +30,7 @@ const mapDispatchToProps = (dispatch, props) => ({
         ...data,
         ...scripts
       }))
+      dispatch(fullnodeProcess())
       return true
     } catch (err) {
       console.log('err', err)

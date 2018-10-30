@@ -5,9 +5,11 @@ import { MODULE_NAME as MODULE_PROJECT } from './project/model'
 import dashboardReducers from './dashboard/reducers'
 import projectReducers from './project/reducers'
 // MODULE SAGAS
-import dashboardSagas from './dashboard/sagas'
+import playgroundSagas from './playground/saga'
+import dashboardSagas from './dashboard/saga'
 
 export const MODULE_SAGAS = [
+  ...playgroundSagas,
   ...dashboardSagas
 ]
 

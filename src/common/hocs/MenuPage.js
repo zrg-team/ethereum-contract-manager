@@ -57,7 +57,8 @@ class MenuPage extends React.Component {
   render () {
     const { collapsed } = this.state
     const { children, history: { location } } = this.props
-    const selectedMenu = MENUS.find(item => item.redirect === location.pathname) || { key: 'projects' }
+    const selectedMenu = MENUS.find(item => item.redirect === location.pathname) ||
+      { key: location.pathname === '/playground' ? 'playground' : 'projects' }
     return (
       <Layout className='menu-page'>
         <Sider
@@ -72,6 +73,12 @@ class MenuPage extends React.Component {
             onClick={this.changePage}
             selectedKeys={[selectedMenu.key]}
           >
+            {location.pathname === '/playground' && (
+              <Menu.Item key='playground'>
+                <Icon type='code' theme='twoTone' />
+                <span>Playground</span>
+              </Menu.Item>
+            )}
             {MENUS.map(item => (
               <Menu.Item key={item.key}>
                 <Icon type={item.icon.type} theme={item.icon.theme} />
@@ -88,7 +95,7 @@ class MenuPage extends React.Component {
               onClick={this.toggle}
             />
           </Header>
-          <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+          <Content style={{ margin: '10px 10px', padding: 10, background: '#fff', display: 'flex', justifyContent: 'center' }}>
             {children}
           </Content>
         </Layout>

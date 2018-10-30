@@ -2,7 +2,8 @@ import { handleActions } from 'redux-actions'
 import * as actions from './actions'
 
 const defaultState = {
-  projects: []
+  projects: [],
+  transactions: {}
 }
 
 const handlers = {
@@ -22,7 +23,24 @@ const handlers = {
         ...projects
       ]
     }
-  }
+  },
+  [actions.addTransaction]: (state, action) => ({
+    ...state,
+    transactions: {
+      ...state.transactions,
+      [action.payload.key]: [
+        ...action.payload.data ? action.payload.data : [],
+        ...state.transactions[action.payload.key] ? state.transactions[action.payload.key] : []
+      ]
+    }
+  }),
+  [actions.setTransactions]: (state, action) => ({
+    ...state,
+    transactions: {
+      ...state.transactions,
+      [action.payload.key]: action.payload.data
+    }
+  })
 }
 
 export default handleActions(handlers, defaultState)

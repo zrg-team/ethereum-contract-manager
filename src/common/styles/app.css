@@ -278,3 +278,7 @@
   -webkit-animation-delay: -10s;
           animation-delay: -10s;
 }
+
+.ant-tabs-content {
+  flex: 1 !important
+}

@@ -1,5 +1,8 @@
 import Web3 from 'web3'
 
+let contracts = {}
+export let instance = null
+let blockListenInstance = null
 const resolveWeb3 = (resolve, url, useWeb3) => {
   let { web3 } = window
   let injected = false
@@ -31,12 +34,93 @@ const getWeb3 = (url, useWeb3) =>
     }
   })
 
+const getContractConnect = (abi, address) => {
+  const contract = instance.eth.contract(abi)
+  return contract.at(address)
+}
+
+const connectToContracts = (list) => {
+  contracts = list.reduce((all, item) => {
+    const contract = getContractConnect(JSON.parse(item.abi), item.address)
+    return { ...all, [item.address]: contract }
+  }, {})
+}
+
+const getNonceUsingFullnode = async (address) => {
+  try {
+    const count = await instance.eth.getTransactionCount(address)
+    return count
+  } catch (err) {
+    return undefined
+  }
+}
+
+const sendRawTransactionUsingFullnode = async (raw) => {
+  try {
+    const transaction = await instance.eth.sendSignedTransaction(raw)
+    return transaction
+  } catch (err) {
+    return undefined
+  }
+}
+
+const contractListener = (address, callback, fromBlock = 0) => {
+  const events = contracts[address].allEvents({fromBlock, toBlock: 'latest'})
+  events.watch((error, result) => {
+    callback(error, result)
+  })
+  return events
+}
+
+const getCurrentBlock = () => {
+  const block = instance.eth.blockNumber
+  console.log('instance.eth.blockNumber', block)
+  return block
+}
+
+const newBlockListener = (callback, address, fromBlock = 0) => {
+  console.log('blockListenInstance', 'data', address, fromBlock)
+  if (blockListenInstance) {
+    blockListenInstance.stopWatching()
+    blockListenInstance = null
+  }
+  blockListenInstance = instance.eth.filter({
+    fromBlock,
+    toBlock: 'latest',
+    address: address
+  })
+  blockListenInstance.watch(function (error, result) {
+    console.log('blockListenInstance', 'data', result, error)
+    callback({ error, result, address })
+  })
+  return blockListenInstance
+}
+
+const syncListener = (callback) => {
+  instance.eth.isSyncing(function (error, sync) {
+    callback(error, sync)
+  })
+}
+
+const stopProcess = () => {
+  instance.reset()
+  instance = null
+}
+
 export default {
-  instance: null,
+  contracts,
   injected: false,
   init: async function (url = undefined, useWeb3 = false) {
     const { web3, injected } = await getWeb3(url, useWeb3)
-    this.instance = web3
+    instance = web3
     this.injected = injected
-  }
+  },
+  stopProcess,
+  syncListener,
+  getCurrentBlock,
+  contractListener,
+  newBlockListener,
+  connectToContracts,
+  getNonceUsingFullnode,
+  sendRawTransactionUsingFullnode
 }

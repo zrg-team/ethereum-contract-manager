@@ -1,4 +1,6 @@
+import Web3 from 'web3'
 import web3 from './web3'
+const Transaction = require('ethereumjs-tx')
 const Abi = require('ethereumjs-abi')
 
 export function getDataSmartContract ({ functionName, typeParams, params }) {
@@ -47,4 +49,55 @@ export function sendTransaction (defaultAccount, data) {
 export function getTransactionLink (txID) {
   // FIXME: all config for ropsten, rinkeby, or mainnet
   return `https://ropsten.etherscan.io/tx/${txID}`
+}
+
+export function convertEthereumOutput (value, type) {
+  switch (type) {
+    case 'uint':
+    case 'uint8':
+    case 'uint256':
+      return Web3.utils.hexToNumberString(value)
+    case 'bool':
+      return Number(value) === 1
+    case 'address':
+      return `${value}`.replace('0x000000000000000000000000', '0x')
+    case 'bytes32':
+      return Web3.utils.toAscii(value)
+    default:
+      return value
+  }
+}
+
+export function mapHexToOutput (response, outputs) {
+  const length = response.length
+  const count = outputs.length
+  return outputs.reduceRight((all, item, index) => {
+    const offset = length - (count - (index + 1)) * 64
+    const data = `${response}`.slice(offset - 64, offset)
+    all.push({
+      ...item,
+      raw: `0x${data}`,
+      value: convertEthereumOutput(`0x${data}`, item.type)
+    })
+    return all
+  }, [])
+}
+
+export function createTransaction (params) {
+  const transaction = new Transaction()
+  transaction.to = params.to
+  transaction.gasLimit = params.gasLimit
+  transaction.gasPrice = params.gasPrice
+  transaction.nonce = params.nonce
+  transaction.value = params.value
+  transaction.data = `0x${getDataSmartContract({
+    functionName: params.functionName,
+    typeParams: params.typeParams,
+    params: params.functionParams
+  })}`
+
+  const privateKey = new Buffer(params.privateKey.substring(2, params.privateKey.length), 'hex')
+
+  transaction.sign(new Buffer(privateKey), 'hex')
+  return '0x' + transaction.serialize().toString('hex')
 }
