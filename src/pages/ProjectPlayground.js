@@ -8,7 +8,7 @@ import Accounts from '../modules/playground/containers/Accounts'
 import NewProcess from '../modules/playground/containers/NewProcess'
 import PendingProcess from '../modules/playground/containers/PendingProcess'
 
-class Playground extends React.Component {
+class ProjectPlayground extends React.Component {
   constructor (props) {
     super(props)
     this.onTabChange = this.onTabChange.bind(this)
@@ -55,4 +55,4 @@ class Playground extends React.Component {
   }
 }
 
-export default Playground
+export default ProjectPlayground

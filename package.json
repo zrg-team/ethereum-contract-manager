@@ -1,7 +1,8 @@
 {
   "name": "ethereum-contract-manager",
-  "version": "0.1.0",
+  "version": "0.4.2",
   "private": true,
+  "homepage": "https://zrg-team.github.io/ethereum-contract-manager",
   "dependencies": {
     "antd": "^3.10.0",
     "axios": "^0.18.0",
@@ -14,6 +15,7 @@
     "ethereumjs-util": "^6.0.0",
     "ethereumjs-wallet": "^0.6.2",
     "file-saver": "^2.0.0-rc.3",
+    "gh-pages": "^2.0.1",
     "history": "^4.7.2",
     "i18n-js": "https://github.com/fnando/i18n-js/tarball/v3.0.0",
     "localforage": "^1.7.2",
