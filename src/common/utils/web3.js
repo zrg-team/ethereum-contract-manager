@@ -103,11 +103,16 @@ const syncListener = (callback) => {
 }
 
 const stopProcess = () => {
-  instance.reset()
+  instance && instance.reset()
   instance = null
 }
 
+const getBalance = (address) => {
+  return instance.eth.getBalance(address)
+}
+
 export default {
+  Web3,
   contracts,
   injected: false,
   init: async function (url = undefined, useWeb3 = false) {
@@ -115,6 +120,7 @@ export default {
     instance = web3
     this.injected = injected
   },
+  getBalance,
   stopProcess,
   syncListener,
   getCurrentBlock,

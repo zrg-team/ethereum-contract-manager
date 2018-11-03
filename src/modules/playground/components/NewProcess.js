@@ -1,4 +1,5 @@
 import React from 'react'
+import I18n from 'i18n-js'
 import {
   Steps,
   Row,
@@ -8,6 +9,7 @@ import {
   Select,
   Input,
   Form,
+  Button,
   message,
   notification
 } from 'antd'
@@ -274,11 +276,13 @@ ${raw}
             title={this.renderStepName(step)}
             style={{ width: 300 }}
             actions={[
-              <Icon
-                type='check'
-                theme='outlined'
-                onClick={this.nextStep}
-              />
+              <Button type='primary' size='large' onClick={this.nextStep}>
+                <Icon
+                  type='check'
+                  theme='outlined'
+                />
+                Confirm
+              </Button>
             ]}
           >
             <Select
@@ -306,11 +310,13 @@ ${raw}
             title={this.renderStepName(step)}
             style={{ width: 300 }}
             actions={[
-              <Icon
-                type='check'
-                theme='outlined'
-                onClick={this.nextStep}
-              />
+              <Button type='primary' size='large' onClick={this.nextStep}>
+                <Icon
+                  type='check'
+                  theme='outlined'
+                />
+                Confirm
+              </Button>
             ]}
           >
             <Form.Item key={`function_selecter`}>
@@ -366,11 +372,13 @@ ${raw}
             title={this.renderStepName(step)}
             style={{ width: 300 }}
             actions={[
-              <Icon
-                type='check'
-                theme='outlined'
-                onClick={this.nextStep}
-              />
+              <Button type='primary' size='large' onClick={this.nextStep}>
+                <Icon
+                  type='check'
+                  theme='outlined'
+                />
+                Confirm
+              </Button>
             ]}
           >
             <Select

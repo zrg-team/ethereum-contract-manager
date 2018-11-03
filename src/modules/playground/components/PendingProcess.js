@@ -16,9 +16,18 @@ class PendingProcess extends React.Component {
     this.modalDetail = this.modalDetail.bind(this)
     this.handleInfiniteOnLoad = this.handleInfiniteOnLoad.bind(this)
   }
-  modalDetail (item) {
+  async modalDetail (item) {
     console.log('item', item)
-    Modal.show(<Card title='Transaction Detail' style={{ width: 450 }}>
+    const { transactions, currentProject, checkTransactionReceipt } = this.props
+    try {
+      if (!item.response) {
+        const response = await checkTransactionReceipt(currentProject, item, transactions)
+        item = response
+      }
+    } catch (err) {
+
+    }
+    Modal.show(<Card style={{ width: 450 }}>
       <ReactMarkdown
         skipHtml={false}
         rawSourcePos={false}
@@ -29,19 +38,19 @@ class PendingProcess extends React.Component {
 
 ---
 
-${JSON.stringify(item.params)}
+${JSON.stringify(item.params || {})}
 
 # **ACCOUNT**
 
 ---
 
-${JSON.stringify(item.account)}
+${JSON.stringify(item.account || {})}
 
 # **EVENTS**
 
 ---
 
-${JSON.stringify(item.response)}
+${JSON.stringify(item.response || {})}
 `}
       />
     </Card>, {
@@ -52,6 +61,7 @@ ${JSON.stringify(item.response)}
     })
   }
   renderItem (item) {
+    const { general } = this.props
     return (
       <List.Item
         key={item.transactionId}
@@ -61,7 +71,7 @@ ${JSON.stringify(item.response)}
       >
         <List.Item.Meta
           avatar={<Avatar src='https://png.icons8.com/color/1600/ethereum.png' />}
-          title={<a target='_blank' rel='noopener noreferrer' href={`https://qtl-qc-privatenet-custom-insight.quanta.im/tx/${item.transactionId}`}>{item.transactionId}</a>}
+          title={<a target='_blank' rel='noopener noreferrer' href={`${general.insightUrl}${item.transactionId}`}>{item.transactionId}</a>}
           description={`${item.contract.name} - ${item.contractFunction.name}`}
         />
         <div>{item.response ? <Icon type='tags' theme='twoTone' twoToneColor='#52c41a' /> : <Icon type='loading' />}</div>

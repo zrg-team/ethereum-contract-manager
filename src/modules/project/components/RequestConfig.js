@@ -14,7 +14,8 @@ const FormItem = Form.Item
 const MODES = {
   broadcast: 1,
   ethCall: 2,
-  nonce: 1
+  nonce: 1,
+  receipt: 1
 }
 const REQUIRED = {
   broadcast: `
@@ -26,6 +27,9 @@ const REQUIRED = {
   ethCall: `
     * First param for address (Required)
     * Second param for data (Required)
+  `,
+  receipt: `
+    * First param for transaction hash (Required)
   `
 }
 class RequestConfig extends React.Component {

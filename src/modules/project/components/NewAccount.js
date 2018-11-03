@@ -15,25 +15,33 @@ class NewAccount extends React.Component {
   handleSubmit () {
     const loading = message.loading('Action in progress..', 0)
     setTimeout(() => {
-      const { form, onSubmit } = this.props
+      const { v3String, form, onSubmit, account = true } = this.props
       form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           let wallet = null
           try {
-            if (ethereumAccount.validateSeed(values.accountPrivate)) {
+            ethereumAccount.fromPrivateKey(values.accountPrivate)
+            wallet = values.accountPrivate
+          } catch (err) {
+            console.log('error', err)
+          }
+          try {
+            if (!wallet && ethereumAccount.validateSeed(values.accountPrivate)) {
               wallet = ethereumAccount.restoreWalletFromSeed(values.accountPrivate)
-            } else {
+            } else if (!wallet) {
               wallet = ethereumAccount.fromKeystore(values.accountPrivate, values.accountPassword)
             }
             onSubmit && onSubmit({
               name: values.accountName,
               address: wallet.getAddressString(),
               privateKey: wallet.getPrivateKeyString(),
-              publicKey: wallet.getPublicKeyString()
+              publicKey: wallet.getPublicKeyString(),
+              v3String: v3String ? wallet.toV3String(values.accountPassword) : undefined
             })
             loading()
           } catch (err) {
             loading()
+            console.log('err', err)
             message.error('Invalid passphare or Wrong password of Keystore!')
           }
         } else {
@@ -43,6 +51,7 @@ class NewAccount extends React.Component {
     }, 100)
   }
   render () {
+    const { account = true } = this.props
     const { getFieldDecorator } = this.props.form
     const formItemLayout = {
       labelCol: {
@@ -56,7 +65,7 @@ class NewAccount extends React.Component {
     }
     return (
       <Form>
-        <FormItem
+        {account && <FormItem
           {...formItemLayout}
           label='Account Name'
         >
@@ -68,15 +77,15 @@ class NewAccount extends React.Component {
           })(
             <Input />
           )}
-        </FormItem>
+        </FormItem>}
         <FormItem
           {...formItemLayout}
-          label='Passphare or Keystore'
+          label='PrivateKey, Passphare or Keystore'
         >
           {getFieldDecorator('accountPrivate', {
             rules: [{
               required: true,
-              message: 'Please input your Passphare or Keystore!'
+              message: 'Please input your PrivateKey, Passphare or Keystore!'
             }]
           })(
             <Input.TextArea rows={4} />

@@ -11,7 +11,7 @@ import { stopFullnodeProcess } from '../../playground/actions'
 import { mapHexToOutput, createTransaction } from '../../../common/utils/ethereum'
 import web3 from '../../../common/utils/web3'
 
-const mapDispatchToProps = (dispatch, props) => ({
+export const mapDispatchToProps = (dispatch, props) => ({
   parseAbi: (data) => {
     return data.reduce((all, item) => {
       if (item.type === 'event') {
