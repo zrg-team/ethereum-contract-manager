@@ -41,6 +41,8 @@
     "web3": "~0.20.6"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -b gh-page -d build",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "eject": "react-scripts eject"
