@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import I18n from 'i18n-js'
 import {
   Icon,
   Row,
@@ -28,9 +29,9 @@ class ImportForm extends React.Component {
     const { history, importProject } = this.props
     const { data, password } = this.state
     if (!data) {
-      return message.error('File data required!')
+      return message.error(I18n.t('errors.file_data_required'))
     }
-    const loading = message.loading('Action in progress...', 0)
+    const loading = message.loading(I18n.t('common.loading_action'), 0)
     setTimeout(async () => {
       await importProject(data, password)
       loading()
@@ -54,7 +55,7 @@ class ImportForm extends React.Component {
       })
     }
     reader.readAsText(file.originFileObj, 'TF-8')
-    message.success(`${info.file.name} file uploaded successfully.`)
+    message.success(I18n.t('messages.upload_success', { file: info.file.name }))
   }
   render () {
     const { data, fileName } = this.state
@@ -75,8 +76,8 @@ class ImportForm extends React.Component {
             <p className='ant-upload-drag-icon'>
               <Icon type='inbox' />
             </p>
-            <p className='ant-upload-text'>Click or drag file to this area to upload</p>
-            <p className='ant-upload-hint'>Support for a single</p>
+            <p className='ant-upload-text'>{I18n.t('project.file_upload_message')}</p>
+            <p className='ant-upload-hint'>{I18n.t('project.file_upload_support')}</p>
           </Upload.Dragger> : <p><Icon type='file' /> <span>{fileName}</span></p>}
         </Row>
         {/* <Row
@@ -104,7 +105,7 @@ class ImportForm extends React.Component {
             size='large'
             htmlType='button'
           >
-            Save <Icon type='save' />
+            {I18n.t('common.save')} <Icon type='save' />
           </Button>
         </Row>
       </Fragment>

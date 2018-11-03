@@ -1,37 +1,10 @@
 import React from 'react'
+import I18n from 'i18n-js'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Layout, Menu, Icon, notification } from 'antd'
 const { Header, Sider, Content } = Layout
 
-const MENUS = [
-  {
-    key: 'projects',
-    title: 'Projects',
-    icon: {
-      type: 'project',
-      theme: 'outlined'
-    },
-    redirect: '/dashboard'
-  },
-  {
-    key: 'new-project',
-    title: 'New Project',
-    icon: {
-      type: 'folder-add',
-      theme: 'outlined'
-    },
-    redirect: '/new'
-  },
-  {
-    key: 'import-project',
-    title: 'Import Project',
-    icon: {
-      type: 'download',
-      theme: 'outlined'
-    },
-    redirect: '/import'
-  }
-]
 notification.config({
   placement: 'bottomLeft'
 })
@@ -41,12 +14,68 @@ class MenuPage extends React.Component {
     this.state = {
       collapsed: false
     }
+    this.setMenus()
     this.toggle = this.toggle.bind(this)
     this.changePage = this.changePage.bind(this)
   }
+  setMenus () {
+    this.MENUS = [
+      {
+        key: 'projects',
+        title: I18n.t('menu.projects'),
+        icon: {
+          type: 'project',
+          theme: 'outlined'
+        },
+        redirect: '/dashboard'
+      },
+      {
+        key: 'new-project',
+        title: I18n.t('menu.new_project'),
+        icon: {
+          type: 'folder-add',
+          theme: 'outlined'
+        },
+        redirect: '/new'
+      },
+      {
+        key: 'import-project',
+        title: I18n.t('menu.import_project'),
+        icon: {
+          type: 'download',
+          theme: 'outlined'
+        },
+        redirect: '/import'
+      },
+      {
+        key: 'tools',
+        title: I18n.t('menu.tools'),
+        icon: {
+          type: 'sliders',
+          theme: 'outlined'
+        },
+        redirect: '/tools'
+      },
+      {
+        key: 'setting',
+        title: I18n.t('menu.setting'),
+        icon: {
+          type: 'setting',
+          theme: 'outlined'
+        },
+        redirect: '/setting'
+      }
+    ]
+  }
+  componentWillReceiveProps (nextProps) {
+    const { language } = nextProps
+    if (language !== this.props.language) {
+      this.setMenus()
+    }
+  }
   changePage (e) {
     const { history } = this.props
-    const item = MENUS.find(data => data.key === e.key)
+    const item = this.MENUS.find(data => data.key === e.key)
     history.push(item.redirect)
   }
   toggle () {
@@ -57,7 +86,7 @@ class MenuPage extends React.Component {
   render () {
     const { collapsed } = this.state
     const { children, history: { location } } = this.props
-    const selectedMenu = MENUS.find(item => item.redirect === location.pathname) ||
+    const selectedMenu = this.MENUS.find(item => item.redirect === location.pathname) ||
       { key: location.pathname === '/playground' ? 'playground' : 'projects' }
     return (
       <Layout className='menu-page'>
@@ -76,10 +105,10 @@ class MenuPage extends React.Component {
             {location.pathname === '/playground' && (
               <Menu.Item key='playground'>
                 <Icon type='code' theme='twoTone' />
-                <span>Playground</span>
+                <span>{I18n.t('menu.playground')}</span>
               </Menu.Item>
             )}
-            {MENUS.map(item => (
+            {this.MENUS.map(item => (
               <Menu.Item key={item.key}>
                 <Icon type={item.icon.type} theme={item.icon.theme} />
                 <span>{item.title}</span>
@@ -104,4 +133,8 @@ class MenuPage extends React.Component {
   }
 }
 
-export default withRouter(MenuPage)
+export default connect((state) => {
+  return {
+    language: state.common.language
+  }
+})(withRouter(MenuPage))

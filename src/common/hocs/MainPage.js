@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { PersistGate } from 'redux-persist/lib/integration/react'
 import Routes from '../routes'
 import Modal from '../components/widgets/Modal'
@@ -17,9 +17,9 @@ export default class Main extends Component {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <React.Fragment>
-            <BrowserRouter>
+            <HashRouter>
               <Routes store={store} />
-            </BrowserRouter>
+            </HashRouter>
             <ProgressLoading.Component />
             <PageLoading.Component type='bars' />
             <Modal.Component global />

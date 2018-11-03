@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import I18n from 'i18n-js'
 import { List, Card, Icon, message } from 'antd'
 import Modal from '../../../common/components/widgets/Modal'
 import ConfirmPassword from './ConfirmPassword'
@@ -33,9 +34,9 @@ class Projects extends Component {
     const { deleteProject } = this.props
     const result = await deleteProject(item)
     if (result) {
-      return message.success('Deleted.')
+      return message.success(I18n.t('messages.deleted'))
     }
-    message.error('Delete error !')
+    message.error(I18n.t('errors.delete_error'))
   }
   renderItem (item) {
     return (
@@ -64,7 +65,7 @@ class Projects extends Component {
           ]}
         >
           <Meta
-            title={`Project ${item.name}`}
+            title={I18n.t('project.project_name', { name: item.name })}
             description={item.description}
           />
         </Card>

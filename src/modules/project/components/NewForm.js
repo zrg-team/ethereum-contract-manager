@@ -33,7 +33,8 @@ class NewForm extends Component {
       connectFullnode: true,
       transactionRequest: {},
       nonceRequest: {},
-      ethCallRequest: {}
+      ethCallRequest: {},
+      receiptRequest: {}
     }
     this.steps = [
       { key: 0, title: 'General', description: 'Project name, server, etc' },
@@ -99,6 +100,10 @@ class NewForm extends Component {
           case 'ethCall':
             return this.setState({
               ethCallRequest: values
+            })
+          case 'receipt':
+            return this.setState({
+              receiptRequest: values
             })
           default:
             return false
@@ -179,6 +184,7 @@ class NewForm extends Component {
       values,
       accounts,
       contracts,
+      receiptRequest,
       transactionRequest,
       nonceRequest,
       ethCallRequest
@@ -193,7 +199,8 @@ class NewForm extends Component {
             ...values,
             transactionRequest,
             nonceRequest,
-            ethCallRequest
+            ethCallRequest,
+            receiptRequest
           },
           accounts,
           contracts
@@ -342,11 +349,11 @@ class NewForm extends Component {
                 ? <Fragment>
                   <FormItem
                     {...formItemLayout}
-                    label='Fullnode url'
+                    label='Fullnode'
                   >
                     {getFieldDecorator('fullnode', {
                       rules: [{
-                        required: true, message: 'Please input your FullNode url!'
+                        required: true, message: 'Please input your fullnode url!'
                       }]
                     })(
                       <Input />
@@ -357,14 +364,12 @@ class NewForm extends Component {
                     label='Submit transaction url'
                   >
                     {getFieldDecorator('transactionUrl', {
-                      rules: [{
-                        required: true,
-                        message: 'Please input your Url to broadcast contract!'
-                      }]
+                      rules: []
                     })(
                       <Input
+                        placeholder='Example: https://api.etherscan.io/api?module=proxy&action=eth_sendRawTransaction&hex=0xf90...'
                         addonAfter={
-                          <Tooltip title='Url you can call function. Including "to=", "data="'>
+                          <Tooltip title='Setting your request. Required field for raw transaction example "hex"'>
                             <Icon type='setting' theme='outlined' onClick={() => this.openSetting('broadcast')} />
                           </Tooltip>}
                       />
@@ -379,12 +384,13 @@ class NewForm extends Component {
                     {getFieldDecorator('transactionUrl', {
                       rules: [{
                         required: true,
-                        message: 'Please input your Url to broadcast trancsaction!'
+                        message: 'Please input your url to broadcast transaction!'
                       }]
                     })(
                       <Input
+                        placeholder='Example: https://api.etherscan.io/api?module=proxy&action=eth_sendRawTransaction&hex=0xf90...'
                         addonAfter={
-                          <Tooltip title='Url that you push transaction in. Including "hex="'>
+                          <Tooltip title='Setting your request. Required field for raw transaction example "hex"'>
                             <Icon type='setting' theme='outlined' onClick={() => this.openSetting('broadcast')} />
                           </Tooltip>
                         }
@@ -402,8 +408,9 @@ class NewForm extends Component {
                       }]
                     })(
                       <Input
+                        placeholder='Example: https://api.etherscan.io/api?module=proxy&action=eth_call&to=0xAEEF...&data=0x70a0...'
                         addonAfter={
-                          <Tooltip title='Url you can call function. Including "to=", "data="'>
+                          <Tooltip title='Setting your request. Required field for data and to address'>
                             <Icon type='setting' theme='outlined' onClick={() => this.openSetting('ethCall')} />
                           </Tooltip>}
                       />
@@ -420,15 +427,42 @@ class NewForm extends Component {
                       }]
                     })(
                       <Input
+                        placeholder='Example: https://api.etherscan.io/api?module=proxy&action=eth_getTransactionCount&address=0x291054...'
                         addonAfter={
-                          <Tooltip title='Url you can get nonce. Including "address="'>
+                          <Tooltip title='Setting your request. Required address field'>
                             <Icon type='setting' theme='outlined' onClick={() => this.openSetting('nonce')} />
+                          </Tooltip>}
+                      />
+                    )}
+                  </FormItem>
+                  <FormItem
+                    {...formItemLayout}
+                    label='check transaction url'
+                  >
+                    {getFieldDecorator('checkTransactionUrl', {
+                      rules: []
+                    })(
+                      <Input
+                        placeholder='Example: https://api.etherscan.io/api?module=proxy&action=eth_getTransactionReceipt&txhash=0x1e2910a26...'
+                        addonAfter={
+                          <Tooltip title='Setting your request. Required transaction hash field'>
+                            <Icon type='setting' theme='outlined' onClick={() => this.openSetting('receipt')} />
                           </Tooltip>}
                       />
                     )}
                   </FormItem>
                 </Fragment>
               }
+              <FormItem
+                {...formItemLayout}
+                label='View transaction url'
+              >
+                {getFieldDecorator('insightUrl', {
+                  rules: []
+                })(
+                  <Input placeholder='Example: https://etherscan.io/tx/0x7...' />
+                )}
+              </FormItem>
             </div>
             <FormItem {...tailFormItemLayout}>
               {getFieldDecorator('agreement', {

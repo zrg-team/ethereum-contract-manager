@@ -1,15 +1,19 @@
 import { fetchLoading } from '../../common/middlewares/effects'
 import { getDataSmartContract } from '../../common/utils/ethereum'
+import storeAccessible from '../../common/utils/storeAccessible'
 
 function parseRequestConfig (mode, project, data) {
+  const common = storeAccessible.getModuleState('common')
+
   const method = project.general[mode].method || 'GET'
   const headers = project.general[mode].headers || []
   const params = project.general[mode].params || []
   const headerValues = project.general[mode].headerValues || {}
   const paramValues = project.general[mode].paramValues || {}
-
+  const timeout = project.general[mode].method.timeout || common.timeout
   return {
     method,
+    timeout,
     headers: headers.reduce((all, item) => {
       return { ...all, [`${item}`.replace('header_', '')]: headerValues[item] }
     }, {}),
@@ -91,5 +95,18 @@ export function getNonce (project, address) {
   })
   .then(response => {
     return parseRequestResponse('nonceRequest', project, response)
+  })
+}
+
+export function getTransactionReceipt (project, txhash) {
+  const url = `${project.general.checkTransactionUrl}`
+  return fetchLoading({
+    url,
+    options: {
+      ...parseRequestConfig('receiptRequest', project, [`${txhash}`])
+    }
+  })
+  .then(response => {
+    return parseRequestResponse('receiptRequest', project, response)
   })
 }

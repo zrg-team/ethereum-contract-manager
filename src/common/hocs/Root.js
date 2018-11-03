@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import locate from '../utils/locate'
 import MainPage from './MainPage'
 
 export default class Root extends Component {
@@ -9,7 +8,7 @@ export default class Root extends Component {
 
   async componentDidMount () {
     try {
-      await locate()
+      // TODO: Repare something
     } catch (error) {
       console.log('Fatal Error. Cannot Initialize.', error)
     }

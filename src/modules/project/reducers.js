@@ -7,6 +7,10 @@ const defaultState = {
 }
 
 const handlers = {
+  [actions.setProject]: (state, action) => ({
+    ...state,
+    projects: action.payload
+  }),
   [actions.addProject]: (state, action) => ({
     ...state,
     projects: [
@@ -40,6 +44,10 @@ const handlers = {
       ...state.transactions,
       [action.payload.key]: action.payload.data
     }
+  }),
+  [actions.setAllTransactions]: (state, action) => ({
+    ...state,
+    transactions: action.payload
   })
 }
 

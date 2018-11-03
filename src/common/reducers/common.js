@@ -2,7 +2,8 @@ import { handleActions } from 'redux-actions'
 import * as actions from '../actions/common'
 
 const defaultState = {
-  language: 'en'
+  language: 'en',
+  timeout: 30000
 }
 
 const handlers = {
@@ -10,6 +11,12 @@ const handlers = {
     return {
       ...state,
       language: action.payload
+    }
+  },
+  [actions.setRequestTimeout]: (state, action) => {
+    return {
+      ...state,
+      timeout: action.payload
     }
   }
 }

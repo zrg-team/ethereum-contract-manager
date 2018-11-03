@@ -90,7 +90,8 @@ export function createTransaction (params) {
   transaction.gasPrice = params.gasPrice
   transaction.nonce = params.nonce
   transaction.value = params.value
-  transaction.data = `0x${getDataSmartContract({
+  transaction.data = params.data !== undefined && params.data !== null
+  ? params.data : `0x${getDataSmartContract({
     functionName: params.functionName,
     typeParams: params.typeParams,
     params: params.functionParams

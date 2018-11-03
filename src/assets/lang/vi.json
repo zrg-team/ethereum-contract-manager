@@ -1,0 +1,71 @@
+{
+  "app_name": "CONTACT MANAGER",
+  "version": "0.0.1",
+  "common": {
+    "save": "Lưu",
+    "address": "Địa Chỉ",
+    "public_key": "Khóa Công Khai",
+    "private_key": "Khóa Bí Mật",
+    "keystore": "Keystore",
+    "params": "Tham Số",
+    "transaction_hex": "TRANSACTION HEX",
+    "account": "Tài Khoản",
+    "account_value": "Private key, Passphare hoặc Keystore",
+    "account_password": "Mật khẩu keystore (tùy chọn)",
+    "value_send": "Giá trị gửi (Wei)",
+    "nonce": "Nonce",
+    "to_address": "Địa chỉ nhận",
+    "transaction_fee": "Phí giao dịch",
+    "gas_price": "Giá Gas (Wei)",
+    "gas_limit": "Giới hạn Gas",
+    "transaction_data": "Transaction Data",
+    "hex_data": "Hex data",
+    "generate_transaction_data": "Tạo Dữ Liệu Giao Dịch",
+    "loading_action": "Đang thực hiện thao tác..."
+  },
+  "messages": {
+    "deleted": "Đã xóa.",
+    "deleted_all": "Đã xóa tất cả.",
+    "timeout_updated": "Timeout đã sửa.",
+    "language_updated": "Đã thay đổi ngôn ngữ.",
+    "upload_success": "{{file}} tải lên thành công."
+  },
+  "errors": {
+    "delete_error": "Xóa bị lỗi !",
+    "transaction_error": "Giao dịch lỗi!",
+    "file_data_required": "File data yêu cầu!"
+  },
+  "menu": {
+    "projects": "Dự Án",
+    "new_project": "Dự Án Mới",
+    "import_project": "Nhập Dự Án",
+    "tools": "Công cụ",
+    "setting": "Cài Đặt",
+    "playground": "Không Gian Xử Lý"
+  },
+  "tools": {
+    "unit_convert": "Đổi Đơn Vị",
+    "get_wallet": "Thông Tin Ví",
+    "transaction": "Giao Dịch",
+    "hash_function": "Hàm Băm",
+    "input": "Đầu Vào",
+    "loading_gererate_transaction": "Đang tạo dữ liệu ...",
+    "language": "Ngôn ngữ",
+    "timeout": "Timeout",
+    "clear_data": "Xóa dữ liệu",
+    "delete_all": "Xóa tất cả",
+    "english": "English",
+    "vietnamese": "Tiếng việt"
+  },
+  "project": {
+    "project_name": "Dự án {{name}}",
+    "file_upload_message": "Chọn hoặc kéo tệp vào đây",
+    "file_upload_support": "Hỗ trợ chọn mốt tệp"
+  },
+  "playground": {
+    "new_process": "Tiến trình mới",
+    "process": "Tiến trình",
+    "accounts": "Các tài khoản",
+    "send": "Gửi"
+  }
+}
