@@ -41,7 +41,8 @@
     "import_project": "Import Project",
     "tools": "Tools",
     "setting": "Setting",
-    "playground": "Playground"
+    "playground": "Playground",
+    "timelife": "Timelife"
   },
   "tools": {
     "unit_convert": "Unit Converter",

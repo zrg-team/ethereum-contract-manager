@@ -48,6 +48,15 @@ class MenuPage extends React.Component {
         redirect: '/import'
       },
       {
+        key: 'timelife',
+        title: I18n.t('menu.timelife'),
+        icon: {
+          type: 'sort-ascending',
+          theme: 'outlined'
+        },
+        redirect: '/timelife'
+      },
+      {
         key: 'tools',
         title: I18n.t('menu.tools'),
         icon: {

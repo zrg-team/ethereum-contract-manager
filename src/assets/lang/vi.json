@@ -41,7 +41,8 @@
     "import_project": "Nhập Dự Án",
     "tools": "Công cụ",
     "setting": "Cài Đặt",
-    "playground": "Không Gian Xử Lý"
+    "playground": "Không Gian Xử Lý",
+    "timelife": "Kịch bản"
   },
   "tools": {
     "unit_convert": "Đổi Đơn Vị",

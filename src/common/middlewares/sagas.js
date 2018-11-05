@@ -64,8 +64,9 @@ function onLanguageChanged ({ payload }) {
   setLocate(payload)
 }
 
-function onRehydrateChanged ({ payload: { common } }) {
-  setLocate(common.language)
+function onRehydrateChanged ({ payload }) {
+  console.log('payload', payload)
+  setLocate(payload.common.language)
 }
 
 function * watchLoadStart () {
