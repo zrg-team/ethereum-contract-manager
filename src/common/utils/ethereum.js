@@ -83,6 +83,45 @@ export function mapHexToOutput (response, outputs) {
   }, [])
 }
 
+export function parseTransactionParams (item) {
+  let type = ''
+  let value = ''
+  switch (item.type) {
+    case 'bool':
+      type = item.type
+      value = item.value === 'true'
+      break
+    case 'uint256[]':
+    case 'arrayUint256':
+      type = 'uint256[]'
+      value = [...`${item.value}`.split(',')]
+      break
+    case 'uint[]':
+    case 'arrayUint':
+      type = 'uint[]'
+      value = [...`${item.value}`.split(',')]
+      break
+    case 'address[]':
+    case 'arrayAddress':
+      type = 'address[]'
+      value = [...`${item.value}`.split(',')]
+      break
+    case 'bytes32[]':
+    case 'arrayByte32':
+      type = 'bytes32[]'
+      value = [...`${item.value}`.split(',')]
+      break
+    default:
+      type = item.type
+      value = `${item.value}`
+      break
+  }
+  return {
+    type,
+    value
+  }
+}
+
 export function createTransaction (params) {
   const transaction = new Transaction()
   transaction.to = params.to

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import I18n from 'i18n-js'
-import { List, Card, Icon, message } from 'antd'
+import { List, Card, Icon, message, Button } from 'antd'
 import Modal from '../../../common/components/widgets/Modal'
 import ConfirmPassword from './ConfirmPassword'
 import projectBanner from '../../../assets/images/project_banner.png'
@@ -51,19 +51,23 @@ class Projects extends Component {
             />
           }
           actions={[
-            <Icon
-              type='play-circle'
-              theme='twoTone'
-              twoToneColor='#1890ff'
-              onClick={() => this.startProject(item)}
-            />,
-            <Icon type='setting' />,
-            <Icon
-              type='delete'
-              theme='twoTone'
-              twoToneColor='#cf1322'
-              onClick={() => this.deleteProject(item)}
-            />
+            <Button onClick={() => this.startProject(item)}>
+              <Icon
+                type='play-circle'
+                theme='twoTone'
+                twoToneColor='#1890ff'
+              />
+              {I18n.t('dashboard.play')}
+            </Button>,
+            <Button><Icon type='setting' />{I18n.t('dashboard.setting')}</Button>,
+            <Button onClick={() => this.deleteProject(item)}>
+              <Icon
+                type='delete'
+                theme='twoTone'
+                twoToneColor='#cf1322'
+              />
+              {I18n.t('dashboard.delete')}
+            </Button>
           ]}
         >
           <Meta

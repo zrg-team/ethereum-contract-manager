@@ -42,7 +42,8 @@
     "tools": "Tools",
     "setting": "Setting",
     "playground": "Playground",
-    "timelife": "Timelife"
+    "timelife": "Timelife",
+    "about": "About"
   },
   "tools": {
     "unit_convert": "Unit Converter",
@@ -68,5 +69,10 @@
     "process": "Process",
     "accounts": "Accounts",
     "send": "Send"
+  },
+  "dashboard": {
+    "play": "Play",
+    "setting": "Setting",
+    "delete": "Delete"
   }
 }

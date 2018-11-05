@@ -73,6 +73,15 @@ class MenuPage extends React.Component {
           theme: 'outlined'
         },
         redirect: '/setting'
+      },
+      {
+        key: 'about',
+        title: I18n.t('menu.about'),
+        icon: {
+          type: 'info-circle',
+          theme: 'outlined'
+        },
+        redirect: '/about'
       }
     ]
   }

@@ -9,6 +9,7 @@ import {
   Select,
   message
 } from 'antd'
+import { parseTransactionParams } from '../../../common/utils/ethereum'
 const FormItem = Form.Item
 
 const TYPES = {
@@ -76,28 +77,9 @@ class GenerateData extends React.Component {
           const paramTypes = []
           const paramValues = []
           params.forEach(item => {
-            switch (item.type) {
-              case 'bool':
-                paramTypes.push(item.type)
-                paramValues.push(item.value === 'true')
-                break
-              case 'arrayUint':
-                paramTypes.push('uint[]')
-                paramValues.push([...`${item.value}`.split(',')])
-                break
-              case 'arrayAddress':
-                paramTypes.push('address[]')
-                paramValues.push([...`${item.value}`.split(',')])
-                break
-              case 'arrayByte32':
-                paramTypes.push('bytes32[]')
-                paramValues.push([...`${item.value}`.split(',')])
-                break
-              default:
-                paramTypes.push(item.type)
-                paramValues.push(`${item.value}`)
-                break
-            }
+            const parsed = parseTransactionParams(item)
+            paramTypes.push(parsed.type)
+            paramValues.push(parsed.value)
           })
           onSubmit && onSubmit({
             ...values,

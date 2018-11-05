@@ -33,15 +33,20 @@ class UnitConvert extends React.Component {
     this.onChangeValue = this.onChangeValue.bind(this)
   }
   onChangeValue (e, editKey) {
+    let { values } = this.state
     try {
       const value = e.target.value
-      if (!value || !`${value}`.trim() || isNaN(value)) {
+      if (isNaN(value)) {
         return false
+      } else if (!value || !`${value}`.trim()) {
+        values = UNITS.reduce((all, item) => {
+          return { ...all, [item.key]: '' }
+        }, {})
+      } else {
+        values = UNITS.reduce((all, item) => {
+          return { ...all, [item.key]: new BigNumber(`${convert(value, editKey, item.key)}`).toFixed() }
+        }, {})
       }
-      let { values } = this.state
-      values = UNITS.reduce((all, item) => {
-        return { ...all, [item.key]: new BigNumber(`${convert(value, editKey, item.key)}`).toFixed() }
-      }, {})
       this.setState({
         values
       })

@@ -8,7 +8,7 @@ import {
 } from '../repository'
 import { addTransaction } from '../../project/actions'
 import { stopFullnodeProcess } from '../../playground/actions'
-import { mapHexToOutput, createTransaction } from '../../../common/utils/ethereum'
+import { mapHexToOutput, createTransaction, parseTransactionParams } from '../../../common/utils/ethereum'
 import web3 from '../../../common/utils/web3'
 
 export const mapDispatchToProps = (dispatch, props) => ({
@@ -49,6 +49,11 @@ export const mapDispatchToProps = (dispatch, props) => ({
   },
   fetchViewData: async (project, data) => {
     try {
+      data.params = data.params.map((item, index) => {
+        const type = data.inputs[index]
+        const parsed = parseTransactionParams({ type, value: item })
+        return parsed.value
+      })
       const response = await getContractView(project, data)
       return mapHexToOutput(response, data.outputs)
     } catch (err) {

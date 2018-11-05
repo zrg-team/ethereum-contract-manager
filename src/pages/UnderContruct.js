@@ -10,7 +10,7 @@ class UnderContruct extends React.Component {
           position: 'absolute',
           fontSize: 30,
           fontWeight: 'bold'
-        }}>UNDER CONTRACT</p>
+        }}>UNDER CONTRUCT</p>
       </Fragment>
     )
   }

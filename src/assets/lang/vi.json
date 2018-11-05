@@ -42,7 +42,8 @@
     "tools": "Công cụ",
     "setting": "Cài Đặt",
     "playground": "Không Gian Xử Lý",
-    "timelife": "Kịch bản"
+    "timelife": "Kịch bản",
+    "about": "Thông Tin"
   },
   "tools": {
     "unit_convert": "Đổi Đơn Vị",
@@ -68,5 +69,10 @@
     "process": "Tiến trình",
     "accounts": "Các tài khoản",
     "send": "Gửi"
+  },
+  "dashboard": {
+    "play": "Thực hiện",
+    "setting": "Cài đặt",
+    "delete": "Xóa"
   }
 }

@@ -9,6 +9,7 @@ import Page from './hocs/Page'
 import MenuPage from './hocs/MenuPage'
 import Setting from '../pages/Setting'
 import UnderContruct from '../pages/UnderContruct'
+import About from '../pages/About'
 
 export default class Root extends Component {
   render () {
@@ -22,6 +23,7 @@ export default class Root extends Component {
         <Route path='/tools' component={Tools} />
         <Route path='/setting' component={Setting} />
         <Route path='/timelife' component={UnderContruct} />
+        <Route path='/about' component={About} />
       </MenuPage>
     )
   }
