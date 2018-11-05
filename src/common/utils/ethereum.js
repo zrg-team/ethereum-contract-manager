@@ -3,6 +3,7 @@ import web3 from './web3'
 const Transaction = require('ethereumjs-tx')
 const Abi = require('ethereumjs-abi')
 
+const web3Utils = new Web3()
 export function getDataSmartContract ({ functionName, typeParams, params }) {
   return Abi
     .methodID(functionName, typeParams)
@@ -25,7 +26,6 @@ export function getAccount () {
 }
 
 export function sendTransaction (defaultAccount, data) {
-  console.log('defaultAccount', defaultAccount)
   if (!web3 || !web3.instance || !web3.injected || !defaultAccount) {
     const url = `https://www.myetherwallet.com/?to=${data.to}&value=${web3.instance.toWei(data.value, 'ether')}&gasLimit=300000&#send-transaction`
     window.open(url, '_blank')
@@ -56,13 +56,13 @@ export function convertEthereumOutput (value, type) {
     case 'uint':
     case 'uint8':
     case 'uint256':
-      return Web3.utils.hexToNumberString(value)
+      return web3Utils.toDecimal(value)
     case 'bool':
       return Number(value) === 1
     case 'address':
       return `${value}`.replace('0x000000000000000000000000', '0x')
     case 'bytes32':
-      return Web3.utils.toAscii(value)
+      return web3Utils.toAscii(value)
     default:
       return value
   }

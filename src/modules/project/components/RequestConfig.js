@@ -132,7 +132,6 @@ class RequestConfig extends React.Component {
     const { form, onSubmit, mode } = this.props
     const loading = message.loading('Action in progress..', 0)
     form.validateFieldsAndScroll((err, values) => {
-      console.log('values', values)
       if (values.params.length < MODES[mode]) {
         loading()
         return message.error('Missing required params!')

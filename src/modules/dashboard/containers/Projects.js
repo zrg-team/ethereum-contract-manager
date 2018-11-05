@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch, props) => ({
       dispatch(removeProject(item.key))
       return true
     } catch (err) {
-      console.log('err', err)
+      console.error('err', err)
       return false
     }
   },
@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch, props) => ({
       dispatch(fullnodeProcess())
       return true
     } catch (err) {
-      console.log('err', err)
+      console.error('err', err)
       return false
     }
   }

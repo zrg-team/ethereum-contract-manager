@@ -19,9 +19,11 @@ class Projects extends Component {
         this.modalRef = ref
       }}
       onSubmit={async (password) => {
-        await startProject(item, password)
+        const result = await startProject(item, password)
         Modal.hide()
-        history.replace('/playground')
+        if (result) {
+          history.replace('/playground')
+        }
       }}
     />, {
       onOk: () => {

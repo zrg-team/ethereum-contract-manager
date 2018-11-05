@@ -7,14 +7,13 @@ import { MODULE_NAME as MODULE_DASHBOARD } from '../../dashboard/model'
 const mapDispatchToProps = (dispatch, props) => ({
   getAllBalance: async (accounts) => {
     try {
-      console.log('balances', web3.Web3)
       const balances = accounts.reduce((all, account) => {
         const balance = web3.getBalance(account.address)
         return { ...all, [account.address]: fromWei(balance.toFixed(), 'eth') }
       }, {})
       return balances
     } catch (err) {
-      console.log('getAllBalance', err)
+      console.error('getAllBalance', err)
       return null
     }
   }

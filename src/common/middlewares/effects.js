@@ -20,7 +20,7 @@ export async function loading (fetchingProcess, done = undefined) {
     return ret
   } catch (error) {
     storeAccessible.dispatch(loadEnd({config: {key: 'loading'}}))
-    console.log('ERROR', error)
+    console.error('ERROR', error)
     throw error
   }
 }

@@ -74,12 +74,10 @@ const contractListener = (address, callback, fromBlock = 0) => {
 
 const getCurrentBlock = () => {
   const block = instance.eth.blockNumber
-  console.log('instance.eth.blockNumber', block)
   return block
 }
 
 const newBlockListener = (callback, address, fromBlock = 0) => {
-  console.log('blockListenInstance', 'data', address, fromBlock)
   if (blockListenInstance) {
     blockListenInstance.stopWatching()
     blockListenInstance = null
@@ -90,7 +88,6 @@ const newBlockListener = (callback, address, fromBlock = 0) => {
     address: address
   })
   blockListenInstance.watch(function (error, result) {
-    console.log('blockListenInstance', 'data', result, error)
     callback({ error, result, address })
   })
   return blockListenInstance

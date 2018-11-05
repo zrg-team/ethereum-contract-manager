@@ -23,7 +23,7 @@ class NewAccount extends React.Component {
             ethereumAccount.fromPrivateKey(values.accountPrivate)
             wallet = values.accountPrivate
           } catch (err) {
-            console.log('error', err)
+            console.error('error', err)
           }
           try {
             if (!wallet && ethereumAccount.validateSeed(values.accountPrivate)) {
@@ -41,7 +41,7 @@ class NewAccount extends React.Component {
             loading()
           } catch (err) {
             loading()
-            console.log('err', err)
+            console.error('err', err)
             message.error('Invalid passphare or Wrong password of Keystore!')
           }
         } else {

@@ -21,11 +21,10 @@ const mapDispatchToProps = (dispatch, props) => ({
           key: new Date().getTime(),
           description: data.description
         }
-        const result = await store.setItem(`project_${defaultData.key}`, {
+        await store.setItem(`project_${defaultData.key}`, {
           ...defaultData,
           encypted: data.encypted
         })
-        console.log('result', result)
         dispatch(addProject(defaultData))
         return true
       })

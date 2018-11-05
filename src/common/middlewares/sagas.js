@@ -65,7 +65,6 @@ function onLanguageChanged ({ payload }) {
 }
 
 function onRehydrateChanged ({ payload }) {
-  console.log('payload', payload)
   setLocate(payload.common.language)
 }
 

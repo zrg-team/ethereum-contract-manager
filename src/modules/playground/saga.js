@@ -22,13 +22,11 @@ const CONTRACT_EVENT = 'CONTRACT_EVENT'
 function eventHandler (currentProject) {
   return eventChannel(emitter => {
     const blockNumber = web3.getCurrentBlock()
-    console.log('eventHandler', currentProject, blockNumber)
     // blockInstance = web3.newBlockListener((data) => {
     //   emitter({ type: CONTRACT_EVENT, data })
     // }, currentProject.contracts.map(item => item.address), blockNumber)
     currentProject.contracts.forEach(contract => {
       watchers.push(web3.contractListener(contract.address, (error, result) => {
-        console.log('contractListener', error, result, contract)
         if (!error) {
           emitter({ type: CONTRACT_EVENT, result, contract, key: contract.address })
         }
@@ -45,8 +43,6 @@ function eventHandler (currentProject) {
   })
 }
 function * onStopEventRequest () {
-  const { currentProject } = yield select(state => state[MODULE_DASHBOARD])
-  console.log('currentProject', currentProject)
   watchers.forEach((item) => {
     item.stopWatching()
   })
@@ -84,14 +80,13 @@ function * onEventListenerRequest () {
             key: currentProject.key,
             data: filteredTransactions
           }))
-          console.log('currentState', result, contract)
           break
         default:
           break
       }
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 

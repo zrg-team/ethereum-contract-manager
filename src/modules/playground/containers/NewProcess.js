@@ -52,7 +52,7 @@ export const mapDispatchToProps = (dispatch, props) => ({
       const response = await getContractView(project, data)
       return mapHexToOutput(response, data.outputs)
     } catch (err) {
-      console.log('error', err)
+      console.error('error', err)
       return undefined
     }
   },
@@ -65,7 +65,7 @@ export const mapDispatchToProps = (dispatch, props) => ({
       nonce = await getNonce(project, data.account.address)
       return nonce
     } catch (err) {
-      console.log('error', err)
+      console.error('error', err)
       return undefined
     }
   },
@@ -74,13 +74,12 @@ export const mapDispatchToProps = (dispatch, props) => ({
       const raw = createTransaction(params)
       return raw
     } catch (err) {
-      console.log('error', err)
+      console.error('error', err)
       return undefined
     }
   },
   submitFunctionTransaction: async (project, data, raw) => {
     try {
-      console.log('data', data, project)
       let response = null
       if (project.general.fullnode && !project.general.transactionUrl) {
         response = await web3.sendRawTransactionUsingFullnode(raw)
@@ -89,7 +88,7 @@ export const mapDispatchToProps = (dispatch, props) => ({
       }
       return response
     } catch (err) {
-      console.log('error', err)
+      console.error('error', err)
       return null
     }
   },

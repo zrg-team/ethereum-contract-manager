@@ -17,7 +17,6 @@ class PendingProcess extends React.Component {
     this.handleInfiniteOnLoad = this.handleInfiniteOnLoad.bind(this)
   }
   async modalDetail (item) {
-    console.log('item', item)
     const { transactions, currentProject, checkTransactionReceipt } = this.props
     try {
       if (!item.response) {

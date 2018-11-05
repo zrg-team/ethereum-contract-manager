@@ -13,7 +13,7 @@ export function format (value, decimalCount = 2, decimal = '.', thousands = ',')
 
     return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousands) + (decimalCount ? decimal + Math.abs(value - i).toFixed(decimalCount).slice(2) : '')
   } catch (e) {
-    console.log(e)
+    console.error(e)
     return 0
   }
 }
@@ -26,6 +26,5 @@ export function formatCrypto (value, digits = 6) {
 
 export function fromWei (value, to = 'eth') {
   const result = new BigNumber(`${units.convert(`${value}`, 'wei', to)}`)
-  console.log(result.toFixed())
   return result.toFixed()
 }

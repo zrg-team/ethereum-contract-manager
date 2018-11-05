@@ -8,7 +8,7 @@ const mapDispatchToProps = (dispatch, props) => ({
       const raw = createTransaction(params)
       return raw
     } catch (err) {
-      console.log('error', err)
+      console.error('error', err)
       return null
     }
   },

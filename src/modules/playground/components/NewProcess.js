@@ -141,7 +141,6 @@ OUTPUT:
         })
         break
       case 2:
-        console.log('values', values, inputs)
         const nonce = await getNonceAddress(currentProject, values)
         if (isNaN(nonce)) {
           return message.error('Cannot get nonce.')

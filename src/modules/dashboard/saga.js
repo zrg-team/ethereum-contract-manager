@@ -10,10 +10,8 @@ import {
 import web3 from '../../common/utils/web3'
 
 function * onFullnodeRequest ({ payload }) {
-  console.log('onFullnodeRequest')
   try {
     const { currentProject } = yield select(state => state[MODULE_DASHBOARD])
-    console.log('currentProject', currentProject)
     if (!currentProject || !currentProject.general || !currentProject.general.fullnode) {
       return false
     }
@@ -27,7 +25,6 @@ function * onFullnodeRequest ({ payload }) {
           yield web3.instance.reset(true)
           // show sync info
         } else if (sync) {
-          console.log(sync.currentBlock)
           // re-gain app operation
         } else {
           // run your app init function...
@@ -36,7 +33,7 @@ function * onFullnodeRequest ({ payload }) {
       }
     })
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 

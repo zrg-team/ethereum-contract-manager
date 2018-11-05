@@ -10,7 +10,7 @@ export default class Root extends Component {
     try {
       // TODO: Repare something
     } catch (error) {
-      console.log('Fatal Error. Cannot Initialize.', error)
+      console.error('Fatal Error. Cannot Initialize.', error)
     }
   }
 
