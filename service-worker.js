@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.2/workbox-sw.js");
 
 importScripts(
-  "/ethereum-contract-manager/precache-manifest.66ebdb8bb0b2f7fab8852916345b444c.js"
+  "/ethereum-contract-manager/precache-manifest.1544c692150f7d624ff627ce6ee2de7a.js"
 );
 
 workbox.clientsClaim();
