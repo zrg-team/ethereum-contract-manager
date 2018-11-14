@@ -12,7 +12,7 @@ const mapDispatchToProps = (dispatch, props) => ({
         data = JSON.parse(data)
         // let decypted = ''
         // if (password) {
-        //   decypted = descrypt(data.encypted, password)
+        //   decypted = descrypt(data.encrypted, password)
         // }
         // console.log('decypted', data)
         // decypted = JSON.parse(decypted)
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch, props) => ({
         }
         await store.setItem(`project_${defaultData.key}`, {
           ...defaultData,
-          encypted: data.encypted
+          encrypted: data.encrypted
         })
         dispatch(addProject(defaultData))
         return true

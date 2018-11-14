@@ -15,7 +15,7 @@ class NewAccount extends React.Component {
   handleSubmit () {
     const loading = message.loading('Action in progress..', 0)
     setTimeout(() => {
-      const { v3String, form, onSubmit, account = true } = this.props
+      const { v3String, form, onSubmit } = this.props
       form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           let wallet = null

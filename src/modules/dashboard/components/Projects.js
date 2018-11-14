@@ -32,6 +32,10 @@ class Projects extends Component {
       onCancel: () => Modal.hide()
     })
   }
+  editProject (item) {
+    const { history } = this.props
+    history.replace(`/edit/${item.key}`)
+  }
   async deleteProject (item) {
     const { deleteProject } = this.props
     const result = await deleteProject(item)
@@ -59,7 +63,7 @@ class Projects extends Component {
               />
               {I18n.t('dashboard.play')}
             </Button>,
-            <Button><Icon type='setting' />{I18n.t('dashboard.setting')}</Button>,
+            <Button onClick={() => this.editProject(item)}><Icon type='setting' />{I18n.t('dashboard.setting')}</Button>,
             <Button onClick={() => this.deleteProject(item)}>
               <Icon
                 type='delete'
