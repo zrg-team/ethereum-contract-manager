@@ -1,4 +1,5 @@
 import React from 'react'
+import I18n from 'i18n-js'
 import { Card, Icon, Avatar, List, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 import Modal from '../../../common/components/widgets/Modal'
@@ -33,19 +34,19 @@ class PendingProcess extends React.Component {
         sourcePos={false}
         escapeHtml={false}
         source={`
-# **PARAMS**
+# **${I18n.t('common.params').toUpperCase()}**
 
 ---
 
 ${JSON.stringify(item.params || {})}
 
-# **ACCOUNT**
+# **${I18n.t('common.account').toUpperCase()}**
 
 ---
 
 ${JSON.stringify(item.account || {})}
 
-# **EVENTS**
+# **${I18n.t('common.events').toUpperCase()}**
 
 ---
 

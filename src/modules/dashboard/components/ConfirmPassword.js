@@ -4,6 +4,7 @@ import {
   Row,
   Input
 } from 'antd'
+import I18n from 'i18n-js'
 
 class ConfirmPassword extends React.Component {
   constructor (props) {
@@ -38,7 +39,7 @@ class ConfirmPassword extends React.Component {
             type={'password'}
             onChange={this.onChangePassword}
             style={{ width: 500 }}
-            placeholder={'Password'}
+            placeholder={I18n.t('common.password')}
             prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
           />
         </Row>

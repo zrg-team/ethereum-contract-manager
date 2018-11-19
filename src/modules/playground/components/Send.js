@@ -13,6 +13,7 @@ import {
   notification,
   message
 } from 'antd'
+import I18n from 'i18n-js'
 import Modal from '../../../common/components/widgets/Modal'
 import GenerateData from './GenerateData'
 
@@ -77,11 +78,11 @@ class Send extends React.Component {
       Modal.hide()
       if (result) {
         return notification.success({
-          message: 'Transaction success',
+          message: I18n.t('messages.transaction_success'),
           description: result
         })
       }
-      message.error('Transaction error.')
+      message.error(I18n.t('errors.transaction_error'))
     }
   }
   selectAccount (value) {
@@ -152,15 +153,15 @@ class Send extends React.Component {
           bodyStyle={{ flex: 1, overflowY: 'auto' }}
           >
           <Card.Meta
-            title='Send Transaction'
+            title={I18n.t('playground.send_transaction')}
           />
           <Form.Item
-            label='Account'
+            label={I18n.t('playground.accounts')}
           >
             <Select
               value={from}
               style={{ width: '100%' }}
-              placeholder='Please select account'
+              placeholder={I18n.t('playground.select_account')}
               onChange={this.selectAccount}
             >
               {accounts.map(item => {
@@ -174,7 +175,7 @@ class Send extends React.Component {
           >
             <InputNumber
               value={valueSend}
-              placeholder='Value Send (Wei)'
+              placeholder={I18n.t('common.value_send')}
               style={{ width: 'calc(100%)' }}
               onChange={this.onChangeValueSend}
             />
@@ -183,16 +184,16 @@ class Send extends React.Component {
           >
             <Input
               value={address}
-              placeholder='To Address'
+              placeholder={I18n.t('common.to_address')}
               onChange={this.onChangeAddress}
             />
           </Form.Item>
           <Collapse accordion>
-            <Collapse.Panel header='Transacton Data Fee' key='1'>
+            <Collapse.Panel header={I18n.t('common.transaction_fee')} key='1'>
               <Row style={{ width: '100%' }}>
                 <Col span={12}>
                   <Form.Item
-                    label='Gas prize (Wei)'
+                    label={I18n.t('common.gas_price')}
                   >
                     <InputNumber
                       value={gasPrice}
@@ -204,7 +205,7 @@ class Send extends React.Component {
                 </Col>
                 <Col span={12}>
                   <Form.Item
-                    label='Gas limit'
+                    label={I18n.t('common.gas_limit')}
                   >
                     <InputNumber
                       value={gasLimit}
@@ -216,18 +217,18 @@ class Send extends React.Component {
                 </Col>
               </Row>
             </Collapse.Panel>
-            <Collapse.Panel header='Transacton Data' key='3'>
+            <Collapse.Panel header={I18n.t('common.transaction_data')} key='3'>
               <Form.Item
               >
                 <Input.TextArea
                   value={data}
-                  placeholder='Hex data'
+                  placeholder={I18n.t('common.hex_data')}
                   onChange={this.onChangeTransactionData}
                 />
               </Form.Item>
               <Form.Item>
                 <Button type='dashed' onClick={this.generateTransactionData} style={{ width: '100%' }}>
-                  <Icon type='plus' /> Generate Transacton Data
+                  <Icon type='plus' /> {I18n.t('common.generate_transaction_data')}
                 </Button>
               </Form.Item>
             </Collapse.Panel>

@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
-import Accounts from '../components/Accounts'
+import Contracts from '../components/Contracts'
 import web3 from '../../../common/utils/web3'
 import { fromWei } from '../../../common/utils/format'
 import { MODULE_NAME as MODULE_DASHBOARD } from '../../dashboard/model'
 
 const mapDispatchToProps = (dispatch, props) => ({
-  getAllBalance: async (accounts) => {
+  getAllBalance: async (contracts) => {
     try {
-      const balances = accounts.reduce((all, account) => {
+      const balances = contracts.reduce((all, account) => {
         const balance = web3.getBalance(account.address)
         return { ...all, [account.address]: fromWei(balance.toFixed(), 'eth') }
       }, {})
@@ -21,9 +21,10 @@ const mapDispatchToProps = (dispatch, props) => ({
 
 const mapStateToProps = state => {
   const currentProject = state[MODULE_DASHBOARD].currentProject || {}
+  console.log('>>>>>>', currentProject, currentProject.contracts)
   return {
-    accounts: currentProject.accounts || []
+    contracts: currentProject.contracts || []
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Accounts)
+export default connect(mapStateToProps, mapDispatchToProps)(Contracts)

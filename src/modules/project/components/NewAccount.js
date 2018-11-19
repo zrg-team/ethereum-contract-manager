@@ -4,6 +4,7 @@ import {
   Input,
   message
 } from 'antd'
+import I18n from 'i18n-js'
 import ethereumAccount from '../../../common/utils/ethereumAccount'
 const FormItem = Form.Item
 
@@ -13,7 +14,7 @@ class NewAccount extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleSubmit () {
-    const loading = message.loading('Action in progress..', 0)
+    const loading = message.loading(I18n.t('common.loading_action'), 0)
     setTimeout(() => {
       const { v3String, form, onSubmit } = this.props
       form.validateFieldsAndScroll((err, values) => {
@@ -42,7 +43,7 @@ class NewAccount extends React.Component {
           } catch (err) {
             loading()
             console.error('err', err)
-            message.error('Invalid passphare or Wrong password of Keystore!')
+            message.error(I18n.t('errors.import_error'))
           }
         } else {
           loading()
@@ -67,12 +68,12 @@ class NewAccount extends React.Component {
       <Form>
         {account && <FormItem
           {...formItemLayout}
-          label='Account Name'
+          label={I18n.t('project.account_name')}
         >
           {getFieldDecorator('accountName', {
             rules: [{
               required: true,
-              message: 'Please input your Account Name!'
+              message: I18n.t('errors.required_field')
             }]
           })(
             <Input />
@@ -80,12 +81,12 @@ class NewAccount extends React.Component {
         </FormItem>}
         <FormItem
           {...formItemLayout}
-          label='PrivateKey, Passphare or Keystore'
+          label={I18n.t('common.account_value')}
         >
           {getFieldDecorator('accountPrivate', {
             rules: [{
               required: true,
-              message: 'Please input your PrivateKey, Passphare or Keystore!'
+              message: I18n.t('errors.required_field')
             }]
           })(
             <Input.TextArea rows={4} />
@@ -93,7 +94,7 @@ class NewAccount extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label='Password for Keystore'
+          label={I18n.t('common.account_password')}
         >
           {getFieldDecorator('accountPassword', {
             rules: [{
