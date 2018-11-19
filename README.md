@@ -8,7 +8,7 @@
   You Can Create "Project" file with encrypted with a password and share it to another user
 
 ## Version
-  v0.2.1
+  v0.4.2
 
 ## Author
 
