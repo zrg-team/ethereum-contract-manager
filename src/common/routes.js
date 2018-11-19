@@ -13,11 +13,11 @@ import About from '../pages/About'
 import EditProject from '../pages/EditPage'
 import EditAccountPage from '../pages/EditAccount'
 import EditContractPage from '../pages/EditContract'
+import EditGeneralPage from '../pages/EditGeneral'
 export default class Root extends Component {
   render () {
     return (
       <MenuPage>
-        
         <Route path='/' exact component={Page(Dashboard)} />
         <Route path='/dashboard' component={Page(Dashboard)} />
         <Route path='/new' component={Page(NewProject)} />
@@ -30,6 +30,7 @@ export default class Root extends Component {
         <Route path='/edit/:id' component={EditProject} />
         <Route path='/accounts/:id' component={EditAccountPage} />
         <Route path='/contracts/:id' component={EditContractPage} />
+        <Route path='/general/:id' component={EditGeneralPage} />
       </MenuPage>
     )
   }

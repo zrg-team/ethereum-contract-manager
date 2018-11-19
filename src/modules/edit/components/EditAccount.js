@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, Card, Icon, Form, Row, message, Button } from 'antd'
+import { List, Card, Icon, Form, Row, message, Button, notification } from 'antd'
 import Modal from '../../../common/components/widgets/Modal'
 import NewAccount from '../../project/components/NewAccount'
 import ConfirmPassword from '../../dashboard/components/ConfirmPassword'
@@ -29,9 +29,17 @@ class EditAccount extends Component {
         this.modalRef = ref
       }}
       onSubmit={async (password) => {
-        await saveEditAccount(params.id, accountsEdit, password)
+        const loading = message.loading('Process loading', 0)
+        const result = await saveEditAccount(params.id, accountsEdit, password)
         Modal.hide()
-        history.replace('/dashboard')
+        loading()
+        if (result) {
+          notification.success({
+            message: 'Notification',
+            description: 'Edit your project.'
+          })
+          return history.replace('/dashboard')
+        }
       }}
     />, {
       onOk: () => {
@@ -98,6 +106,7 @@ class EditAccount extends Component {
     </List.Item>)
   }
   render () {
+    console.log('currentProject', this.props.currentProject)
     const { accountsEdit } = this.state
     return (
       <React.Fragment>

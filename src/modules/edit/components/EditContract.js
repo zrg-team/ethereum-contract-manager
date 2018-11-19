@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, Row, Card, Icon, Form, Button, message } from 'antd'
+import { List, Row, Card, Icon, Form, Button, message, notification } from 'antd'
 import Modal from '../../../common/components/widgets/Modal'
 import NewContract from '../../project/components/NewContract'
 import ConfirmPassword from '../../dashboard/components/ConfirmPassword'
@@ -30,9 +30,17 @@ class EditContract extends Component {
         this.modalRef = ref
       }}
       onSubmit={async (password) => {
-        await saveEditContract(params.id, contractsEdit, password)
+        const loading = message.loading('Process loading', 0)
+        const result = await saveEditContract(params.id, contractsEdit, password)
         Modal.hide()
-        history.replace('/dashboard')
+        loading()
+        if (result) {
+          notification.success({
+            message: 'Notification',
+            description: 'Edit your project.'
+          })
+          return history.replace('/dashboard')
+        }
       }}
     />, {
       onOk: () => {

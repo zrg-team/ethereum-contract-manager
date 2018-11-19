@@ -19,6 +19,7 @@
     "history": "^4.7.2",
     "i18n-js": "https://github.com/fnando/i18n-js/tarball/v3.0.0",
     "localforage": "^1.7.2",
+    "lodash": "^4.17.11",
     "markdown-to-jsx": "^6.8.1",
     "moment": "^2.22.2",
     "react": "^16.5.2",

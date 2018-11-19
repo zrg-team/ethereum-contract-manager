@@ -56,6 +56,23 @@ class EditOption extends Component {
           onCancel: () => Modal.hide()
         })
         break
+      case 'general':
+        Modal.show(<ConfirmPassword
+          ref={(ref) => {
+            this.modalRef = ref
+          }}
+          onSubmit={async (password) => {
+            await editOption(params.id, password)
+            Modal.hide()
+            history.replace(`/general/${params.id}`)
+          }}
+        />, {
+          onOk: () => {
+            this.modalRef && this.modalRef.handleSubmit()
+          },
+          onCancel: () => Modal.hide()
+        })
+        break
       default:
         break
     }
