@@ -9,6 +9,7 @@ import {
   message,
   Collapse
 } from 'antd'
+import I18n from 'i18n-js'
 const FormItem = Form.Item
 
 const MODES = {
@@ -16,21 +17,6 @@ const MODES = {
   ethCall: 2,
   nonce: 1,
   receipt: 1
-}
-const REQUIRED = {
-  broadcast: `
-    * First param for transaction data (Required)
-  `,
-  nonce: `
-    * First param for address (Required)
-  `,
-  ethCall: `
-    * First param for address (Required)
-    * Second param for data (Required)
-  `,
-  receipt: `
-    * First param for transaction hash (Required)
-  `
 }
 class RequestConfig extends React.Component {
   constructor (props) {
@@ -40,6 +26,21 @@ class RequestConfig extends React.Component {
       method: 'get',
       paramKey: '',
       headerKey: ''
+    }
+    this.REQUIRED = {
+      broadcast: `
+        * ${I18n.t('project.broadcast_required')}
+      `,
+      nonce: `
+        * ${I18n.t('project.nonce_required')}
+      `,
+      ethCall: `
+        * ${I18n.t('project.ethcall_address_required')} \n
+        * ${I18n.t('project.ethcall_data_required')}
+      `,
+      receipt: `
+        * ${I18n.t('project.receipt_required')}
+      `
     }
     this.requiredField = MODES[props.mode]
     getFieldDecorator('params', { initialValue: [] })
@@ -77,7 +78,7 @@ class RequestConfig extends React.Component {
     // can use data-binding to get
     const headers = form.getFieldValue('headers')
     if (headers.some(item => item === `header_${headerKey}`)) {
-      return message.error('Duplicate param name.')
+      return message.error(I18n.t('errors.duplicate_param_name'))
     }
     const nextKeys = headers.concat(`header_${headerKey}`)
     // this.uuid++
@@ -115,7 +116,7 @@ class RequestConfig extends React.Component {
     // can use data-binding to get
     const params = form.getFieldValue('params')
     if (params.some(item => item === `param_${paramKey}`)) {
-      return message.error('Duplicate param name.')
+      return message.error(I18n.t('errors.duplicate_param_name'))
     }
     const nextKeys = params.concat(`param_${paramKey}`)
     // this.uuid++
@@ -130,11 +131,11 @@ class RequestConfig extends React.Component {
   }
   handleSubmit () {
     const { form, onSubmit, mode } = this.props
-    const loading = message.loading('Action in progress..', 0)
+    const loading = message.loading(I18n.t('common.loading_action'), 0)
     form.validateFieldsAndScroll((err, values) => {
       if (values.params.length < MODES[mode]) {
         loading()
-        return message.error('Missing required params!')
+        return message.error(I18n.t('errors.missing_required_params'))
       }
       if (!err) {
         try {
@@ -146,7 +147,7 @@ class RequestConfig extends React.Component {
           loading()
         } catch (err) {
           loading()
-          message.error('Add contract error!')
+          message.error(I18n.t('erors.update_request_error'))
         }
       } else {
         loading()
@@ -177,13 +178,13 @@ class RequestConfig extends React.Component {
     return (
       <Form>
         <Alert
-          message={REQUIRED[this.props.mode]}
+          message={this.REQUIRED[this.props.mode]}
           type='warning'
           closable
         />
         <FormItem
           {...formItemLayout}
-          label='Method'
+          label={I18n.t('project.request_method')}
         >
           {getFieldDecorator('modifier', {
             initialValue: 'get'
@@ -197,19 +198,18 @@ class RequestConfig extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label='Response path'
+          label={I18n.t('project.response_path')}
         >
           {getFieldDecorator('response', {
             rules: [{
-              required: false,
-              message: 'Please input your Response path!'
+              required: false
             }]
           })(
-            <Input placeholder='Example: result.data' />
+            <Input placeholder={I18n.t('project.response_path_example')} />
           )}
         </FormItem>
         <Collapse>
-          <Collapse.Panel header='Params' key='1'>
+          <Collapse.Panel header={I18n.t('project.params')} key='1'>
             {params.map((key, index) => {
               return (
                 <FormItem
@@ -222,13 +222,12 @@ class RequestConfig extends React.Component {
                     validateTrigger: ['onChange', 'onBlur'],
                     rules: [{
                       required: false,
-                      whitespace: false,
-                      message: 'Please input or delete this field.'
+                      whitespace: false
                     }]
                   })(
                     <Input
                       disabled={MODES[this.props.mode] > index}
-                      placeholder='value'
+                      placeholder={I18n.t('project.value')}
                       style={{ width: '60%', marginRight: 8 }}
                     />
                   )}
@@ -244,9 +243,9 @@ class RequestConfig extends React.Component {
               )
             })}
             <FormItem {...formItemLayoutWithOutLabel}>
-              <Input placeholder='Param key' onChange={this.onChangeParamKey} style={{ width: '60%', marginRight: 8 }} />
+              <Input placeholder={I18n.t('project.param_key')} onChange={this.onChangeParamKey} style={{ width: '60%', marginRight: 8 }} />
               <Button disabled={!paramKey || !`${paramKey}`.trim()} type='dashed' onClick={this.addParam} style={{ width: '60%' }}>
-                <Icon type='plus' /> Add param
+                <Icon type='plus' /> {I18n.t('project.add_param')}
               </Button>
             </FormItem>
           </Collapse.Panel>
@@ -263,8 +262,7 @@ class RequestConfig extends React.Component {
                     validateTrigger: ['onChange', 'onBlur'],
                     rules: [{
                       required: false,
-                      whitespace: false,
-                      message: 'Please input or delete this field.'
+                      whitespace: false
                     }]
                   })(
                     <Input
@@ -284,9 +282,9 @@ class RequestConfig extends React.Component {
               )
             })}
             <FormItem {...formItemLayoutWithOutLabel}>
-              <Input placeholder='Header key' onChange={this.onChangeHeaderKey} style={{ width: '60%', marginRight: 8 }} />
+              <Input placeholder={I18n.t('project.header_key')} onChange={this.onChangeHeaderKey} style={{ width: '60%', marginRight: 8 }} />
               <Button disabled={!headerKey || !`${headerKey}`.trim()} type='dashed' onClick={this.addHeader} style={{ width: '60%' }}>
-                <Icon type='plus' /> Add header
+                <Icon type='plus' /> {I18n.t('project.add_header')}
               </Button>
             </FormItem>
           </Collapse.Panel>

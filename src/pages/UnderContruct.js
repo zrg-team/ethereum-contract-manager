@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import I18n from 'i18n-js'
 import Loading from '../common/components/widgets/Loading'
 
 class UnderContruct extends React.Component {
@@ -10,7 +11,7 @@ class UnderContruct extends React.Component {
           position: 'absolute',
           fontSize: 30,
           fontWeight: 'bold'
-        }}>UNDER CONTRUCT</p>
+        }}>{I18n.t('common.under_contruct').toUpperCase()}</p>
       </Fragment>
     )
   }

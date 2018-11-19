@@ -6,6 +6,7 @@ import {
   Upload,
   message
 } from 'antd'
+import I18n from 'i18n-js'
 const FormItem = Form.Item
 
 class NewContract extends React.Component {
@@ -20,7 +21,7 @@ class NewContract extends React.Component {
   }
   handleSubmit () {
     const { form, onSubmit } = this.props
-    const loading = message.loading('Action in progress..', 0)
+    const loading = message.loading(I18n.t('common.loading_action'), 0)
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         try {
@@ -33,7 +34,7 @@ class NewContract extends React.Component {
           loading()
         } catch (err) {
           loading()
-          message.error('Add contract error!')
+          message.error(I18n.t('errors.add_contract_error'))
         }
       } else {
         loading()
@@ -51,7 +52,7 @@ class NewContract extends React.Component {
           fileName: file.name
         })
       } catch (err) {
-        message.error('Read contract error!')
+        message.error(I18n.t('errors.read_contract_file_error'))
       }
     }
 
@@ -74,12 +75,12 @@ class NewContract extends React.Component {
       <Form>
         <FormItem
           {...formItemLayout}
-          label='Contract Name'
+          label={I18n.t('project.contract_name')}
         >
           {getFieldDecorator('contractName', {
             rules: [{
               required: true,
-              message: 'Please input your Contract Name!'
+              message: I18n.t('errors.required_field')
             }]
           })(
             <Input />
@@ -87,12 +88,12 @@ class NewContract extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label='Contract Address'
+          label={I18n.t('project.contract_address')}
         >
           {getFieldDecorator('contractAddress', {
             rules: [{
               required: true,
-              message: 'Please input your Contract Address!'
+              message: I18n.t('errors.required_field')
             }]
           })(
             <Input />
@@ -111,8 +112,8 @@ class NewContract extends React.Component {
                 <p className='ant-upload-drag-icon'>
                   <Icon type='inbox' />
                 </p>
-                <p className='ant-upload-text'>Click or drag file to this area to upload</p>
-                <p className='ant-upload-hint'>Support for a single</p>
+                <p className='ant-upload-text'>{I18n.t('project.file_upload_message')}</p>
+                <p className='ant-upload-hint'>{I18n.t('project.file_upload_support')}</p>
               </Upload.Dragger>
             )} </div> : (
               <p><Icon type='file' /> <span>{fileName}</span></p>

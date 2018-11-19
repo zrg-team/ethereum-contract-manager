@@ -55,6 +55,10 @@ export function convertEthereumOutput (value, type) {
   switch (type) {
     case 'uint':
     case 'uint8':
+    case 'uint16':
+    case 'uint32':
+    case 'uint64':
+    case 'uint128':
     case 'uint256':
       return web3Utils.toDecimal(value)
     case 'bool':
@@ -99,6 +103,31 @@ export function parseTransactionParams (item) {
     case 'uint[]':
     case 'arrayUint':
       type = 'uint[]'
+      value = [...`${item.value}`.split(',')]
+      break
+    case 'uint8[]':
+    case 'arrayUint8':
+      type = 'uint8[]'
+      value = [...`${item.value}`.split(',')]
+      break
+    case 'uint16[]':
+    case 'arrayUint16':
+      type = 'uint16[]'
+      value = [...`${item.value}`.split(',')]
+      break
+    case 'uint32[]':
+    case 'arrayUint32':
+      type = 'uint32[]'
+      value = [...`${item.value}`.split(',')]
+      break
+    case 'uint64[]':
+    case 'arrayUint64':
+      type = 'uint64[]'
+      value = [...`${item.value}`.split(',')]
+      break
+    case 'uint128[]':
+    case 'arrayUint128':
+      type = 'uint128[]'
       value = [...`${item.value}`.split(',')]
       break
     case 'address[]':

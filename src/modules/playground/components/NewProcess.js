@@ -64,13 +64,13 @@ class NewProcess extends React.Component {
   renderStepName (step) {
     switch (step) {
       case 0:
-        return 'Contract'
+        return I18n.t('playground.contract')
       case 1:
-        return 'Method'
+        return I18n.t('playground.method')
       case 2:
-        return 'User'
+        return I18n.t('playground.user')
       case 3:
-        return 'Output'
+        return I18n.t('playground.output')
       default:
         return ''
     }
@@ -110,22 +110,22 @@ class NewProcess extends React.Component {
           params: inputs
         })
         if (!result) {
-          return message.error('Function call error !')
+          return message.error(I18n.t('errors.function_call_error'))
         }
         let markdown = `
-# **OUTPUT**
+# **${I18n.t('playground.output').toUpperCase()}**
 
 ---
 
-Function Name: ${values.contractFunction.name}
+${I18n.t('playground.function_name')}: ${values.contractFunction.name}
 
-IMPUT: ${inputs.join(', ')}
+${I18n.t('playground.input').toUpperCase()}: ${inputs.join(', ')}
 
-OUTPUT:
+${I18n.t('playground.output')}:
 
 <div style='overflow-x: scroll'>
 
-| Index | Name | Type | value | Raw |
+| ${I18n.t('playground.index')} | ${I18n.t('playground.name')} | ${I18n.t('playground.type')} | ${I18n.t('playground.value')} | ${I18n.t('playground.raw')} |
 | ------- | ------- | ------- | ------- | ------- |
  `
 
@@ -143,7 +143,7 @@ OUTPUT:
       case 2:
         const nonce = await getNonceAddress(currentProject, values)
         if (isNaN(nonce)) {
-          return message.error('Cannot get nonce.')
+          return message.error(I18n.t('errors.can_not_get_nonce'))
         }
         const params = {
           to: values.contract.address,
@@ -167,18 +167,18 @@ OUTPUT:
             source={`
 <pre>
 {
-  to: ${params.to},
-  from: ${params.from},
-  value: ${params.value},
-  nonce: ${params.nonce},
-  gasLimit: ${params.gasLimit},
-  gasPrice: ${params.gasPrice},
-  privateKey: ${params.privateKey},
-  functionName: ${params.functionName},
-  typeParams: ${params.typeParams.join(',')},
-  functionParams: ${params.functionParams.join(',')},
+  ${I18n.t('playground.to')}: ${params.to},
+  ${I18n.t('playground.from')}: ${params.from},
+  ${I18n.t('playground.value')}: ${params.value},
+  ${I18n.t('playground.nonce')}: ${params.nonce},
+  ${I18n.t('playground.gas_limit')}: ${params.gasLimit},
+  ${I18n.t('playground.gas_price')}: ${params.gasPrice},
+  ${I18n.t('playground.private_key')}: ${params.privateKey},
+  ${I18n.t('playground.function_name')}: ${params.functionName},
+  ${I18n.t('playground.type_params')}: ${params.typeParams.join(',')},
+  ${I18n.t('playground.function_params')}: ${params.functionParams.join(',')},
 }
-rawData:
+${I18n.t('playground.raw_data')}:
 ${raw}
 
 </pre>
@@ -203,11 +203,11 @@ ${raw}
                 Modal.hide()
                 if (result) {
                   return notification.success({
-                    message: 'Transaction success',
+                    message: I18n.t('messages.transaction_success'),
                     description: result
                   })
                 }
-                message.error('Transaction error.')
+                message.error(I18n.t('errors.transaction_error'))
               },
               onCancel: () => Modal.hide()
             })
@@ -280,7 +280,7 @@ ${raw}
                   type='check'
                   theme='outlined'
                 />
-                Confirm
+                {I18n.t('common.confirm')}
               </Button>
             ]}
           >
@@ -289,7 +289,7 @@ ${raw}
               value={values.contract
                 ? values.contract.address : null}
               style={{ width: 250 }}
-              placeholder='Select contract'
+              placeholder={I18n.t('playground.select_contract')}
               optionFilterProp='children'
               onChange={this.handleChangeContract}
             >
@@ -314,7 +314,7 @@ ${raw}
                   type='check'
                   theme='outlined'
                 />
-                Confirm
+                {I18n.t('common.confirm')}
               </Button>
             ]}
           >
@@ -324,7 +324,7 @@ ${raw}
                 value={values.contractFunction
                   ? values.contractFunction.name : null}
                 style={{ width: 250 }}
-                placeholder='Select function'
+                placeholder={I18n.t('playground.select_function')}
                 optionFilterProp='children'
                 onChange={this.handleChangeFunction}
               >
@@ -361,7 +361,7 @@ ${raw}
                   </Form.Item>
                 )
               })
-              : <p>No param required.</p>
+              : <p>{I18n.t('messages.no_param_required')}</p>
             : null}
           </Card>
         )
@@ -376,7 +376,7 @@ ${raw}
                   type='check'
                   theme='outlined'
                 />
-                Confirm
+                {I18n.t('common.confirm')}
               </Button>
             ]}
           >
@@ -385,7 +385,7 @@ ${raw}
               value={values.account
                 ? values.account.address : null}
               style={{ width: 250 }}
-              placeholder='Select User'
+              placeholder={I18n.t('playground.select_user')}
               optionFilterProp='children'
               onChange={this.handleChangeAccount}
             >
@@ -399,7 +399,7 @@ ${raw}
             </Select>
             <Form.Item key={`value_send`}>
               <Input
-                placeholder={'Value'}
+                placeholder={I18n.t('playground.value')}
                 value={valueSend}
                 onChange={this.onChangeValueSend}
               />
@@ -426,7 +426,7 @@ ${raw}
   componentWillUnmount () {
     const { stopPlayground } = this.props
     stopPlayground()
-    message.info('Playground stop!')
+    message.info(I18n.t('messages.playground_stop'))
   }
   render () {
     const { step } = this.state
@@ -442,30 +442,30 @@ ${raw}
           <Steps direction='vertical' size='small' current={step}>
             <Steps.Step
               status={this.checkStep(0)}
-              title='Contract'
+              title={I18n.t('playground.contract')}
               onClick={() => this.setStep(0)}
-              description='Select contract that you want to use'
+              description={I18n.t('playground.contract_message')}
               icon={<Icon type='contacts' theme='outlined' />}
             />
             <Steps.Step
               status={this.checkStep(1)}
-              title='Method'
+              title={I18n.t('playground.method')}
               onClick={() => step > 1 && this.setStep(1)}
-              description='Select function and fill require params'
+              description={I18n.t('playground.method_message')}
               icon={<Icon type='form' theme='outlined' />}
             />
             <Steps.Step
               status={this.checkStep(2)}
-              title='User'
+              title={I18n.t('playground.user')}
               onClick={() => step > 2 && this.setStep(2)}
-              description='Select user to sign'
+              description={I18n.t('playground.user_message')}
               icon={<Icon type='user' theme='outlined' />}
             />
             <Steps.Step
               status={this.checkStep(3)}
-              title='Output'
+              title={I18n.t('playground.output')}
               onClick={() => step > 3 && this.setStep(3)}
-              description='Contract output'
+              description={I18n.t('playground.output_message')}
               icon={<Icon type='profile' theme='outlined' />}
             />
           </Steps>

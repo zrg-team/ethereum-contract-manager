@@ -5,6 +5,7 @@ import { Tabs, Icon } from 'antd'
 import '../modules/playground/styles/playground.css'
 import Send from '../modules/playground/containers/Send'
 import Accounts from '../modules/playground/containers/Accounts'
+import Contracts from '../modules/playground/containers/Contracts'
 import NewProcess from '../modules/playground/containers/NewProcess'
 import PendingProcess from '../modules/playground/containers/PendingProcess'
 
@@ -46,8 +47,13 @@ class ProjectPlayground extends React.Component {
           <Accounts />
         </Tabs.TabPane>
         <Tabs.TabPane
-          tab={<span><Icon type='cloud-upload' theme='outlined' />{I18n.t('playground.send')}</span>}
+          tab={<span><Icon type='snippets' theme='outlined' />{I18n.t('playground.contracts')}</span>}
           key='4'>
+          <Contracts />
+        </Tabs.TabPane>
+        <Tabs.TabPane
+          tab={<span><Icon type='cloud-upload' theme='outlined' />{I18n.t('playground.send')}</span>}
+          key='5'>
           <Send />
         </Tabs.TabPane>
       </Tabs>

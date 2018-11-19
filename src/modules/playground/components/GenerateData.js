@@ -9,6 +9,7 @@ import {
   Select,
   message
 } from 'antd'
+import I18n from 'i18n-js'
 import { parseTransactionParams } from '../../../common/utils/ethereum'
 const FormItem = Form.Item
 
@@ -16,10 +17,20 @@ const TYPES = {
   address: 'address',
   bytes32: 'bytes32',
   uint: 'uint',
+  uint8: 'uint8',
+  uint16: 'uint16',
+  uint32: 'uint32',
+  uint64: 'uint64',
   uint128: 'uint128',
   uint256: 'uint256',
   bool: 'bool',
   arrayUint: 'uint array',
+  arrayUint8: 'uint 8 array',
+  arrayUint16: 'uint 16 array',
+  arrayUint32: 'uint 32 array',
+  arrayUint64: 'uint 64 array',
+  arrayUint128: 'uint 128 array',
+  arrayUint256: 'uint 256 array',
   arrayBytes32: 'bytes32 array',
   arrayAddress: 'address array'
 }
@@ -67,7 +78,7 @@ class GenerateData extends React.Component {
     })
   }
   handleSubmit () {
-    const loading = message.loading('Action in progress..', 0)
+    const loading = message.loading(I18n.t('common.loading_action'), 0)
     setTimeout(() => {
       const { params } = this.state
       const { form, onSubmit } = this.props
@@ -107,12 +118,12 @@ class GenerateData extends React.Component {
       <Form>
         <FormItem
           {...formItemLayout}
-          label='Function name'
+          label={I18n.t('playground.function_name')}
         >
           {getFieldDecorator('functionName', {
             rules: [{
               required: true,
-              message: 'Please input your Function Name!'
+              message: I18n.t('errors.required_field')
             }]
           })(
             <Input />
@@ -126,7 +137,7 @@ class GenerateData extends React.Component {
               >
                 <Select
                   style={{ width: 'calc(100% - 10px)', marginRight: '10px' }}
-                  placeholder='Please select account'
+                  placeholder={I18n.t('playground.select_user')}
                   onChange={(e) => this.onChangeType(e, item)}
                 >
                   {Object.keys(TYPES).map(key => {
@@ -139,11 +150,11 @@ class GenerateData extends React.Component {
             </Col>
             <Col span={12}>
               <Form.Item
-                label='Value'
+                label={I18n.t('playground.value')}
               >
                 <Input
                   style={{ width: 'calc(100% - 10px)', marginLeft: '10px' }}
-                  placeholder='Value'
+                  placeholder={I18n.t('playground.value')}
                   onChange={(e) => this.onChangeValue(e, item)}
                 />
               </Form.Item>
@@ -152,7 +163,7 @@ class GenerateData extends React.Component {
         })}
         <Form.Item>
           <Button type='dashed' onClick={this.addParam} style={{ width: '100%' }}>
-            <Icon type='plus' /> Add params
+            <Icon type='plus' /> {I18n.t('playground.add_param')}
           </Button>
         </Form.Item>
       </Form>
