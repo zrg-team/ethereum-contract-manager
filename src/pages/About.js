@@ -26,7 +26,7 @@ class About extends React.Component {
   render () {
     const { data } = this.state
     return (
-      <div style={{ flex: 1, height: '100%' }}>
+      <div style={{ flex: 1, overflowY: 'auto' }}>
         <ReactMarkdown
           skipHtml={false}
           rawSourcePos={false}
