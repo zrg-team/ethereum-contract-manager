@@ -30,6 +30,8 @@ You Can Create and encrypt **Project's** file with your password and share it to
   * ethereumjs-wallet: https://github.com/ethereumjs/ethereumjs-wallet
   * ethereumjs-abi: https://github.com/ethereumjs/ethereumjs-abi
 
+## Develop
+  Github: https://github.com/zrg-team/ethereum-contract-manager
 ## Author
 
   [HungDT](https://zrg-team.github.io/store/)
