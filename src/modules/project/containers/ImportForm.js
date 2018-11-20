@@ -3,22 +3,21 @@ import ImportForm from '../components/ImportForm'
 import { store } from '../../../common/utils/database'
 // import { descrypt } from '../../../common/utils/encrypt'
 import { loading } from '../../../common/middlewares/effects'
-import { addProject } from '../actions'
+import { addProject, removeProject } from '../actions'
 
 const mapDispatchToProps = (dispatch, props) => ({
   importProject: async (data, password) => {
     try {
       const result = await loading(async () => {
         data = JSON.parse(data)
-        // let decypted = ''
-        // if (password) {
-        //   decypted = descrypt(data.encrypted, password)
-        // }
-        // console.log('decypted', data)
-        // decypted = JSON.parse(decypted)
+        const isExisted = await store.getItem(`project_${data.key}`)
+        if (isExisted) {
+          await store.removeItem(`project_${data.key}`)
+          dispatch(removeProject(data.key))
+        }
         const defaultData = {
           name: data.name,
-          key: new Date().getTime(),
+          key: data.key,
           description: data.description
         }
         await store.setItem(`project_${defaultData.key}`, {

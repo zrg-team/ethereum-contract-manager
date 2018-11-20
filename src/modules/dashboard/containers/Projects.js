@@ -40,15 +40,14 @@ const mapDispatchToProps = (dispatch, props) => ({
   settingProject: async (item, password) => {
     try {
       const data = await store.getItem(`project_${item.key}`)
-      console.log('item key - data', item, data)
       let scripts = null
       if (password) {
         scripts = JSON.parse(descrypt(data.encrypted, password))
         delete data.encrypted
       }
       dispatch(setCurrentProject({
-        ...data,
-        ...scripts
+        ...scripts,
+        ...data
       }))
       dispatch(fullnodeProcess())
       return true

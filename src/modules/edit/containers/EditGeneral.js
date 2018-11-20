@@ -12,30 +12,33 @@ const mapDispatchToProps = (dispatch, props) => ({
       const result = await loading(async () => {
         const currentProject = await store.getItem(`project_${id}`)
         let scripts = null
+
         if (password) {
           scripts = JSON.parse(descrypt(currentProject.encrypted, password))
           delete currentProject.encrypted
         }
+
         const newScript = { ...scripts, general: newGeneral }
         let encrypted = newScript
-
         encrypted = encrypt(JSON.stringify(newScript), password)
-        const newDefaultData = {
+        let newDefaultData = {
           name: newScript.general.name,
           key: new Date().getTime(),
           description: newScript.general.name
         }
+        
         await store.setItem(`project_${newDefaultData.key}`, {
           ...newDefaultData,
           encrypted
         })
         dispatch(addProject(newDefaultData))
         dispatch(setCurrentProject({
-          ...newDefaultData,
-          ...newScript
+          ...newScript,
+          ...newDefaultData
         }))
         await store.removeItem(`project_${id}`)
         dispatch(removeProject(+id))
+        return true
       })
       return result
     } catch (error) {

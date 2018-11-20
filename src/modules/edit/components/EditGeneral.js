@@ -81,7 +81,6 @@ class EditGeneral extends Component {
   componentDidMount () {
     const { currentProject: { general } } = this.props
     const { transactionRequest, nonceRequest, ethCallRequest, receiptRequest, fullnode } = general
-    console.log('fullnode', fullnode, !fullnode)
     this.setState({
       connectFullnode: fullnode || false,
       transactionRequest,
@@ -138,7 +137,6 @@ class EditGeneral extends Component {
   }
 
   render () {
-    console.log('render', this.state)
     const { connectFullnode } = this.state
     const { form: { getFieldDecorator, getFieldValue }, currentProject: { general } } = this.props
     const { name, fullnode, transactionUrl, callTransactionUrl, checkTransactionUrl, nonceTransactionUrl, insightUrl } = general

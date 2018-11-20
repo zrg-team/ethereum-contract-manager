@@ -37,7 +37,8 @@
     "transaction_success": "Transaction success",
     "upload_success": "{{file}} file uploaded successfully.",
     "no_param_required": "No param required.",
-    "playground_stop": "Playground stop !"
+    "playground_stop": "Playground stop !",
+    "import_success": "Import successfully"
   },
   "errors": {
     "transaction_success": "Transaction error.",
@@ -53,7 +54,7 @@
     "duplicate_param_name": "Duplicate param name.",
     "missing_required_params": "Missing required params !",
     "update_request_error": "Update request error !",
-    "wrong_password": "Invalid password!"
+    "wrong_password": "Invalid password!",
   },
   "menu": {
     "projects": "Projects",

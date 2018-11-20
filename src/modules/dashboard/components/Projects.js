@@ -34,7 +34,6 @@ class Projects extends Component {
   }
   editProject (item) {
     const { settingProject, history } = this.props
-    console.log('item', item)
     Modal.show(<ConfirmPassword
       ref={(ref) => {
         this.modalRef = ref
