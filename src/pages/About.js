@@ -26,15 +26,17 @@ class About extends React.Component {
   render () {
     const { data } = this.state
     return (
-      <ReactMarkdown
-        skipHtml={false}
-        rawSourcePos={false}
-        sourcePos={false}
-        escapeHtml={false}
-        source={`
+      <div style={{ flex: 1, overflowY: 'auto' }}>
+        <ReactMarkdown
+          skipHtml={false}
+          rawSourcePos={false}
+          sourcePos={false}
+          escapeHtml={false}
+          source={`
 ${data}
 `}
-      />
+        />
+      </div>
     )
   }
 }
