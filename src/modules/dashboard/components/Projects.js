@@ -33,8 +33,27 @@ class Projects extends Component {
     })
   }
   editProject (item) {
-    const { history } = this.props
-    history.replace(`/edit/${item.key}`)
+    const { settingProject, history } = this.props
+    console.log('item', item)
+    Modal.show(<ConfirmPassword
+      ref={(ref) => {
+        this.modalRef = ref
+      }}
+      onSubmit={async (password) => {
+        const result = await settingProject(item, password)
+        Modal.hide()
+        if (result) {
+          history.replace(`/edit/${item.key}`)
+        } else {
+          message.error(I18n.t('errors.wrong_password'))
+        }
+      }}
+    />, {
+      onOk: () => {
+        this.modalRef && this.modalRef.handleSubmit()
+      },
+      onCancel: () => Modal.hide()
+    })
   }
   async deleteProject (item) {
     const { deleteProject } = this.props

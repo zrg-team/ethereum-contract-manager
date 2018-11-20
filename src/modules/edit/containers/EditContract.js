@@ -8,7 +8,6 @@ import { setCurrentProject } from '../../dashboard/actions'
 
 const mapDispatchToProps = (dispatch, props) => ({
   saveEditContract: async (id, contractsEdit, password) => {
-    console.log('newAccount', contractsEdit)
     try {
       const result = await loading(async () => {
         const currentProject = await store.getItem(`project_${id}`)

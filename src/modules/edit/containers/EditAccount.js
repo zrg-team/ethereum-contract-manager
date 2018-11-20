@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import EditAccount from '../components/EditAccount'
+import saveAs from 'file-saver'
 import { descrypt, encrypt } from '../../../common/utils/encrypt'
 import { store } from '../../../common/utils/database'
 import { addProject, removeProject } from '../../project/actions'
@@ -7,7 +8,6 @@ import { loading } from '../../../common/middlewares/effects'
 import { setCurrentProject } from '../../dashboard/actions'
 const mapDispatchToProps = (dispatch, props) => ({
   saveEditAccount: async (id, accountsEdit, password) => {
-    console.log('newAccount', accountsEdit)
     try {
       const result = await loading(async () => {
         const currentProject = await store.getItem(`project_${id}`)
@@ -37,6 +37,11 @@ const mapDispatchToProps = (dispatch, props) => ({
         try {
           await store.removeItem(`project_${id}`)
           dispatch(removeProject(+id))
+          const blob = new Blob([JSON.stringify({
+            ...newDefaultData,
+            encrypted
+          })], { type: 'text/plain;charset=utf-8' })
+          saveAs(blob, 'export.json')
           return true
         } catch (err) {
           console.error('err', err)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Select, Form, Button } from 'antd'
 import Modal from '../../../common/components/widgets/Modal'
-import ConfirmPassword from '../../dashboard/components/ConfirmPassword'
+import I18n from 'i18n-js'
 const Option = Select.Option
 const Item = Form.Item
 
@@ -19,59 +19,20 @@ class EditOption extends Component {
   }
   handleSubmit (e) {
     e.preventDefault()
-    const { match: { params }, history, editOption } = this.props
+    const { match: { params }, history } = this.props
     const { option } = this.state
     switch (option) {
       case 'accounts':
-        Modal.show(<ConfirmPassword
-          ref={(ref) => {
-            this.modalRef = ref
-          }}
-          onSubmit={async (password) => {
-            await editOption(params.id, password)
-            Modal.hide()
-            history.replace(`/accounts/${params.id}`)
-          }}
-        />, {
-          onOk: () => {
-            this.modalRef && this.modalRef.handleSubmit()
-          },
-          onCancel: () => Modal.hide()
-        })
+        Modal.hide()
+        history.replace(`/accounts/${params.id}`)
         break
       case 'contracts':
-        Modal.show(<ConfirmPassword
-          ref={(ref) => {
-            this.modalRef = ref
-          }}
-          onSubmit={async (password) => {
-            await editOption(params.id, password)
-            Modal.hide()
-            history.replace(`/contracts/${params.id}`)
-          }}
-        />, {
-          onOk: () => {
-            this.modalRef && this.modalRef.handleSubmit()
-          },
-          onCancel: () => Modal.hide()
-        })
+        Modal.hide()
+        history.replace(`/contracts/${params.id}`)
         break
       case 'general':
-        Modal.show(<ConfirmPassword
-          ref={(ref) => {
-            this.modalRef = ref
-          }}
-          onSubmit={async (password) => {
-            await editOption(params.id, password)
-            Modal.hide()
-            history.replace(`/general/${params.id}`)
-          }}
-        />, {
-          onOk: () => {
-            this.modalRef && this.modalRef.handleSubmit()
-          },
-          onCancel: () => Modal.hide()
-        })
+        Modal.hide()
+        history.replace(`/general/${params.id}`)
         break
       default:
         break
@@ -83,8 +44,8 @@ class EditOption extends Component {
         <Item>
           <Select
             showSearch
-            style={{ width: 200 }}
-            placeholder='Select option to change'
+            style={{ width: 300 }}
+            placeholder={I18n.t('common.option')}
             optionFilterProp='children'
             onChange={this.handleChange}
             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}

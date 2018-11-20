@@ -3,6 +3,7 @@ import { List, Row, Card, Icon, Form, Button, message, notification } from 'antd
 import Modal from '../../../common/components/widgets/Modal'
 import NewContract from '../../project/components/NewContract'
 import ConfirmPassword from '../../dashboard/components/ConfirmPassword'
+import I18n from 'i18n-js'
 import '../styles/edit.css'
 
 class EditContract extends Component {
@@ -22,7 +23,8 @@ class EditContract extends Component {
     this.setState({ contractsEdit: [...this.state.contractsEdit, ...contracts] })
   }
 
-  handleSubmit () {
+  handleSubmit (e) {
+    e.preventDefault()
     const { contractsEdit } = this.state
     const { match: { params }, history, saveEditContract } = this.props
     Modal.show(<ConfirmPassword
@@ -40,6 +42,8 @@ class EditContract extends Component {
             description: 'Edit your project.'
           })
           return history.replace('/dashboard')
+        } else {
+          message.error(I18n.t('errors.wrong_password'))
         }
       }}
     />, {

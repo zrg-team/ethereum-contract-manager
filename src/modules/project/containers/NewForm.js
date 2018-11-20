@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch, props) => ({
         const blob = new Blob([JSON.stringify({
           ...defaultData,
           encrypted
-        })], {type: 'text/plain;charset=utf-8'})
+        })], { type: 'text/plain;charset=utf-8' })
         saveAs(blob, 'export.json')
         return true
       })

@@ -15,7 +15,7 @@ import '../styles/edit.css'
 import Modal from '../../../common/components/widgets/Modal'
 import ConfirmPassword from '../../dashboard/components/ConfirmPassword'
 import RequestConfig from '../../project/components/RequestConfig'
-
+import I18n from 'i18n-js'
 const FormItem = Form.Item
 
 class EditGeneral extends Component {
@@ -81,8 +81,9 @@ class EditGeneral extends Component {
   componentDidMount () {
     const { currentProject: { general } } = this.props
     const { transactionRequest, nonceRequest, ethCallRequest, receiptRequest, fullnode } = general
+    console.log('fullnode', fullnode, !fullnode)
     this.setState({
-      connectFullnode: !fullnode && false,
+      connectFullnode: fullnode || false,
       transactionRequest,
       nonceRequest,
       ethCallRequest,
@@ -117,6 +118,8 @@ class EditGeneral extends Component {
                 description: 'Edit your project.'
               })
               return history.replace('/dashboard')
+            } else {
+              message.error(I18n.t('errors.wrong_password'))
             }
           }}
         />, {

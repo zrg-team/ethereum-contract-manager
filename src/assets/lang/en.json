@@ -52,7 +52,8 @@
     "read_contract_file_error": "Read contract file error !",
     "duplicate_param_name": "Duplicate param name.",
     "missing_required_params": "Missing required params !",
-    "update_request_error": "Update request error !"
+    "update_request_error": "Update request error !",
+    "wrong_password": "Invalid password!"
   },
   "menu": {
     "projects": "Projects",

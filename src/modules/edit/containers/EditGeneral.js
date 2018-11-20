@@ -34,14 +34,8 @@ const mapDispatchToProps = (dispatch, props) => ({
           ...newDefaultData,
           ...newScript
         }))
-        try {
-          await store.removeItem(`project_${id}`)
-          dispatch(removeProject(+id))
-          return true
-        } catch (err) {
-          console.error('err', err)
-          return false
-        }
+        await store.removeItem(`project_${id}`)
+        dispatch(removeProject(+id))
       })
       return result
     } catch (error) {
