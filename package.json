@@ -4,10 +4,13 @@
   "private": true,
   "homepage": "https://zrg-team.github.io/ethereum-contract-manager",
   "dependencies": {
+    "@babel/standalone": "^7.1.0",
+    "@nx-js/compiler-util": "^2.0.0",
     "antd": "^3.10.0",
     "axios": "^0.18.0",
     "bignumber.js": "^7.2.1",
     "bip39": "^2.5.0",
+    "brace": "^0.11.1",
     "crypto-js": "^3.1.9-1",
     "ethereumjs-abi": "^0.6.5",
     "ethereumjs-tx": "^1.3.7",
@@ -18,9 +21,11 @@
     "history": "^4.7.2",
     "i18n-js": "https://github.com/fnando/i18n-js/tarball/v3.0.0",
     "localforage": "^1.7.2",
+    "lodash": "^4.17.11",
     "markdown-to-jsx": "^6.8.1",
     "moment": "^2.22.2",
     "react": "^16.5.2",
+    "react-ace": "^6.2.0",
     "react-dom": "^16.5.2",
     "react-infinite-scroller": "^1.2.2",
     "react-loading": "^2.0.3",
@@ -56,7 +61,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "gh-pages": "^2.0.1",
     "react-app-rewired": "^1.6.2",
-    "gh-pages": "^2.0.1"
+    "standard": "^12.0.1"
   }
 }
