@@ -10,10 +10,8 @@ import MenuPage from './hocs/MenuPage'
 import Setting from '../pages/Setting'
 import UnderContruct from '../pages/UnderContruct'
 import About from '../pages/About'
-import EditProject from '../pages/EditPage'
-import EditAccountPage from '../pages/EditAccount'
-import EditContractPage from '../pages/EditContract'
-import EditGeneralPage from '../pages/EditGeneral'
+import EditProject from '../pages/EditProject'
+
 export default class Root extends Component {
   render () {
     return (
@@ -28,9 +26,6 @@ export default class Root extends Component {
         <Route path='/timelife' component={UnderContruct} />
         <Route path='/about' component={About} />
         <Route path='/edit/:id' component={EditProject} />
-        <Route path='/accounts/:id' component={EditAccountPage} />
-        <Route path='/contracts/:id' component={EditContractPage} />
-        <Route path='/general/:id' component={EditGeneralPage} />
       </MenuPage>
     )
   }

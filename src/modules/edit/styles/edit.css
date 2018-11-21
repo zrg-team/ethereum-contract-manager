@@ -2,5 +2,8 @@
   width: 100%;
 }
 .edit-button {
-  margin: 10px;
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  margin: 0 auto;
 }

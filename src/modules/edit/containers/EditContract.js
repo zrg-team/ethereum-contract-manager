@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import EditContract from '../components/EditContract'
 import { descrypt, encrypt } from '../../../common/utils/encrypt'
 import { store } from '../../../common/utils/database'
+import saveAs from 'file-saver'
 import { addProject, removeProject } from '../../project/actions'
 import { loading } from '../../../common/middlewares/effects'
 import { setCurrentProject } from '../../dashboard/actions'
@@ -36,6 +37,12 @@ const mapDispatchToProps = (dispatch, props) => ({
         }))
         await store.removeItem(`project_${id}`)
         dispatch(removeProject(+id))
+        dispatch(removeProject(+id))
+        const blob = new Blob([JSON.stringify({
+          ...newDefaultData,
+          encrypted
+        })], { type: 'text/plain;charset=utf-8' })
+        saveAs(blob, `${newDefaultData.name}.json`)
         return true
       })
       return result

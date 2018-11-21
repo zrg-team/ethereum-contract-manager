@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch, props) => ({
           ...newDefaultData,
           encrypted
         })], { type: 'text/plain;charset=utf-8' })
-        saveAs(blob, 'export.json')
+        saveAs(blob, `${newDefaultData.name}.json`)
         return true
       })
       return result

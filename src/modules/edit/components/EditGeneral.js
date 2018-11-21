@@ -331,9 +331,9 @@ class EditGeneral extends Component {
               <Checkbox>I have read the <a href='#'>agreement</a></Checkbox>
             )}
           </FormItem>
-          <Form.Item>
+          <Form.Item className='edit-button'>
             <Button
-              style={{ marginRight: 5 }}
+              style={{ marginRight: 40 }}
               onClick={this.handleBack}
               size='large'
               htmlType='button'
@@ -341,6 +341,7 @@ class EditGeneral extends Component {
               <Icon type='left' /> Back
             </Button>
             <Button
+              style={{ marginLeft: 40 }}
               type='primary'
               size='large'
               htmlType='submit'
