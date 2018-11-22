@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { getDataSmartContract } from './utils/ethereum'
 
-function parseRequestConfig (mode, project, data, common) {
+function parseRequestConfig (mode, project, data) {
   const method = project.general[mode].method || 'GET'
   const headers = project.general[mode].headers || []
   const params = project.general[mode].params || []
   const headerValues = project.general[mode].headerValues || {}
   const paramValues = project.general[mode].paramValues || {}
-  const timeout = project.general[mode].method.timeout || common.timeout
+  const timeout = project.general[mode].method.timeout || 60000
   return {
     method,
     timeout,
@@ -60,9 +60,7 @@ export function getContractView (project, data) {
   const url = `${project.general.callTransactionUrl}`
   return axios({
     url,
-    options: {
-      ...parseRequestConfig('ethCallRequest', project, [data.address, `0x${raw}`])
-    }
+    ...parseRequestConfig('ethCallRequest', project, [data.address, `0x${raw}`])
   })
   .then(response => {
     return parseRequestResponse('ethCallRequest', project, response)
@@ -73,9 +71,7 @@ export function submitFunctionTransaction (project, hex) {
   const url = `${project.general.transactionUrl}`
   return axios({
     url,
-    options: {
-      ...parseRequestConfig('transactionRequest', project, [hex])
-    }
+    ...parseRequestConfig('transactionRequest', project, [hex])
   })
   .then(response => {
     return parseRequestResponse('transactionRequest', project, response)
@@ -86,9 +82,7 @@ export function getNonce (project, address) {
   const url = `${project.general.nonceTransactionUrl}`
   return axios({
     url,
-    options: {
-      ...parseRequestConfig('nonceRequest', project, [address])
-    }
+    ...parseRequestConfig('nonceRequest', project, [address])
   })
   .then(response => {
     return parseRequestResponse('nonceRequest', project, response)
@@ -99,9 +93,7 @@ export function getTransactionReceipt (project, txhash) {
   const url = `${project.general.checkTransactionUrl}`
   return axios({
     url,
-    options: {
-      ...parseRequestConfig('receiptRequest', project, [`${txhash}`])
-    }
+    ...parseRequestConfig('receiptRequest', project, [`${txhash}`])
   })
   .then(response => {
     return parseRequestResponse('receiptRequest', project, response)

@@ -120,6 +120,9 @@ export default class Compiler {
             type = TYPES.other
           }
           this.sendOutput(type, message)
+        },
+        table: (message) => {
+          this.sendOutput(TYPES.table, message)
         }
       }
     }

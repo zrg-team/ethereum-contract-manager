@@ -13,13 +13,20 @@ class CodeEditor extends React.Component {
     this.state = {
       code: ''
     }
+    this.factory = null
+    this.compiler = null
     this.onCompile = this.onCompile.bind(this)
     this.onChangeCode = this.onChangeCode.bind(this)
+  }
+  componentDidMount () {
+    const { project, createFactory, createSanboxCompiler } = this.props
+    this.factory = createFactory(project)
+    this.compiler = createSanboxCompiler(this.factory)
   }
   onCompile () {
     const { code } = this.state
     const { compileSource } = this.props
-    compileSource(code)
+    compileSource(code, this.compiler)
   }
   onChangeCode (code) {
     this.setState({
