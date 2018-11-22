@@ -10,7 +10,7 @@ import MenuPage from './hocs/MenuPage'
 import Setting from '../pages/Setting'
 // import UnderContruct from '../pages/UnderContruct'
 import About from '../pages/About'
-import CodeEditorPage from '../pages/CodeEditor'
+import TimeLifePage from '../pages/TimeLife'
 
 export default class Root extends Component {
   render () {
@@ -23,7 +23,7 @@ export default class Root extends Component {
         <Route path='/playground' component={ProjectPlayground} />
         <Route path='/tools' component={Tools} />
         <Route path='/setting' component={Setting} />
-        <Route path='/timelife' component={CodeEditorPage} />
+        <Route path='/timelife' component={TimeLifePage} />
         <Route path='/about' component={About} />
       </MenuPage>
     )

@@ -14,7 +14,7 @@ export const history = createHashHistory()
 const config = {
   key: 'root',
   storage,
-  blacklist: ['session']
+  blacklist: ['session', 'timelife']
 }
 const createMiddlewares = sagaMiddleware => {
   const middlewares = []
