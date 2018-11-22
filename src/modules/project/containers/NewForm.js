@@ -10,9 +10,9 @@ const mapDispatchToProps = (dispatch, props) => ({
   saveData: async (data, password) => {
     try {
       const result = await loading(async () => {
-        let encypted = data
+        let encrypted = data
         if (password) {
-          encypted = encrypt(JSON.stringify(data), password)
+          encrypted = encrypt(JSON.stringify(data), password)
         }
         const defaultData = {
           name: data.general.name,
@@ -21,13 +21,13 @@ const mapDispatchToProps = (dispatch, props) => ({
         }
         await store.setItem(`project_${defaultData.key}`, {
           ...defaultData,
-          encypted
+          encrypted
         })
         dispatch(addProject(defaultData))
         const blob = new Blob([JSON.stringify({
           ...defaultData,
-          encypted
-        })], {type: 'text/plain;charset=utf-8'})
+          encrypted
+        })], { type: 'text/plain;charset=utf-8' })
         saveAs(blob, 'export.json')
         return true
       })

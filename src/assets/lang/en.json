@@ -26,6 +26,7 @@
     "loading": "Loading...",
     "refresh": "Refresh",
     "events": "Events",
+    "option": "Choose field to change",
     "password": "Password",
     "under_contruct": "Under Contruct"
   },
@@ -37,7 +38,8 @@
     "transaction_success": "Transaction success",
     "upload_success": "{{file}} file uploaded successfully.",
     "no_param_required": "No param required.",
-    "playground_stop": "Playground stop !"
+    "playground_stop": "Playground stop !",
+    "import_success": "Import successfully"
   },
   "errors": {
     "transaction_success": "Transaction error.",
@@ -52,7 +54,8 @@
     "read_contract_file_error": "Read contract file error !",
     "duplicate_param_name": "Duplicate param name.",
     "missing_required_params": "Missing required params !",
-    "update_request_error": "Update request error !"
+    "update_request_error": "Update request error !",
+    "wrong_password": "Invalid password!"
   },
   "menu": {
     "projects": "Projects",
@@ -98,7 +101,10 @@
     "param_key": "Param key",
     "add_param": "Add Param",
     "header_key": "Header key",
-    "add_header": "Add header"
+    "add_header": "Add header",
+    "accounts": "Accounts",
+    "contracts": "Contracts",
+    "general": "General"
   },
   "playground": {
     "new_process": "New Process",

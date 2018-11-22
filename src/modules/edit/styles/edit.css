@@ -1,0 +1,9 @@
+.edit-row {
+  width: 100%;
+}
+.edit-button {
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  margin: 0 auto;
+}
