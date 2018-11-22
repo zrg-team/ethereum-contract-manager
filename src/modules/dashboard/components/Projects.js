@@ -32,6 +32,28 @@ class Projects extends Component {
       onCancel: () => Modal.hide()
     })
   }
+  editProject (item) {
+    const { settingProject, history } = this.props
+    Modal.show(<ConfirmPassword
+      ref={(ref) => {
+        this.modalRef = ref
+      }}
+      onSubmit={async (password) => {
+        const result = await settingProject(item, password)
+        Modal.hide()
+        if (result) {
+          history.replace(`/edit/${item.key}`)
+        } else {
+          message.error(I18n.t('errors.wrong_password'))
+        }
+      }}
+    />, {
+      onOk: () => {
+        this.modalRef && this.modalRef.handleSubmit()
+      },
+      onCancel: () => Modal.hide()
+    })
+  }
   async deleteProject (item) {
     const { deleteProject } = this.props
     const result = await deleteProject(item)
@@ -59,7 +81,7 @@ class Projects extends Component {
               />
               {I18n.t('dashboard.play')}
             </Button>,
-            <Button><Icon type='setting' />{I18n.t('dashboard.setting')}</Button>,
+            <Button onClick={() => this.editProject(item)}><Icon type='setting' />{I18n.t('dashboard.setting')}</Button>,
             <Button onClick={() => this.deleteProject(item)}>
               <Icon
                 type='delete'

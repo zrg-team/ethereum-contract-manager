@@ -8,7 +8,11 @@ import {
 } from '../repository'
 import { addTransaction } from '../../project/actions'
 import { stopFullnodeProcess } from '../../playground/actions'
-import { mapHexToOutput, createTransaction, parseTransactionParams } from '../../../common/utils/ethereum'
+import {
+  mapHexToOutput,
+  createTransaction,
+  parseTransactionParams
+} from '../../../common/utils/ethereum'
 import web3 from '../../../common/utils/web3'
 
 export const mapDispatchToProps = (dispatch, props) => ({

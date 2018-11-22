@@ -27,6 +27,7 @@
     "refresh": "Tải lại",
     "events": "Sự kiện",
     "password": "Mật Khẩu",
+    "option": "Chọn Giá Trị Muốn Thay Đổi",
     "under_contruct": "Tính Năng Đang Xây Dựng"
   },
   "messages": {
@@ -51,7 +52,8 @@
     "read_contract_file_error": "Đọc dữ liễu contract lỗi !",
     "duplicate_param_name": "Tham số đã tồn tại.",
     "missing_required_params": "Thiếu thông số bắt buộc !",
-    "update_request_error": "Sửa yêu cầu lỗi !"
+    "update_request_error": "Sửa yêu cầu lỗi !",
+    "wrong_password": "Sai mật khẩu!"
   },
   "menu": {
     "projects": "Dự Án",

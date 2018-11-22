@@ -5,7 +5,6 @@
   "homepage": "https://zrg-team.github.io/ethereum-contract-manager",
   "dependencies": {
     "@babel/standalone": "^7.1.0",
-    "@nx-js/compiler-util": "^2.0.0",
     "antd": "^3.10.0",
     "axios": "^0.18.0",
     "bignumber.js": "^7.2.1",
@@ -42,6 +41,7 @@
     "redux-persist": "^5.10.0",
     "redux-saga": "^0.16.2",
     "reselect": "^4.0.0",
+    "rxjs": "^6.3.3",
     "web3": "~0.20.6"
   },
   "scripts": {

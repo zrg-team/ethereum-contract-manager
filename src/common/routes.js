@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router'
+import { Route, Switch } from 'react-router'
 import Dashboard from '../pages/Dashboard'
 import NewProject from '../pages/NewProject'
 import ProjectPlayground from '../pages/ProjectPlayground'
@@ -10,7 +10,8 @@ import MenuPage from './hocs/MenuPage'
 import Setting from '../pages/Setting'
 // import UnderContruct from '../pages/UnderContruct'
 import About from '../pages/About'
-import CodeEditorPage from '../pages/CodeEditor'
+import TimeLifePage from '../pages/TimeLife'
+import EditProject from '../pages/EditProject'
 
 export default class Root extends Component {
   render () {
@@ -23,8 +24,9 @@ export default class Root extends Component {
         <Route path='/playground' component={ProjectPlayground} />
         <Route path='/tools' component={Tools} />
         <Route path='/setting' component={Setting} />
-        <Route path='/timelife' component={CodeEditorPage} />
+        <Route path='/timelife' component={TimeLifePage} />
         <Route path='/about' component={About} />
+        <Route path='/edit/:id' component={EditProject} />
       </MenuPage>
     )
   }

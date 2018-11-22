@@ -124,6 +124,7 @@ class NewForm extends Component {
         this.modalRef = ref
       }}
       onSubmit={(values) => {
+        console.log('values', values)
         const { accounts } = this.state
         if (!accounts.some(item => item.address === values.address)) {
           accounts.push(values)

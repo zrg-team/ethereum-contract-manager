@@ -23,12 +23,31 @@ const mapDispatchToProps = (dispatch, props) => ({
       const data = await store.getItem(`project_${item.key}`)
       let scripts = null
       if (password) {
-        scripts = JSON.parse(descrypt(data.encypted, password))
-        delete data.encypted
+        scripts = JSON.parse(descrypt(data.encrypted, password))
+        delete data.encrypted
       }
       dispatch(setCurrentProject({
         ...data,
         ...scripts
+      }))
+      dispatch(fullnodeProcess())
+      return true
+    } catch (err) {
+      console.error('err', err)
+      return false
+    }
+  },
+  settingProject: async (item, password) => {
+    try {
+      const data = await store.getItem(`project_${item.key}`)
+      let scripts = null
+      if (password) {
+        scripts = JSON.parse(descrypt(data.encrypted, password))
+        delete data.encrypted
+      }
+      dispatch(setCurrentProject({
+        ...scripts,
+        ...data
       }))
       dispatch(fullnodeProcess())
       return true
