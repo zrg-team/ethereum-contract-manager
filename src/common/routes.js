@@ -11,7 +11,6 @@ import Setting from '../pages/Setting'
 // import UnderContruct from '../pages/UnderContruct'
 import About from '../pages/About'
 import TimeLifePage from '../pages/TimeLife'
-import CodeEditorPage from '../pages/CodeEditor'
 import EditProject from '../pages/EditProject'
 
 export default class Root extends Component {
