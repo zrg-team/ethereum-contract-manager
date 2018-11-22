@@ -1,13 +1,6 @@
 import {
-  mapHexToOutput,
-  parseTransactionParams
+  createTransaction
 } from './utils/ethereum'
-import {
-  getNonce,
-  getContractView,
-  submitFunctionTransaction
-} from '../repository'
-import web3 from './utils/web3'
 
 export class Contract {
   constructor (contract, fullnode = false) {
@@ -20,31 +13,13 @@ export class Contract {
     this.events = parsed.events
     this.views = parsed.views
   }
-  async excuseView (data, project) {
+  createRawTransaction (params) {
     try {
-      data.params = data.params.map((item, index) => {
-        const type = data.inputs[index]
-        const parsed = parseTransactionParams({ type, value: item })
-        return parsed.value
-      })
-      const response = await getContractView(project, data)
-      return mapHexToOutput(response, data.outputs)
-    } catch (err) {
-      return undefined
-    }
-  }
-  async excuseFunction (data, project, raw) {
-    try {
-      let response = null
-      if (this.fullnode && !project.general.transactionUrl) {
-        response = await web3.sendRawTransactionUsingFullnode(raw)
-      } else {
-        response = await submitFunctionTransaction(project, raw)
-      }
-      return response
+      const raw = createTransaction(params)
+      return raw
     } catch (err) {
       console.error('error', err)
-      return null
+      return undefined
     }
   }
   parseAbi () {
