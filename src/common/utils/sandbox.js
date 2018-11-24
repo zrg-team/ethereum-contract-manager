@@ -65,6 +65,12 @@ export default class Sandbox {
   }
   exec (source, callbacks = {}) {
     try {
+      source = `
+      async function main () {
+        ${source}
+      }
+      main()
+      `
       const result = babel.transform(source, {
         presets: this.presets,
         plugins: this.plugins

@@ -37,9 +37,6 @@ export function executorCode (src, isAsync) {
       with ($sandbox) {
         try {
           ${src}
-          if (main && typeof main === 'function') {
-            main.call(window)
-          }
         } catch (error) {
           return error.message
         }
@@ -56,9 +53,6 @@ export function executorCode (src, isAsync) {
     with ($sandbox) {
       try {
         ${src}
-        if (main && typeof main === 'function') {
-          main.call(window)
-        }
       } catch (error) {
         return error.message
       }

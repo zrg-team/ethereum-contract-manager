@@ -18,9 +18,7 @@ class CodeEditor extends React.Component {
       project: null,
       projectId: null,
       code: `// SELECT RUNTIME FOR START CODING
-function main () {
-  // TODO: Your code here
-}
+// TODO: Your code here
 `
     }
     this.factory = null

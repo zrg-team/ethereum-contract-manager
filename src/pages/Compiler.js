@@ -1,9 +1,9 @@
 import React from 'react'
 import { Row, Col } from 'antd'
-import CodeEditor from '../modules/timelife/containers/CodeEditor'
-import CodeResult from '../modules/timelife/containers/CodeResult'
+import CodeEditor from '../modules/compiler/containers/CodeEditor'
+import CodeResult from '../modules/compiler/containers/CodeResult'
 
-class TimeLife extends React.Component {
+class Compiler extends React.Component {
   render () {
     const { history } = this.props
     return (
@@ -19,4 +19,4 @@ class TimeLife extends React.Component {
   }
 }
 
-export default TimeLife
+export default Compiler

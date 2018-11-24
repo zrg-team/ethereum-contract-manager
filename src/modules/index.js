@@ -1,11 +1,11 @@
 // MODULE NAMES
 import { MODULE_NAME as MODULE_DASHBOARD } from './dashboard/model'
 import { MODULE_NAME as MODULE_PROJECT } from './project/model'
-import { MODULE_NAME as MODULE_TIMELIFE } from './timelife/model'
+import { MODULE_NAME as MODULE_COMPILER } from './compiler/model'
 // MODULE REDUCERS
 import dashboardReducers from './dashboard/reducers'
 import projectReducers from './project/reducers'
-import timelifeReducers from './timelife/reducers'
+import compilerReducers from './compiler/reducers'
 // MODULE SAGAS
 import playgroundSagas from './playground/saga'
 import dashboardSagas from './dashboard/saga'
@@ -18,5 +18,5 @@ export const MODULE_SAGAS = [
 export const MODULE_REDUCERS = {
   [MODULE_DASHBOARD]: dashboardReducers,
   [MODULE_PROJECT]: projectReducers,
-  [MODULE_TIMELIFE]: timelifeReducers
+  [MODULE_COMPILER]: compilerReducers
 }
