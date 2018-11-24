@@ -4,24 +4,76 @@ import 'brace/mode/javascript'
 import 'brace/theme/monokai'
 import AceEditor from 'react-ace'
 import {
-  Button
+  Button,
+  Select
 } from 'antd'
+import Modal from '../../../common/components/widgets/Modal'
+import ConfirmPassword from '../../../common/components/widgets/ConfirmPassword'
 
 class CodeEditor extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      code: ''
+      ready: false,
+      project: null,
+      projectId: null,
+      code: `// SELECT RUNTIME FOR START CODING
+function main () {
+  // TODO: Your code here
+}
+`
     }
     this.factory = null
     this.compiler = null
     this.onCompile = this.onCompile.bind(this)
     this.onChangeCode = this.onChangeCode.bind(this)
+    this.onChangeRuntime = this.onChangeRuntime.bind(this)
   }
   componentDidMount () {
-    const { project, createFactory, createSanboxCompiler } = this.props
-    this.factory = createFactory(project)
-    this.compiler = createSanboxCompiler(this.factory)
+    const { createSanboxCompiler } = this.props
+    this.compiler = createSanboxCompiler()
+    this.setState({
+      ready: true
+    })
+  }
+  async onChangeRuntime (value) {
+    Modal.show(<ConfirmPassword
+      ref={(ref) => {
+        this.modalRef = ref
+      }}
+      onSubmit={async (password) => {
+        this.setState({
+          ready: false
+        })
+        const { projects, getProjectRuntime, createFactory, createSanboxCompiler } = this.props
+        const project = projects.find(item => item.key === value)
+        const descrypedProject = await getProjectRuntime(project, password)
+        Modal.hide()
+        if (descrypedProject && descrypedProject.accounts && descrypedProject.contracts) {
+          this.factory = await createFactory(descrypedProject)
+          this.compiler = createSanboxCompiler(this.factory)
+          return this.setState({
+            ready: true,
+            projectId: value,
+            project: descrypedProject
+          })
+        }
+        this.setState({
+          ready: true,
+          projectId: null
+        })
+      }}
+    />, {
+      onOk: () => {
+        this.modalRef && this.modalRef.handleSubmit()
+      },
+      onCancel: () => {
+        Modal.hide()
+        this.setState({
+          projectId: null
+        })
+      }
+    })
   }
   onCompile () {
     const { code } = this.state
@@ -34,7 +86,8 @@ class CodeEditor extends React.Component {
     })
   }
   render () {
-    const { code } = this.state
+    const { projects } = this.props
+    const { ready, projectId, project, code } = this.state
     return (
       <div style={{
         height: '100%',
@@ -61,7 +114,8 @@ class CodeEditor extends React.Component {
               enableLiveAutocompletion: true,
               enableBasicAutocompletion: true,
               enableSnippets: true,
-              showLineNumbers: true
+              showLineNumbers: true,
+              tabSize: 2
             }}
             style={{
               width: '100%',
@@ -69,11 +123,32 @@ class CodeEditor extends React.Component {
             }}
           />
         </div>
-        <Button
-          style={{ height: 40, marginTop: 5 }}
-          title='Compile'
-          color='primary'
-          onClick={this.onCompile} />
+        <div style={{ height: 40, marginTop: 5, display: 'flex', flexDirection: 'row' }}>
+          <Select
+            value={projectId}
+            placeholder='Please select a runtime'
+            style={{
+              flex: 1,
+              marginRight: 5
+            }}
+            onChange={this.onChangeRuntime}
+          >
+            {projects.map(item => {
+              return (
+                <Select.Option key={`${item.key}`} value={item.key}>{item.name}</Select.Option>
+              )
+            })}
+          </Select>
+          <Button
+            style={{ marginLeft: 5, flex: 1 }}
+            title='Compile'
+            color='primary'
+            disabled={!ready}
+            onClick={this.onCompile}
+          >
+            Compile
+          </Button>
+        </div>
       </div>
     )
   }

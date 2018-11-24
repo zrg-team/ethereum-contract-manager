@@ -1,6 +1,6 @@
 async function main () {
-  const result = await contracts.Lotto.view(
-      factory.project,
+  const result = await view(
+      Lotto,
       'drawInfo',
       [1]
   )

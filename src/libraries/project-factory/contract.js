@@ -5,7 +5,7 @@ import {
 } from './utils/ethereum'
 import {
   getContractView
-} from './apis'
+} from './utils/apis'
 
 export class Contract {
   constructor (contract) {
@@ -20,7 +20,13 @@ export class Contract {
   getView (name) {
     return this.views.find(item => item.name === name)
   }
-  async view (project, functionName, inputs) {
+  getFunction (name) {
+    return this.functions.find(item => item.name === name)
+  }
+  async view (project, {
+    inputs,
+    functionName
+  }) {
     try {
       const view = this.getView(functionName)
       const data = {

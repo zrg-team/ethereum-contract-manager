@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getDataSmartContract } from './utils/ethereum'
+import { getDataSmartContract } from './ethereum'
 
 function parseRequestConfig (mode, project, data) {
   const method = project.general[mode].method || 'GET'
@@ -15,13 +15,13 @@ function parseRequestConfig (mode, project, data) {
       return { ...all, [`${item}`.replace('header_', '')]: headerValues[item] }
     }, {}),
     params: method === 'get'
-        ? params.reduce((all, item, index) => {
-          let value = paramValues[item]
-          if (data[index]) {
-            value = data[index]
-          }
-          return { ...all, [`${item}`.replace('param_', '')]: value }
-        }, {})
+      ? params.reduce((all, item, index) => {
+        let value = paramValues[item]
+        if (data[index]) {
+          value = data[index]
+        }
+        return { ...all, [`${item}`.replace('param_', '')]: value }
+      }, {})
       : {},
     data: method === 'get'
       ? {}
@@ -46,7 +46,7 @@ function parseRequestResponse (mode, project, response) {
     value = value[key]
   })
   if (!value) {
-    throw new Error('INVALID_RETURN')
+    throw new Error('INVALID_RETURN_PATH')
   }
   return value
 }
@@ -97,5 +97,7 @@ export function getTransactionReceipt (project, txhash) {
   })
   .then(response => {
     return parseRequestResponse('receiptRequest', project, response)
+  }).catch(err => {
+    return { error: true, message: err.message }
   })
 }

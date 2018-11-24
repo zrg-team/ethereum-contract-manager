@@ -4,9 +4,10 @@ import units from 'ethereumjs-units'
 import { BigNumber } from 'bignumber.js'
 import { Observable } from 'rxjs'
 import { TYPES, covertMessage } from './message'
+import plugin, { pluginName } from '../../libraries/babel-plugin-convert-call'
 
 const babel = require('@babel/standalone')
-const sanboxEngine = require('../../libraries/sanboxEngine')
+const sanboxEngine = require('../../libraries/sanbox-core-engine')
 
 const DEFAULT_PRESETS = [
   'es2017',
@@ -23,24 +24,25 @@ const DEFAULT_PLUGINS = [
   'proposal-object-rest-spread',
   'proposal-export-default-from',
   'transform-block-scoped-functions',
-  'proposal-async-generator-functions'
+  'proposal-async-generator-functions',
+  pluginName
 ]
 // Javascript sanbox required for exec the javascript code without threatened main application
-export default class Compiler {
-  constructor (global, presets = undefined, plugins = undefined) {
+export default class Sandbox {
+  constructor (global, variables, presets = undefined, plugins = undefined) {
     this.presets = presets || DEFAULT_PRESETS
     this.plugins = plugins || DEFAULT_PLUGINS
+    this.variables = variables
 
     this.responseObserver = null
     this.responseSubscription = null
     // Make a generator function for response result
-    this.responseObservable = Observable.create((observer) => {
+    this.responseObservable = new Observable((observer) => {
       this.responseObserver = observer
     })
 
     this.global = this.prepareGlobalObjects(global || {})
-    // Currently not need
-    // this.outputs = {}
+    babel.registerPlugin(pluginName, plugin)
   }
   prepareGlobalObjects (inputs) {
     return {
@@ -50,6 +52,7 @@ export default class Compiler {
       Array,
       Number,
       Date,
+      Error,
       // Global function
       JSON,
       Symbol,
@@ -75,7 +78,10 @@ export default class Compiler {
         complete: this.processComplete
       })
       const code = sanboxEngine.compileSanbox(result)
-      const resultExcuse = code(this.global)
+      const resultExcuse = code(
+        { ...this.global, window: this.global },
+        this.variables || {}
+      )
       if (resultExcuse) {
         this.sendOutput(TYPES.execuse_result, resultExcuse)
       }
@@ -102,6 +108,12 @@ export default class Compiler {
       moment,
       BigNumber,
       fetch: axios,
+      clearInterval: (item) => {
+        clearInterval(item)
+      },
+      setInterval: (func, time) => {
+        setInterval(func, time)
+      },
       setTimeout: (func, time) => {
         setTimeout(func, time)
       },

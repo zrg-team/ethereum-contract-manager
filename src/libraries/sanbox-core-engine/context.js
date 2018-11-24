@@ -41,7 +41,7 @@ function get (target, key) {
   if (key === Symbol.unscopables) {
     return undefined
   }
-  return key in temp ? temp[key] : target[key]
+  return temp && temp[key] ? temp[key] : target[key]
 }
 
 const hasHandler = { has }

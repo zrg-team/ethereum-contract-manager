@@ -24,11 +24,12 @@ const mapDispatchToProps = (dispatch, props) => ({
               blockHash: response.blockHash,
               args: []
             })
+            item = { ...item }
+            newItem = item
           }
-          newItem = item
           return item
         })
-        dispatch(setTransactions(transactions))
+        dispatch(setTransactions([ ...transactions ]))
         return newItem
       }
       throw new Error('INVALID_RETURN')

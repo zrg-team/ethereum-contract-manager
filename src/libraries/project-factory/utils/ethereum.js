@@ -159,14 +159,13 @@ export function createTransaction (params) {
   transaction.nonce = params.nonce
   transaction.value = params.value
   transaction.data = params.data !== undefined && params.data !== null
-  ? params.data : `0x${getDataSmartContract({
-    functionName: params.functionName,
-    typeParams: params.typeParams,
-    params: params.functionParams
-  })}`
+    ? params.data : `0x${getDataSmartContract({
+      functionName: params.functionName,
+      typeParams: params.typeParams,
+      params: params.functionParams
+    })}`
 
   const privateKey = new Buffer(params.privateKey.substring(2, params.privateKey.length), 'hex')
-
   transaction.sign(new Buffer(privateKey), 'hex')
   return '0x' + transaction.serialize().toString('hex')
 }

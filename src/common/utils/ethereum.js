@@ -164,7 +164,6 @@ export function createTransaction (params) {
     typeParams: params.typeParams,
     params: params.functionParams
   })}`
-
   const privateKey = new Buffer(params.privateKey.substring(2, params.privateKey.length), 'hex')
 
   transaction.sign(new Buffer(privateKey), 'hex')

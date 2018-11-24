@@ -62,6 +62,7 @@ ${JSON.stringify(item.response || {})}
   }
   renderItem (item) {
     const { general } = this.props
+    const transactionId = typeof item.transactionId === 'string' ? item.transactionId : ''
     return (
       <List.Item
         key={item.transactionId}
@@ -71,7 +72,7 @@ ${JSON.stringify(item.response || {})}
       >
         <List.Item.Meta
           avatar={<Avatar src='https://png.icons8.com/color/1600/ethereum.png' />}
-          title={<a target='_blank' rel='noopener noreferrer' href={`${general.insightUrl}${item.transactionId}`}>{item.transactionId}</a>}
+          title={<a target='_blank' rel='noopener noreferrer' href={`${general.insightUrl}${transactionId}`}>{transactionId}</a>}
           description={`${item.contract.name} - ${item.contractFunction.name}`}
         />
         <div>{item.response ? <Icon type='tags' theme='twoTone' twoToneColor='#52c41a' /> : <Icon type='loading' />}</div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import I18n from 'i18n-js'
 import { List, Card, Icon, message, Button } from 'antd'
 import Modal from '../../../common/components/widgets/Modal'
-import ConfirmPassword from './ConfirmPassword'
+import ConfirmPassword from '../../../common/components/widgets/ConfirmPassword'
 import projectBanner from '../../../assets/images/project_banner.png'
 
 const { Meta } = Card

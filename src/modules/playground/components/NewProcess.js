@@ -183,34 +183,34 @@ ${raw}
 
 </pre>
               `}
-            />), {
-              onOk: async () => {
-                result = await submitFunctionTransaction(currentProject, values, raw)
-                submitTimelife(result, currentProject, {
-                  params,
-                  account: {
-                    name: values.account.name,
-                    address: values.account.address
-                  },
-                  contractFunction: values.contractFunction,
-                  contract: {
-                    name: values.contract.name,
-                    events: values.contract.events,
-                    address: values.contract.address
-                  },
-                  raw
-                })
-                Modal.hide()
-                if (result) {
-                  return notification.success({
-                    message: I18n.t('messages.transaction_success'),
-                    description: result
-                  })
-                }
-                message.error(I18n.t('errors.transaction_error'))
+          />), {
+          onOk: async () => {
+            result = await submitFunctionTransaction(currentProject, values, raw)
+            submitTimelife(result, currentProject, {
+              params,
+              account: {
+                name: values.account.name,
+                address: values.account.address
               },
-              onCancel: () => Modal.hide()
+              contractFunction: values.contractFunction,
+              contract: {
+                name: values.contract.name,
+                events: values.contract.events,
+                address: values.contract.address
+              },
+              raw
             })
+            Modal.hide()
+            if (result) {
+              return notification.success({
+                message: I18n.t('messages.transaction_success'),
+                description: result
+              })
+            }
+            message.error(I18n.t('errors.transaction_error'))
+          },
+          onCancel: () => Modal.hide()
+        })
         break
       default:
         return ''
@@ -349,20 +349,20 @@ ${raw}
               </Select>
             </Form.Item>
             {values.contractFunction
-            ? values.contractFunction.inputs.length
-              ? values.contractFunction.inputs.map((item, index) => {
-                return (
-                  <Form.Item key={`${item.type}_${index}`}>
-                    <Input
-                      placeholder={item.type}
-                      value={inputs[index] ? `${inputs[index]}` : ''}
-                      onChange={(event) => this.onChangeParamInput(index, event)}
-                    />
-                  </Form.Item>
-                )
-              })
-              : <p>{I18n.t('messages.no_param_required')}</p>
-            : null}
+              ? values.contractFunction.inputs.length
+                ? values.contractFunction.inputs.map((item, index) => {
+                  return (
+                    <Form.Item key={`${item.type}_${index}`}>
+                      <Input
+                        placeholder={item.type}
+                        value={inputs[index] ? `${inputs[index]}` : ''}
+                        onChange={(event) => this.onChangeParamInput(index, event)}
+                      />
+                    </Form.Item>
+                  )
+                })
+                : <p>{I18n.t('messages.no_param_required')}</p>
+              : null}
           </Card>
         )
       case 2:
@@ -404,7 +404,6 @@ ${raw}
                 onChange={this.onChangeValueSend}
               />
             </Form.Item>
-            
           </Card>
         )
       case 3:

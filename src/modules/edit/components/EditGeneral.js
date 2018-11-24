@@ -13,7 +13,7 @@ import {
 } from 'antd'
 import '../styles/edit.css'
 import Modal from '../../../common/components/widgets/Modal'
-import ConfirmPassword from '../../dashboard/components/ConfirmPassword'
+import ConfirmPassword from '../../../common/components/widgets/ConfirmPassword'
 import RequestConfig from '../../project/components/RequestConfig'
 import I18n from 'i18n-js'
 const FormItem = Form.Item

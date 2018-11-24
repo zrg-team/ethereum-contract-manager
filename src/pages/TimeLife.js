@@ -7,7 +7,7 @@ class TimeLife extends React.Component {
   render () {
     const { history } = this.props
     return (
-      <Row style={{ flex: 1 }}>
+      <Row style={{ flex: 1, width: '100%' }}>
         <Col style={{ height: '100%' }} span={12}>
           <CodeEditor history={history} />
         </Col>

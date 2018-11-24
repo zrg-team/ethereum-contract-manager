@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { List, Row, Card, Icon, Form, Button, message, notification } from 'antd'
 import Modal from '../../../common/components/widgets/Modal'
 import NewContract from '../../project/components/NewContract'
-import ConfirmPassword from '../../dashboard/components/ConfirmPassword'
+import ConfirmPassword from '../../../common/components/widgets/ConfirmPassword'
 import I18n from 'i18n-js'
 import '../styles/edit.css'
 

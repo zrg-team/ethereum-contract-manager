@@ -32,20 +32,38 @@ export function executorCode (src, isAsync) {
     return new AsyncFunction( // eslint-disable-line
       'context',
       'tempVars',
-      `const sandbox = $engineCompileToSandbox(context, tempVars)
-      with (sandbox) {
-        ${src}
+      `
+      const $sandbox = $engineCompileToSandbox(context, tempVars)
+      with ($sandbox) {
+        try {
+          ${src}
+          if (main && typeof main === 'function') {
+            main.call(window)
+          }
+        } catch (error) {
+          return error.message
+        }
       }
-      $engineClearSandbox()`
+      $engineClearSandbox()
+      `
     )
   }
   return new Function( // eslint-disable-line
     'context',
     'tempVars',
-    `const sandbox = $engineCompileToSandbox(context, tempVars)
-    with (sandbox) {
-      ${src}
+    `
+    const $sandbox = $engineCompileToSandbox(context, tempVars)
+    with ($sandbox) {
+      try {
+        ${src}
+        if (main && typeof main === 'function') {
+          main.call(window)
+        }
+      } catch (error) {
+        return error.message
+      }
     }
-    $engineClearSandbox()`
+    $engineClearSandbox()
+    `
   )
 }

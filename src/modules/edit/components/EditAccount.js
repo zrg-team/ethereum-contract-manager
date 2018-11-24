@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { List, Card, Icon, Form, Row, message, Button, notification } from 'antd'
 import Modal from '../../../common/components/widgets/Modal'
 import NewAccount from '../../project/components/NewAccount'
-import ConfirmPassword from '../../dashboard/components/ConfirmPassword'
+import ConfirmPassword from '../../../common/components/widgets/ConfirmPassword'
 import I18n from 'i18n-js'
 import '../styles/edit.css'
 class EditAccount extends Component {
