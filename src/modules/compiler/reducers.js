@@ -2,10 +2,15 @@ import { handleActions } from 'redux-actions'
 import * as actions from './actions'
 
 const defaultState = {
-  outputs: []
+  outputs: [],
+  runtime: null
 }
 
 const handlers = {
+  [actions.setRuntime]: (state, action) => ({
+    ...state,
+    runtime: action.payload
+  }),
   [actions.setOutput]: (state, action) => ({
     ...state,
     outputs: action.payload

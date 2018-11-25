@@ -15,7 +15,6 @@ import {
   notification,
   Modal as ModalCofirm
 } from 'antd'
-import I18n from 'i18n-js'
 import Modal from '../../../common/components/widgets/Modal'
 import NewAccount from './NewAccount'
 import NewContract from './NewContract'

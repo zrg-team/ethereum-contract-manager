@@ -1,11 +1,13 @@
 import { connect } from 'react-redux'
+import saveAs from 'file-saver'
 import CodeEditor from '../components/CodeEditor'
 import Sandbox from '../../../common/utils/sandbox'
-import { setOutput, appendOutput } from '../actions'
+import { setRuntime, setOutput, appendOutput } from '../actions'
 import { store } from '../../../common/utils/database'
 import { descrypt } from '../../../common/utils/encrypt'
 import { ProjectFactory } from '../../../libraries/project-factory'
 import { MODULE_NAME as MODULE_PROJECT } from '../../project/model'
+import { MODULE_NAME as MODULE_COMPILER } from '../model'
 
 const mapDispatchToProps = (dispatch, props) => ({
   compileSource: async (code, compiler) => {
@@ -54,19 +56,27 @@ const mapDispatchToProps = (dispatch, props) => ({
         scripts = JSON.parse(descrypt(data.encrypted, password))
         delete data.encrypted
       }
-      return {
+      const runtime = {
         ...data,
         ...scripts
       }
+      dispatch(setRuntime(runtime))
+      return runtime
     } catch (err) {
       console.error('err', err)
       return false
     }
+  },
+  saveSourceFile: (code) => {
+    const blob = new Blob([`${code}`], { type: 'text/plain;charset=utf-8' })
+    saveAs(blob, 'source.js')
+    return true
   }
 })
 
 const mapStateToProps = state => ({
-  projects: state[MODULE_PROJECT].projects
+  projects: state[MODULE_PROJECT].projects,
+  runtime: state[MODULE_COMPILER].runtime
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CodeEditor)

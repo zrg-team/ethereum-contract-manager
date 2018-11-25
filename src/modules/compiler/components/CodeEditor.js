@@ -1,11 +1,16 @@
 import React from 'react'
+import I18n from 'i18n-js'
 import 'brace'
 import 'brace/mode/javascript'
 import 'brace/theme/monokai'
 import AceEditor from 'react-ace'
 import {
+  Icon,
+  Menu,
   Button,
-  Select
+  Select,
+  message,
+  Dropdown
 } from 'antd'
 import Modal from '../../../common/components/widgets/Modal'
 import ConfirmPassword from '../../../common/components/widgets/ConfirmPassword'
@@ -23,9 +28,66 @@ class CodeEditor extends React.Component {
     }
     this.factory = null
     this.compiler = null
+    this.fileInput = null
+    this.saveFile = this.saveFile.bind(this)
     this.onCompile = this.onCompile.bind(this)
+    this.selectFile = this.selectFile.bind(this)
+    this.selectMenu = this.selectMenu.bind(this)
     this.onChangeCode = this.onChangeCode.bind(this)
     this.onChangeRuntime = this.onChangeRuntime.bind(this)
+
+    this.menu = (
+      <Menu onClick={this.selectMenu} style={{ width: 120 }}>
+        <Menu.Item key='open'>
+          <Icon type='folder-open' /> Open
+        </Menu.Item>
+        <Menu.Item key='save'>
+          <input
+            ref={(ref) => {
+              this.fileInput = ref
+            }}
+            type='file'
+            onChange={this.selectFile}
+            accept='application/javascript'
+            style={{ width: 0, height: 0, overflow: 'hidden' }}
+          />
+          <Icon type='save' /> Save
+        </Menu.Item>
+      </Menu>
+    )
+  }
+  selectFile (e) {
+    try {
+      const files = e.target.files
+      const reader = new FileReader()
+      reader.onload = (upload) => {
+        try {
+          this.setState({
+            code: upload.target.result
+          })
+        } catch (err) {
+          message.error(I18n.t('errors.read_contract_file_error'))
+        }
+      }
+
+      reader.readAsText(files[0], 'TF-8')
+    } catch (err) {
+    }
+  }
+  saveFile () {
+    const { code } = this.state
+    const { saveSourceFile } = this.props
+    saveSourceFile(code)
+  }
+  selectMenu (menu) {
+    switch (menu.key) {
+      case 'open':
+        return this.fileInput && this.fileInput.click()
+      case 'save':
+        return this.saveFile()
+      default:
+        break
+    }
   }
   componentDidMount () {
     const { createSanboxCompiler } = this.props
@@ -52,8 +114,7 @@ class CodeEditor extends React.Component {
           this.compiler = createSanboxCompiler(this.factory)
           return this.setState({
             ready: true,
-            projectId: value,
-            project: descrypedProject
+            projectId: value
           })
         }
         this.setState({
@@ -85,7 +146,7 @@ class CodeEditor extends React.Component {
   }
   render () {
     const { projects } = this.props
-    const { ready, projectId, project, code } = this.state
+    const { ready, projectId, code } = this.state
     return (
       <div style={{
         height: '100%',
@@ -122,11 +183,15 @@ class CodeEditor extends React.Component {
           />
         </div>
         <div style={{ height: 40, marginTop: 5, display: 'flex', flexDirection: 'row' }}>
+          <Dropdown overlay={this.menu} placement='bottomCenter'>
+            <Button style={{ width: 60, marginRight: 5 }}>File</Button>
+          </Dropdown>
           <Select
             value={projectId}
             placeholder='Please select a runtime'
             style={{
               flex: 1,
+              marginLeft: 5,
               marginRight: 5
             }}
             onChange={this.onChangeRuntime}

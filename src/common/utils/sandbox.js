@@ -120,6 +120,9 @@ export default class Sandbox {
       setInterval: (func, time) => {
         setInterval(func, time)
       },
+      clearTimeout: (item) => {
+        clearTimeout(item)
+      },
       setTimeout: (func, time) => {
         setTimeout(func, time)
       },
