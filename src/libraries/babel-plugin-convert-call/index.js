@@ -1,7 +1,7 @@
 export const pluginName = 'babel-plugin-convert-call'
 
 // Call identifier function auto bind global "this"
-// Fixed by: convert identifier call with .call with custom "this" 
+// Fixed by: convert identifier call with .call with custom "this"
 export default function plugin ({ types }) {
   return {
     visitor: {

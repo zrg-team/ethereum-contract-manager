@@ -8,6 +8,11 @@ import { descrypt } from '../../../common/utils/encrypt'
 import { ProjectFactory } from '../../../libraries/project-factory'
 import { MODULE_NAME as MODULE_PROJECT } from '../../project/model'
 import { MODULE_NAME as MODULE_COMPILER } from '../model'
+import TestEngine from '../../../common/utils/testEngine'
+const chai = require('chai')
+const expect = chai.expect
+const should = chai.should()
+const assert = chai.assert
 
 const mapDispatchToProps = (dispatch, props) => ({
   compileSource: async (code, compiler) => {
@@ -32,6 +37,16 @@ const mapDispatchToProps = (dispatch, props) => ({
     return factory
   },
   createSanboxCompiler: (factory) => {
+    const test = new TestEngine()
+    const global = {
+      describe: (name, callback) => test.describe(name, callback),
+      it: (name, callback) => test.it(name, callback),
+      $result: test.cases,
+      $test: test,
+      expect,
+      should,
+      assert
+    }
     if (factory) {
       return new Sandbox({
         $factory: factory,
@@ -43,10 +58,11 @@ const mapDispatchToProps = (dispatch, props) => ({
         awaitResult: factory.awaitResult,
         transactions: factory.transactions,
         responseObservable: factory.responseObservable,
-        ...factory.contracts
+        ...factory.contracts,
+        ...global
       })
     }
-    return new Sandbox({})
+    return new Sandbox(global)
   },
   getProjectRuntime: async (item, password) => {
     try {

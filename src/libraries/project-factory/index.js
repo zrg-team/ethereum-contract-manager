@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs'
+import { Subject } from 'rxjs'
 import { Contract } from './contract'
 import { Account } from './account'
 import {
@@ -17,39 +17,47 @@ export class ProjectFactory {
     this.processIntance = null
   }
   init () {
-    this.responseObservable = new Observable((observer) => {
-      const interval = this.process(observer)
-      return () => clearInterval(interval)
-    })
-    this.responseObservable.toPromise()
+    this.responseSubject = new Subject()
+    this.process()
     return true
   }
   reset () {
-    this.transactions = []
-    this.subscribers && this.subscribers.forEach(item => {
-      item && item.unsubscribe()
-    })
-    this.subscribers = []
+    try {
+      this.transactions = []
+      Object.keys(this.subscribers).forEach(key => {
+        this.subscribers[key] && this.subscribers[key].unsubscribe()
+      })
+      this.subscribers = []
+    } catch (err) {
+      this.transactions = []
+      this.subscribers = []
+    }
   }
-  process (observer) {
-    return setInterval(async () => {
-      try {
-        const results = await Promise.all(this.transactions.map(async transaction => {
-          const result = await getTransactionReceipt(this.project, transaction)
-          if (result && !result.error) {
-            observer.next(result)
-            return null
-          } else if (result && result.message === 'INVALID_RETURN_PATH') {
-            return transaction
-          } else {
-            observer.error(result.message)
-            return undefined
-          }
-        }))
-        this.transactions = results.filter(item => item)
-      } catch (error) {
-      }
-    }, 10000)
+  async process () {
+    if (this.processTimeout) {
+      clearTimeout(this.processTimeout)
+      this.processTimeout = null
+    }
+    this.processTimeout = setTimeout(() => this.checkTransaction(this.process), 10000)
+  }
+  async checkTransaction () {
+    try {
+      const results = await Promise.all(this.transactions.map(async transaction => {
+        const result = await getTransactionReceipt(this.project, transaction)
+        if (result && !result.error) {
+          this.responseSubject.next(result)
+          return null
+        } else if (result && result.message === 'INVALID_RETURN_PATH') {
+          return transaction
+        } else {
+          this.responseSubject.error(result.message)
+          return undefined
+        }
+      }))
+      this.transactions = results.filter(item => item)
+    } catch (error) {
+    }
+    this.process()
   }
   prepareContract () {
     this.contracts = this.project.contracts.reduce((all, item) => {
@@ -128,16 +136,22 @@ export class ProjectFactory {
       const timeout = setTimeout(() => {
         reject(new Error('TIMEOUT'))
       }, 60000)
-      this.subscribers.push(this.responseObservable.subscribe(
+      const key = new Date().getTime()
+      const subscriber = this.responseSubject.subscribe(
         (data) => {
           clearTimeout(timeout)
+          subscriber.unsubscribe()
+          delete this.subscribers[key]
           resolve(data)
         },
         (err) => {
           clearTimeout(timeout)
+          subscriber.unsubscribe()
+          delete this.subscribers[key]
           reject(err)
         }
-      ))
+      )
+      this.subscribers[key] = subscriber
     })
   }
   submitContract (contract, functionName, inputs, account, valueSend) {

@@ -51,8 +51,8 @@ export const DEFAULT_HELP_DATA = {
   * Data Types: Supported data types
   * Functions: Global functions
 ## Project API document
-  * How to view contract data
-  * How to excuse contract function
+  * How to view contract data ?
+  * How to excuse contract function ?
 `,
   'basic-overview': `
   This sandbox compiler using **javascript** as primary language

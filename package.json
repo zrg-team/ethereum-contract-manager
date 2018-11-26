@@ -23,6 +23,7 @@
     "localforage": "^1.7.2",
     "lodash": "^4.17.11",
     "markdown-to-jsx": "^6.8.1",
+    "mocha": "^5.2.0",
     "moment": "^2.22.2",
     "react": "^16.5.2",
     "react-ace": "^6.2.0",

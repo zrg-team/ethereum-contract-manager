@@ -49,25 +49,35 @@ class CodeResult extends React.Component {
 `
       runtime.contracts.forEach((item) => {
         data += `
-  Name: ${item.name}
+---
+
+  **${item.name}**
 
   Address: ${item.address}
 
   Functions:
+
+`
+        let abi = []
+        try {
+          abi = JSON.parse(item.abi)
+          data += `
 
 <div style='overflow-x: scroll'>
 
 | Name | Input types | Input name | Output type | Output name |
 | ------- | ------- | ------- | ------- | ------- |
 `
-        const abi = JSON.parse(item.abi)
-        abi.forEach((functionItem) => {
-          functionItem.inputs = functionItem.inputs || []
-          functionItem.outputs = functionItem.outputs || []
-          data += `| ${functionItem.name || ''} | ${functionItem.inputs.map(i => i.type)} | ${functionItem.inputs.map(i => i.name)} | ${functionItem.outputs.map(i => i.type)} | ${functionItem.outputs.map(i => i.name)} |\n`
-        })
-
-        data += '</div>'
+          abi.forEach((functionItem) => {
+            functionItem.inputs = functionItem.inputs || []
+            functionItem.outputs = functionItem.outputs || []
+            data += `| ${functionItem.name || ''} | ${functionItem.inputs.map(i => i.type)} | ${functionItem.inputs.map(i => i.name)} | ${functionItem.outputs.map(i => i.type)} | ${functionItem.outputs.map(i => i.name)} |\n`
+          })
+          data += `
+</div>
+`
+        } catch (err) {
+        }
       })
       return this.setState({
         helpType,
@@ -120,7 +130,7 @@ ${item.message}\n`
           defaultActiveKey={['result']}
         >
           <Collapse.Panel
-            header='Result'
+            header='RESULT'
             key='result'
           >
             <div
@@ -142,7 +152,7 @@ ${markdown}
               />
             </div>
           </Collapse.Panel>
-          <Collapse.Panel header='Help' key='helper'>
+          <Collapse.Panel header='HELP' key='helper'>
             <TreeSelect
               style={{ width: '100%' }}
               value={helpType}

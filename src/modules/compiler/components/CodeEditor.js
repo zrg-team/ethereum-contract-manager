@@ -5,6 +5,7 @@ import 'brace/mode/javascript'
 import 'brace/theme/monokai'
 import AceEditor from 'react-ace'
 import {
+  Tabs,
   Icon,
   Menu,
   Button,
@@ -51,7 +52,7 @@ class CodeEditor extends React.Component {
             accept='application/javascript'
             style={{ width: 0, height: 0, overflow: 'hidden' }}
           />
-          <Icon type='save' /> Save
+          <Icon type='save' style={{ marginRight: 10 }} /> Save
         </Menu.Item>
       </Menu>
     )
