@@ -1,8 +1,9 @@
 import { handleActions } from 'redux-actions'
 import * as actions from './actions'
+import { DEFAULT_LOGO } from './model'
 
 const defaultState = {
-  outputs: [],
+  outputs: [DEFAULT_LOGO],
   runtime: null
 }
 

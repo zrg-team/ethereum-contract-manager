@@ -182,7 +182,7 @@ class CodeEditor extends React.Component {
             }}
           />
         </div>
-        <div style={{ height: 40, marginTop: 5, display: 'flex', flexDirection: 'row' }}>
+        <div style={{ height: 40, marginTop: 10, display: 'flex', flexDirection: 'row' }}>
           <Dropdown overlay={this.menu} placement='bottomCenter'>
             <Button type='primary' shape='circle-outline'>
               <Icon type='file' width='3em' height='3em' style={{ paddingBottom: 10 }} />
@@ -210,7 +210,7 @@ class CodeEditor extends React.Component {
             disabled={!ready}
             onClick={this.onCompile}
           >
-            Compile
+            Run
           </Button>
         </div>
       </div>
