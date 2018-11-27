@@ -50,7 +50,10 @@ export class ProjectFactory {
         } else if (result && result.message === 'INVALID_RETURN_PATH') {
           return transaction
         } else {
-          this.responseSubject.error(result.message)
+          this.responseSubject.error({
+            data: { transactionHash: transaction },
+            error: result.message
+          })
           return undefined
         }
       }))
@@ -122,13 +125,40 @@ export class ProjectFactory {
       })
       if (transaction) {
         this.transactions.push(transaction)
-        return this.awaitResult()
+        return this.awaitResult(transaction)
       }
       throw new Error('INVALID_RETURN')
     } catch (err) {
     }
   }
-  awaitResult () {
+  async submitAsync ({
+    inputs,
+    account,
+    contract,
+    valueSend,
+    functionName
+  }) {
+    try {
+      if (typeof contract === 'string') {
+        contract = this.contracts[contract]
+      }
+      if (typeof account === 'string') {
+        account = this.accounts[account]
+      }
+      const transaction = await account.submit(this.project, {
+        inputs,
+        contract,
+        valueSend,
+        functionName
+      })
+      if (transaction) {
+        return transaction
+      }
+      throw new Error('INVALID_RETURN')
+    } catch (err) {
+    }
+  }
+  awaitResult (transaction) {
     return new Promise((resolve, reject) => {
       if (!this.transactions.length) {
         throw new Error('TRANSACTION_MISSING')
@@ -139,16 +169,22 @@ export class ProjectFactory {
       const key = new Date().getTime()
       const subscriber = this.responseSubject.subscribe(
         (data) => {
+          if (transaction !== data.transactionHash) {
+            return false
+          }
           clearTimeout(timeout)
           subscriber.unsubscribe()
           delete this.subscribers[key]
           resolve(data)
         },
-        (err) => {
+        ({ data, error }) => {
+          if (transaction !== data.transactionHash) {
+            return false
+          }
           clearTimeout(timeout)
           subscriber.unsubscribe()
           delete this.subscribers[key]
-          reject(err)
+          reject(error)
         }
       )
       this.subscribers[key] = subscriber
@@ -163,7 +199,7 @@ export class ProjectFactory {
       functionName
     }).then(async transaction => {
       this.transactions.push(transaction)
-      return this.awaitResult()
+      return this.awaitResult(transaction)
     })
   }
 }

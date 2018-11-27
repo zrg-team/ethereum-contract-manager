@@ -3,7 +3,7 @@ import * as actions from './actions'
 import { DEFAULT_LOGO } from './model'
 
 const defaultState = {
-  outputs: [DEFAULT_LOGO],
+  outputs: [{ message: DEFAULT_LOGO }],
   runtime: null
 }
 
