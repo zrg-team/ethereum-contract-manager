@@ -1,3 +1,4 @@
+import moment from 'moment'
 import units from 'ethereumjs-units'
 import { BigNumber } from 'bignumber.js'
 
@@ -27,4 +28,10 @@ export function formatCrypto (value, digits = 6) {
 export function fromWei (value, to = 'eth') {
   const result = new BigNumber(`${units.convert(`${value}`, 'wei', to)}`)
   return result.toFixed()
+}
+
+export function formatSecondDuration (time) {
+  const duration = moment.duration(time)
+  const seconds = +duration.asSeconds() > 10 ? duration.asSeconds() : `0${duration.asSeconds()}`
+  return `${formatCrypto(seconds, 3)} seconds`
 }

@@ -5,7 +5,6 @@ import 'brace/mode/javascript'
 import 'brace/theme/monokai'
 import AceEditor from 'react-ace'
 import {
-  Tabs,
   Icon,
   Menu,
   Button,
@@ -185,7 +184,9 @@ class CodeEditor extends React.Component {
         </div>
         <div style={{ height: 40, marginTop: 5, display: 'flex', flexDirection: 'row' }}>
           <Dropdown overlay={this.menu} placement='bottomCenter'>
-            <Button style={{ width: 60, marginRight: 5 }}>File</Button>
+            <Button type='primary' shape='circle-outline'>
+              <Icon type='file' width='3em' height='3em' style={{ paddingBottom: 10 }} />
+            </Button>
           </Dropdown>
           <Select
             value={projectId}
@@ -205,8 +206,7 @@ class CodeEditor extends React.Component {
           </Select>
           <Button
             style={{ marginLeft: 5, flex: 1 }}
-            title='Compile'
-            color='primary'
+            type='primary'
             disabled={!ready}
             onClick={this.onCompile}
           >

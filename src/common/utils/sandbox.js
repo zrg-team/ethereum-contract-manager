@@ -1,13 +1,18 @@
 import axios from 'axios'
 import moment from 'moment'
-import units from 'ethereumjs-units'
-import { BigNumber } from 'bignumber.js'
 import { Observable } from 'rxjs'
+import units from 'ethereumjs-units'
+import TestEngine from './testEngine'
+import { BigNumber } from 'bignumber.js'
 import { TYPES, covertMessage } from './message'
 import plugin, { pluginName } from '../../libraries/babel-plugin-convert-call'
 
 const babel = require('@babel/standalone')
 const sanboxEngine = require('../../libraries/sanbox-core-engine')
+const chai = require('chai')
+const expect = chai.expect
+const should = chai.should()
+const assert = chai.assert
 
 const DEFAULT_PRESETS = [
   'es2017',
@@ -40,7 +45,7 @@ export default class Sandbox {
     this.responseObservable = new Observable((observer) => {
       this.responseObserver = observer
     })
-
+    this.testEngine = new TestEngine()
     this.global = this.prepareGlobalObjects(global || {})
     babel.registerPlugin(pluginName, plugin)
   }
@@ -112,8 +117,13 @@ export default class Sandbox {
     return {
       units,
       moment,
+      expect,
+      should,
+      assert,
       BigNumber,
       fetch: axios,
+      $test: this.testEngine,
+      $result: this.testEngine.cases,
       clearInterval: (item) => {
         clearInterval(item)
       },
@@ -145,6 +155,22 @@ export default class Sandbox {
         table: (message) => {
           this.sendOutput(TYPES.table, message)
         }
+      },
+      it: (name, callback) => this.testEngine.it(name, callback),
+      test: (name, callback) => this.testEngine.it(name, callback),
+      describe: (name, callback) => {
+        return this.testEngine.describe(
+          name,
+          callback,
+          (message) => this.sendOutput(TYPES.testcase, message)
+        )
+      },
+      suite: (name, callback) => {
+        return this.testEngine.describe(
+          name,
+          callback,
+          (message) => this.sendOutput(TYPES.testcase, message)
+        )
       }
     }
   }

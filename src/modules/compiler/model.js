@@ -20,7 +20,7 @@ export const DEFAULT_HELP_TREE = [{
     }
   ]
 }, {
-  title: 'Project API',
+  title: 'Blockchain API',
   value: 'api',
   key: 'api',
   children: [
@@ -42,6 +42,25 @@ export const DEFAULT_HELP_TREE = [{
       key: 'api-functions'
     }
   ]
+}, {
+  title: 'Testing API',
+  value: 'test-api',
+  key: 'test-api',
+  children: [
+    {
+      title: 'Overview',
+      value: 'test-overview',
+      key: 'test-overview'
+    }, {
+      title: 'Assert',
+      value: 'test-assert',
+      key: 'test-assert'
+    }, {
+      title: 'Expect',
+      value: 'test-expect',
+      key: 'test-expect'
+    }
+  ]
 }]
 
 export const DEFAULT_HELP_DATA = {
@@ -50,9 +69,12 @@ export const DEFAULT_HELP_DATA = {
   * Overview: About compiler
   * Data Types: Supported data types
   * Functions: Global functions
-## Project API document
+## Blockchain API documents
   * How to view contract data ?
   * How to excuse contract function ?
+## Testing API documents
+  * How to write unit test on deployed contract ?
+  * Assert and Expect api
 `,
   'basic-overview': `
   This sandbox compiler using **javascript** as primary language
@@ -239,5 +261,89 @@ async function main () {
   }
 }
 \`\`\`
+`,
+  'test-overview': `
+  We supported a simple test framework running on compiler, making asynchronous testing simple and fun.
+  It tests run serially, allowing for flexible and accurate reporting, while mapping uncaught exceptions to the correct test case
+
+### EXAMPLE:
+\`\`\`javascript
+describe('Test Math Function', () => {
+  it('Add work fine', async () => {
+    const value = 2 + 2
+    expect(value).to.equal(4)
+  })
+})
+// OR
+suite('Test Math Function', () => {
+  test('Array Contain', async () => {
+    const shoppingList = [
+      'diapers',
+      'kleenex',
+      'trash bags',
+      'paper towels',
+      'beer',
+    ]
+    expect(shoppingList).toContain('beer')
+  })
+})
+\`\`\`
+
+## ASYNCHRONOUS CODE
+Testing asynchronous code could not be simpler! Simply invoke the callback when your test is complete.
+By adding a callback (usually named done) to it(), It will know that it should wait for this function to be called to complete the test.
+This callback accepts both an Error instance (or subclass thereof) or a falsy value; anything else will cause a failed test.
+
+\`\`\`javascript
+describe('Test payout contract', () => {
+  it('is Allow Withdraw', async () => {
+    const isAllow = await view({
+      inputs: [],
+      contract: Payout,
+      functionName: 'isAllowed'
+    })
+    expect(isAllow[0].value).to.equal(false)
+  })
+})
+\`\`\`
+`,
+  'test-assert': `
+  The assert style is exposed through assert interface. This provides the classic assert-dot notation, similar to that packaged with node.js.
+  This assert module, however, provides several additional tests and is browser compatible
+  In all cases, the assert style allows you to include an optional message as the last parameter in the assert statement.
+  These will be included in the error messages should your assertion not pass.
+
+\`\`\`javascript
+var assert = require('chai').assert
+  , foo = 'bar'
+  , beverages = { tea: [ 'chai', 'matcha', 'oolong' ] };
+
+assert.typeOf(foo, 'string'); // without optional message
+assert.typeOf(foo, 'string', 'foo is a string'); // with optional message
+assert.equal(foo, 'bar', 'foo equal "bar"');
+assert.lengthOf(foo, 3, 'foo's value has a length of 3');
+assert.lengthOf(beverages.tea, 3, 'beverages has 3 types of tea');
+\`\`\`
+
+* [More Information][information]
+[information]: https://www.chaijs.com/api/assert/
+`,
+  'test-expect': `
+  The BDD style is exposed through expect or should interfaces. In both scenarios, you chain together natural language assertions.
+\`\`\`javascript
+var expect = require('chai').expect
+  , foo = 'bar'
+  , beverages = { tea: [ 'chai', 'matcha', 'oolong' ] };
+
+expect(foo).to.be.a('string');
+expect(foo).to.equal('bar');
+expect(foo).to.have.lengthOf(3);
+expect(beverages).to.have.property('tea').with.lengthOf(3);
+\`\`\`
+  Expect also allows you to include arbitrary messages to prepend to any failed assertions that might occur.
+  This comes in handy when being used with non-descript topics such as booleans or numbers.
+
+  * [More Information][information]
+[information]: https://www.chaijs.com/api/bdd/
 `
 }

@@ -12,6 +12,5 @@ async function main () {
       expect(isAllow[0].value).to.equal(false)
     })
   })
-  console.native($result)
 }
 main()
