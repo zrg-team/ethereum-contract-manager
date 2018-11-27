@@ -12,15 +12,15 @@ self.__precacheManifest = [
     "url": "/ethereum-contract-manager/static/js/runtime~main.f814758f.js"
   },
   {
-    "revision": "88b89530d2687479d706",
-    "url": "/ethereum-contract-manager/static/js/main.88b89530.chunk.js"
+    "revision": "4f41b99807a8b7e590da",
+    "url": "/ethereum-contract-manager/static/js/main.4f41b998.chunk.js"
   },
   {
     "revision": "1c7f90350bb29dcac5d3",
     "url": "/ethereum-contract-manager/static/js/1.1c7f9035.chunk.js"
   },
   {
-    "revision": "88b89530d2687479d706",
+    "revision": "4f41b99807a8b7e590da",
     "url": "/ethereum-contract-manager/static/css/main.62c2305c.chunk.css"
   },
   {
@@ -28,7 +28,7 @@ self.__precacheManifest = [
     "url": "/ethereum-contract-manager/static/css/1.8fa8fb8c.chunk.css"
   },
   {
-    "revision": "b536793610681c2268b7c2dbdf8e99ab",
+    "revision": "0e1e24c8448427129192cf71671df9eb",
     "url": "/ethereum-contract-manager/index.html"
   }
 ];
