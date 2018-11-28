@@ -37,14 +37,13 @@ const mapDispatchToProps = (dispatch, props) => ({
     if (factory) {
       return new Sandbox({
         $factory: factory,
-        view: (params) => factory.view(params),
-        submit: (params) => factory.submit(params),
-        project: factory.project,
-        accounts: factory.accounts,
-        subscribers: factory.subscribers,
-        awaitResult: factory.awaitResult,
-        transactions: factory.transactions,
-        responseObservable: factory.responseObservable,
+        $view: (params) => factory.view(params),
+        $submit: (params) => factory.submit(params),
+        $project: factory.project,
+        $accounts: factory.accounts,
+        $subscribers: factory.subscribers,
+        $transactions: factory.transactions,
+        $responseObservable: factory.responseObservable,
         ...factory.contracts,
         ...global
       })

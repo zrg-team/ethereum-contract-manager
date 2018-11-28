@@ -112,6 +112,8 @@ export const DEFAULT_HELP_DATA = {
 ## Testing API documents
   * How to write unit test on deployed contract ?
   * Assert and Expect api
+** Noted :** All injected function have "$" at prefix
+Example: $accounts, $view, $submit, $project, etc
 `,
   'basic-overview': `
   This sandbox compiler using **javascript** as primary language
@@ -190,7 +192,7 @@ export const DEFAULT_HELP_DATA = {
 \`\`\`javascript
 // Project including Erc20 Token contract named "FreeToken"
 console.log(FreeToken.address) // return '0x41...'
-onsole.log(FreeToken.abi) // return '[...]'
+console.log(FreeToken.abi) // return '[...]'
 \`\`\`
 
 ## Support functions:
@@ -235,57 +237,57 @@ main()
 async function main () {
   // Automatic transaction
   const result = await accounts.user1.submit(
-    $factory.project,
+    $project,
     {
-      inputs: [accounts.user2.address, +units.convert(1, 'eth', 'wei')],
+      inputs: [$accounts.user2.address, +units.convert(1, 'eth', 'wei')],
       contract: FreeToken,
       functionName: 'transfer',
       valueSend: 0
     }
   )
   // Manual transaction
-  const nonce = await accounts.user2.getNonceAddress($factory.project)
+  const nonce = await $accounts.user2.getNonceAddress($factory.project)
   const functionTransfer = FreeToken.functions.find(item => item.name === 'transfer')
-  const raw = accounts.user2.createRawTransaction({
-    to: accounts.user1.address,
-    from: accounts.user2.address,
+  const raw = $accounts.user2.createRawTransaction({
+    to: $accounts.user1.address,
+    from: $accounts.user2.address,
     value: 0x0,
     nonce,
     gasLimit: 8000000,
     gasPrice: 20 * 1000000000,
     functionName: 'transfer',
-    privateKey: accounts.user2.privateKey,
+    privateKey: $accounts.user2.privateKey,
     typeParams: functionTransfer.inputs.map(item => item.type),
-    functionParams: [accounts.user1.address, +units.convert(1, 'eth', 'wei')]
+    functionParams: [$accounts.user1.address, +units.convert(1, 'eth', 'wei')]
   })
-  accounts.user2.submitTransaction($factory.project, raw)
+  $accounts.user2.submitTransaction($factory.project, raw)
 }
 \`\`\`
 `,
   'api-functions': `
 ## Global Functions:
-  * view: get data from contract
-  * submit: submit transaction
+  * $view: get data from contract
+  * $submit: submit transaction
 
 ### Example:
 \`\`\`javascript
 async function main () {
   try {
-    const isAllow = await view({
+    const isAllow = await $view({
       inputs: [],
       contract: Payout,
       functionName: 'isAllowed'
     })
     let result = null
     if (isAllow[0] && !isAllow[0].value) {
-      result = await submit({
+      result = await $submit({
         inputs: [],
         account: accounts.ESCROW,
         contract: Payout,
         functionName: 'allowPayout'
       })
     } else {
-      result = await submit({
+      result = await $submit({
         inputs: [],
         account: accounts.ESCROW,
         contract: Payout,

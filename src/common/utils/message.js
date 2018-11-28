@@ -56,7 +56,7 @@ ${message}
 
 <div style='overflow-x: scroll'>
 
-| Index | Result | 📒 Case | 📖 Message | 🕛 Time |
+| Index | Result | Case | Message | Time |
 | ------- | ------- | ------- | ------- | ------- |
 `
         message.cases.forEach((item, index) => {
