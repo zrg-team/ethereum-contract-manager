@@ -10,7 +10,7 @@ With **Ethereum Contract Management** we have **Project**, **Project** includes 
 
 You Can Create and encrypt **Project's** file with your password and share it to another user
 
-**Ethereum Contract Management** supported a sandbox compiler which posible to write a script to interact with smart contract or write unit on deployed contract
+**Ethereum Contract Management** supported a sandbox compiler which posible to write a script to interact with smart contract or write unit on deployed contract (document: https://github.com/zrg-team/ethereum-contract-manager/blob/develop/documents/SANDBOX.md)
 
 ## Version
 
