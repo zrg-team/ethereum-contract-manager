@@ -62,9 +62,9 @@ export function getContractView (project, data) {
     url,
     ...parseRequestConfig('ethCallRequest', project, [data.address, `0x${raw}`])
   })
-  .then(response => {
-    return parseRequestResponse('ethCallRequest', project, response)
-  })
+    .then(response => {
+      return parseRequestResponse('ethCallRequest', project, response)
+    })
 }
 
 export function submitFunctionTransaction (project, hex) {
@@ -73,9 +73,9 @@ export function submitFunctionTransaction (project, hex) {
     url,
     ...parseRequestConfig('transactionRequest', project, [hex])
   })
-  .then(response => {
-    return parseRequestResponse('transactionRequest', project, response)
-  })
+    .then(response => {
+      return parseRequestResponse('transactionRequest', project, response)
+    })
 }
 
 export function getNonce (project, address) {
@@ -84,9 +84,9 @@ export function getNonce (project, address) {
     url,
     ...parseRequestConfig('nonceRequest', project, [address])
   })
-  .then(response => {
-    return parseRequestResponse('nonceRequest', project, response)
-  })
+    .then(response => {
+      return parseRequestResponse('nonceRequest', project, response)
+    })
 }
 
 export function getTransactionReceipt (project, txhash) {
@@ -95,9 +95,9 @@ export function getTransactionReceipt (project, txhash) {
     url,
     ...parseRequestConfig('receiptRequest', project, [`${txhash}`])
   })
-  .then(response => {
-    return parseRequestResponse('receiptRequest', project, response)
-  }).catch(err => {
-    return { error: true, message: err.message }
-  })
+    .then(response => {
+      return parseRequestResponse('receiptRequest', project, response)
+    }).catch(err => {
+      return { error: true, message: err.message }
+    })
 }

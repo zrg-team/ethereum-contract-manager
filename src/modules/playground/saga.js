@@ -56,7 +56,7 @@ function * onEventListenerRequest () {
     yield web3.connectToContracts(currentProject.contracts)
     const channel = yield call(eventHandler, currentProject)
     while (true) {
-      const { type, result, contract } = yield take(channel)
+      const { type, result } = yield take(channel)
       let { transactions } = yield select(state => state[MODULE_PROJECT])
       switch (type) {
         case CONTRACT_EVENT:

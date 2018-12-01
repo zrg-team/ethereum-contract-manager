@@ -18,13 +18,13 @@ function parseRequestConfig (mode, project, data) {
       return { ...all, [`${item}`.replace('header_', '')]: headerValues[item] }
     }, {}),
     params: method === 'get'
-        ? params.reduce((all, item, index) => {
-          let value = paramValues[item]
-          if (data[index]) {
-            value = data[index]
-          }
-          return { ...all, [`${item}`.replace('param_', '')]: value }
-        }, {})
+      ? params.reduce((all, item, index) => {
+        let value = paramValues[item]
+        if (data[index]) {
+          value = data[index]
+        }
+        return { ...all, [`${item}`.replace('param_', '')]: value }
+      }, {})
       : {},
     data: method === 'get'
       ? {}
@@ -67,9 +67,9 @@ export function getContractView (project, data) {
       ...parseRequestConfig('ethCallRequest', project, [data.address, `0x${raw}`])
     }
   })
-  .then(response => {
-    return parseRequestResponse('ethCallRequest', project, response)
-  })
+    .then(response => {
+      return parseRequestResponse('ethCallRequest', project, response)
+    })
 }
 
 export function submitFunctionTransaction (project, hex) {
@@ -80,9 +80,9 @@ export function submitFunctionTransaction (project, hex) {
       ...parseRequestConfig('transactionRequest', project, [hex])
     }
   })
-  .then(response => {
-    return parseRequestResponse('transactionRequest', project, response)
-  })
+    .then(response => {
+      return parseRequestResponse('transactionRequest', project, response)
+    })
 }
 
 export function getNonce (project, address) {
@@ -93,9 +93,9 @@ export function getNonce (project, address) {
       ...parseRequestConfig('nonceRequest', project, [address])
     }
   })
-  .then(response => {
-    return parseRequestResponse('nonceRequest', project, response)
-  })
+    .then(response => {
+      return parseRequestResponse('nonceRequest', project, response)
+    })
 }
 
 export function getTransactionReceipt (project, txhash) {
@@ -106,7 +106,7 @@ export function getTransactionReceipt (project, txhash) {
       ...parseRequestConfig('receiptRequest', project, [`${txhash}`])
     }
   })
-  .then(response => {
-    return parseRequestResponse('receiptRequest', project, response)
-  })
+    .then(response => {
+      return parseRequestResponse('receiptRequest', project, response)
+    })
 }

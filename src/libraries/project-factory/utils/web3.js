@@ -65,7 +65,7 @@ const sendRawTransactionUsingFullnode = async (raw) => {
 }
 
 const contractListener = (address, callback, fromBlock = 0) => {
-  const events = contracts[address].allEvents({fromBlock, toBlock: 'latest'})
+  const events = contracts[address].allEvents({ fromBlock, toBlock: 'latest' })
   events.watch((error, result) => {
     callback(error, result)
   })
@@ -77,7 +77,7 @@ const getCurrentBlock = () => {
   return block
 }
 
-const newBlockListener = (callback, address, fromBlock = 0) => {
+const newBlockListener = (functionCallback, address, fromBlock = 0) => {
   if (blockListenInstance) {
     blockListenInstance.stopWatching()
     blockListenInstance = null
@@ -88,7 +88,7 @@ const newBlockListener = (callback, address, fromBlock = 0) => {
     address: address
   })
   blockListenInstance.watch(function (error, result) {
-    callback({ error, result, address })
+    functionCallback({ error, result, address })
   })
   return blockListenInstance
 }

@@ -4,6 +4,7 @@ import { Account } from './account'
 import {
   getTransactionReceipt
 } from './utils/apis'
+import web3 from './utils/web3'
 
 export class ProjectFactory {
   constructor (project) {
@@ -15,6 +16,7 @@ export class ProjectFactory {
     this.transactions = []
     this.subscribers = []
     this.processIntance = null
+    this.web3 = null
   }
   init () {
     this.responseSubject = new Subject()
@@ -34,11 +36,25 @@ export class ProjectFactory {
     }
   }
   async process () {
-    if (this.processTimeout) {
-      clearTimeout(this.processTimeout)
-      this.processTimeout = null
+    if (this.project.general && this.project.general.fullnode) {
+      if (this.processTimeout) {
+        this.processTimeout.stopWatching()
+        this.processTimeout = null
+      }
+      web3.init(this.project.general.fullnode)
+      const blockNumber = web3.getCurrentBlock()
+      this.processTimeout = web3.newBlockListener((data) => {
+        if (this.transactions.includes(data.transactionHash)) {
+          this.responseSubject.next(data)
+        }
+      }, undefined, blockNumber)
+    } else {
+      if (this.processTimeout) {
+        clearTimeout(this.processTimeout)
+        this.processTimeout = null
+      }
+      this.processTimeout = setTimeout(() => this.checkTransaction(this.process), 10000)
     }
-    this.processTimeout = setTimeout(() => this.checkTransaction(this.process), 10000)
   }
   async checkTransaction () {
     try {

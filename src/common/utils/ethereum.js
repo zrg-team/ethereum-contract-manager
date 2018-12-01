@@ -65,6 +65,7 @@ export function convertEthereumOutput (value, type) {
       return Number(value) === 1
     case 'address':
       return `${value}`.replace('0x000000000000000000000000', '0x')
+    case 'string':
     case 'bytes32':
       return web3Utils.toAscii(value)
     default:
