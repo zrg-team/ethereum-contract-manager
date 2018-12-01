@@ -152,7 +152,7 @@ ${markdown}
               />
             </div>
           </Collapse.Panel>
-          <Collapse.Panel header='HELP' key='helper'>
+          <Collapse.Panel header='DOCUMENTS' key='helper'>
             <TreeSelect
               style={{ width: '100%' }}
               value={helpType}
