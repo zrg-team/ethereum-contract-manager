@@ -10,9 +10,11 @@ With **Ethereum Contract Management** we have **Project**, **Project** includes 
 
 You Can Create and encrypt **Project's** file with your password and share it to another user
 
+**Ethereum Contract Management** supported a sandbox compiler which posible to write a script to interact with smart contract or write unit on deployed contract
+
 ## Version
 
-  v0.4.2
+  v0.6.2
   
 ## Technology
 
@@ -29,10 +31,13 @@ You Can Create and encrypt **Project's** file with your password and share it to
   * ethereumjs-util: https://github.com/ethereumjs/ethereumjs-util
   * ethereumjs-wallet: https://github.com/ethereumjs/ethereumjs-wallet
   * ethereumjs-abi: https://github.com/ethereumjs/ethereumjs-abi
+  * chaijs: http://chaijs.com
 
 ## Develop
   Github: https://github.com/zrg-team/ethereum-contract-manager
 ## Author
-
   [HungDT](https://zrg-team.github.io/store/)
-
+## Demo
+  [rosten_project](https://github.com/zrg-team/ethereum-contract-manager/blob/develop/src/assets/data/test.json)
+  password: test123
+  powered by: etherscan
