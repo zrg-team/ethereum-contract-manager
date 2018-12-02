@@ -27,7 +27,7 @@ class NewContract extends React.Component {
         try {
           const { abi } = this.state
           onSubmit && onSubmit({
-            key: `${values.contractName}`.replace(/\s/g, '_'),
+            key: `${values.contractName}`.replace(/\s/g, '_').toLowerCase(),
             name: values.contractName,
             address: values.contractAddress,
             abi: abi

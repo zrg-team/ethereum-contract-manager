@@ -36,11 +36,11 @@ class CodeResult extends React.Component {
 
 <div style='overflow-x: scroll'>
 
-| Index | Name | Address |
-| ------- | ------- | ------- |
+| Index | Name | Name | Address |
+| ------- | ------- | ------- | ------- |
 `
       runtime.accounts.forEach((item, index) => {
-        data += `| ${index} | ${item.name} | ${item.address} |\n`
+        data += `| ${index} | ${item.name} | ${item.key} | ${item.address} |\n`
       })
       data += `
 </div>
@@ -52,6 +52,8 @@ class CodeResult extends React.Component {
 ---
 
   **${item.name}**
+
+  Variable: ${item.key}
 
   Address: ${item.address}
 
