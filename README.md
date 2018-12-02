@@ -10,7 +10,22 @@ With **Ethereum Contract Management** we have **Project**, **Project** includes 
 
 You Can Create and encrypt **Project's** file with your password and share it to another user
 
-**Ethereum Contract Management** supported a sandbox compiler which posible to write a script to interact with smart contract or write unit on deployed contract (document: https://github.com/zrg-team/ethereum-contract-manager/blob/develop/documents/SANDBOX.md)
+**Ethereum Contract Management** supported a sandbox compiler which posible to write a script to interact with smart contract or write unit on deployed contract 
+
+[READ MORE DOCUMENTS](https://github.com/zrg-team/ethereum-contract-manager/blob/develop/documents/SANDBOX.md)
+
+![alt dashboard](https://raw.githubusercontent.com/zrg-team/ethereum-contract-manager/develop/documents/images/dashboard.png "Dashboard Screen")
+
+![alt playground](https://raw.githubusercontent.com/zrg-team/ethereum-contract-manager/develop/documents/images/get_values.gif "Get Value From Smart Contract")
+
+![alt sandbox](https://raw.githubusercontent.com/zrg-team/ethereum-contract-manager/develop/documents/images/sandbox.gif "Sandbox Screen")
+
+## Test Data
+  [rosten_project](https://raw.githubusercontent.com/zrg-team/ethereum-contract-manager/develop/src/assets/data/test.json)
+  
+  password: test123
+  
+  powered by: etherscan
 
 ## Version
 
@@ -37,9 +52,3 @@ You Can Create and encrypt **Project's** file with your password and share it to
   Github: https://github.com/zrg-team/ethereum-contract-manager
 ## Author
   [HungDT](https://zrg-team.github.io/store/)
-## Demo
-  [rosten_project](https://raw.githubusercontent.com/zrg-team/ethereum-contract-manager/develop/src/assets/data/test.json)
-  
-  password: test123
-  
-  powered by: etherscan
