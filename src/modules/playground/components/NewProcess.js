@@ -24,13 +24,15 @@ class NewProcess extends React.Component {
       values: {},
       result: null,
       inputs: [],
-      valueSend: ''
+      valueSend: '',
+      gasLimit: '1000000'
     }
     this.setStep = this.setStep.bind(this)
     this.nextStep = this.nextStep.bind(this)
     this.checkStep = this.checkStep.bind(this)
     this.renderStep = this.renderStep.bind(this)
     this.renderStepName = this.renderStepName.bind(this)
+    this.onChangeGasLimit = this.onChangeGasLimit.bind(this)
     this.onChangeValueSend = this.onChangeValueSend.bind(this)
     this.onChangeParamInput = this.onChangeParamInput.bind(this)
     this.handleChangeAccount = this.handleChangeAccount.bind(this)
@@ -44,6 +46,11 @@ class NewProcess extends React.Component {
   onChangeValueSend (event) {
     this.setState({
       valueSend: event.target.value
+    })
+  }
+  onChangeGasLimit (event) {
+    this.setState({
+      gasLimit: event.target.value
     })
   }
   setStep (step) {
@@ -76,7 +83,7 @@ class NewProcess extends React.Component {
     }
   }
   async nextStep () {
-    const { valueSend, inputs, step, values } = this.state
+    const { gasLimit, valueSend, inputs, step, values } = this.state
     const {
       fetchViewData,
       currentProject,
@@ -150,7 +157,7 @@ ${I18n.t('playground.output')}:
           from: values.account.address,
           value: `${valueSend}`.toString(16) || 0x0,
           nonce,
-          gasLimit: 8000000,
+          gasLimit: +gasLimit || 0,
           gasPrice: 20 * 1000000000,
           functionName: values.contractFunction.name,
           privateKey: values.account.privateKey,
@@ -266,7 +273,7 @@ ${raw}
     })
   }
   renderStep (step) {
-    const { valueSend, inputs, result, values } = this.state
+    const { gasLimit, valueSend, inputs, result, values } = this.state
     const { currentProject } = this.props
     switch (step) {
       case 0:
@@ -402,6 +409,13 @@ ${raw}
                 placeholder={I18n.t('playground.value')}
                 value={valueSend}
                 onChange={this.onChangeValueSend}
+              />
+            </Form.Item>
+            <Form.Item key={`gas_limit`}>
+              <Input
+                placeholder={I18n.t('playground.gas_limit')}
+                value={gasLimit}
+                onChange={this.onChangeGasLimit}
               />
             </Form.Item>
           </Card>

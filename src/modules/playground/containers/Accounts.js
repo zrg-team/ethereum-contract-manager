@@ -8,12 +8,15 @@ const mapDispatchToProps = (dispatch, props) => ({
   getAllBalance: async (accounts) => {
     try {
       const balances = accounts.reduce((all, account) => {
-        const balance = web3.getBalance(account.address)
+        let balance = 0
+        try {
+          balance = web3.getBalance(account.address)
+        } catch (err) {
+        }
         return { ...all, [account.address]: fromWei(balance.toFixed(), 'eth') }
       }, {})
       return balances
     } catch (err) {
-      console.error('getAllBalance', err)
       return null
     }
   }

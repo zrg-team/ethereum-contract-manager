@@ -13,7 +13,6 @@ const mapDispatchToProps = (dispatch, props) => ({
       }, {})
       return balances
     } catch (err) {
-      console.error('getAllBalance', err)
       return null
     }
   }
@@ -21,7 +20,6 @@ const mapDispatchToProps = (dispatch, props) => ({
 
 const mapStateToProps = state => {
   const currentProject = state[MODULE_DASHBOARD].currentProject || {}
-  console.log('>>>>>>', currentProject, currentProject.contracts)
   return {
     contracts: currentProject.contracts || []
   }

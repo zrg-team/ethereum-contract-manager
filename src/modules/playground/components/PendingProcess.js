@@ -62,7 +62,10 @@ ${JSON.stringify(item.response || {})}
   }
   renderItem (item) {
     const { general } = this.props
-    const transactionId = typeof item.transactionId === 'string' ? item.transactionId : ''
+    if (typeof item.transactionId !== 'string') {
+      return null
+    }
+    const transactionId = item.transactionId
     return (
       <List.Item
         key={item.transactionId}
