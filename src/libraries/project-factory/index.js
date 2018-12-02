@@ -80,12 +80,12 @@ export class ProjectFactory {
   }
   prepareContract () {
     this.contracts = this.project.contracts.reduce((all, item) => {
-      return { ...all, [item.name]: new Contract(item) }
+      return { ...all, [item.key]: new Contract(item) }
     }, {})
   }
   prepareAccount () {
     this.accounts = this.project.accounts.reduce((all, item) => {
-      return { ...all, [item.name]: new Account(item) }
+      return { ...all, [item.key]: new Account(item) }
     }, {})
   }
   contract (name) {

@@ -33,6 +33,7 @@ class NewAccount extends React.Component {
               wallet = ethereumAccount.fromKeystore(values.accountPrivate, values.accountPassword)
             }
             onSubmit && onSubmit({
+              key: `${values.accountName}`.replace(/\s/g, '_'),
               name: values.accountName,
               address: wallet.getAddressString(),
               privateKey: wallet.getPrivateKeyString(),
