@@ -46,7 +46,9 @@
 ## Testing API documents
   * How to write unit test on deployed contract ?
   * Assert and Expect api
-** Noted :** All injected function have "$" at prefix
+
+** Noted :** All injected function have "$" at a prefix
+
 Example: $accounts, $view, $submit, $project, etc
 
 # BASIC
@@ -58,54 +60,34 @@ This sandbox compiler using **javascript** as primary language
 
   **Please noted**: this compiler is not support fully javascript, harmful function are removed, DOM object also removed
 
-  [Read more][more]
-[more]: https://www.w3schools.com/js/
+  [Read more](https://www.w3schools.com/js/)
 
 # BASIC DATATYPES
 
   ## Supported Data Types:
-  * [String][string]
-[string]: https://www.w3schools.com/js/js_string_methods.asp
-  * [Object][object]
-[object]: https://www.w3schools.com/js/js_objects.asp
-  * [Array][array]
-[array]: https://www.w3schools.com/js/js_arrays.asp
-  * [Number][number]
-[number]: https://www.w3schools.com/js/js_numbers.asp
-  * [BigNumber][bignumber]
-[bignumber]: http://mikemcl.github.io/bignumber.js/
-  * [Symbol][symbol]
-[symbol]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol
-  * [Date][date]
-[date]: https://www.w3schools.com/js/js_dates.asp
-  * [Error][error]
-[error]: https://www.w3schools.com/js/js_errors.asp
-  * [Promise][promise]
-[promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+  * [String](https://www.w3schools.com/js/js_string_methods.asp)
+  * [Object](https://www.w3schools.com/js/js_objects.asp)
+  * [Array](https://www.w3schools.com/js/js_arrays.asp)
+  * [Number](https://www.w3schools.com/js/js_numbers.asp)
+  * [BigNumber](http://mikemcl.github.io/bignumber.js/)
+  * [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)
+  * [Date](https://www.w3schools.com/js/js_dates.asp)
+  * [Error](https://www.w3schools.com/js/js_errors.asp)
+  * [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
 # BASIC FUNCTIONS
 
   ## Supported Functions:
-  * [JSON][json]
-[json]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
-  * [Math][math]
-[math]: https://www.w3schools.com/js/js_math.asp
-  * [RegExp][reg]
-[reg]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp
-  * [units][unit] : convert ethereum unit library
-[unit]: https://github.com/ethereumjs/ethereumjs-units
-  * [moment][moment] : datetime library
-[moment]: https://momentjs.com/
-  * [fetch][axios] : fetch data library (axios)
-[axios]: https://github.com/axios/axios
-  * [clearInterval][clearI]
-[clearI]: https://www.w3schools.com/jsref/met_win_clearinterval.asp
-  * [setInterval][setI]
-[setI]: https://www.w3schools.com/jsref/met_win_setinterval.asp
-  * [setTimeout][setT]
-[setT]: https://www.w3schools.com/jsref/met_win_settimeout.asp
-  * [clearTimeout][clearT]
-[clearT]: https://www.w3schools.com/jsref/met_win_cleartimeout.asp
+  * [JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)
+  * [Math](https://www.w3schools.com/js/js_math.asp)
+  * [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)
+  * [units](https://github.com/ethereumjs/ethereumjs-units) : convert ethereum unit library
+  * [moment](https://momentjs.com/) : datetime library
+  * [fetch](https://github.com/axios/axios) : fetch data library (axios)
+  * [clearInterval](https://www.w3schools.com/jsref/met_win_clearinterval.asp)
+  * [setInterval](https://www.w3schools.com/jsref/met_win_setinterval.asp)
+  * [setTimeout](https://www.w3schools.com/jsref/met_win_settimeout.asp)
+  * [clearTimeout](https://www.w3schools.com/jsref/met_win_cleartimeout.asp)
   * console: including console.log, console.native, console.table
 
 # BLOCKCHAIN API
@@ -143,7 +125,7 @@ console.log(FreeToken.abi) // return '[...]'
 ```javascript
 // Project including Erc20 Token contract named "FreeToken"
 async function main () {
-  const result = await FreeToken.view($factory.project,
+  const result = await FreeToken.view($project,
     {
       inputs: '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae',
       functionName: 'balanceOf'
@@ -162,7 +144,7 @@ main()
 
 ### Example:
 ```javascript
-  console.log(JSON.stringify(accounts)) // return {"user1": { "address": "0x42...
+  console.log(JSON.stringify($accounts)) // return {"user1": { "address": "0x42...
 ```
 
 ## Support functions:
@@ -186,7 +168,7 @@ async function main () {
     }
   )
   // Manual transaction
-  const nonce = await $accounts.user2.getNonceAddress($factory.project)
+  const nonce = await $accounts.user2.getNonceAddress($project)
   const functionTransfer = FreeToken.functions.find(item => item.name === 'transfer')
   const raw = $accounts.user2.createRawTransaction({
     to: $accounts.user1.address,
@@ -307,8 +289,7 @@ assert.lengthOf(foo, 3, 'foo's value has a length of 3');
 assert.lengthOf(beverages.tea, 3, 'beverages has 3 types of tea');
 ```
 
-* [More Information][information]
-[information]: https://www.chaijs.com/api/assert/
+* [More Information](https://www.chaijs.com/api/assert/)
 
 # TESTING EXPECT
 
@@ -326,5 +307,4 @@ expect(beverages).to.have.property('tea').with.lengthOf(3);
   Expect also allows you to include arbitrary messages to prepend to any failed assertions that might occur.
   This comes in handy when being used with non-descript topics such as booleans or numbers.
 
-  * [More Information][information]
-[information]: https://www.chaijs.com/api/bdd/
+  * [More Information](https://www.chaijs.com/api/bdd/)
