@@ -38,6 +38,8 @@ You Can Create and encrypt **Project's** file with your password and share it to
 ## Author
   [HungDT](https://zrg-team.github.io/store/)
 ## Demo
-  [rosten_project](https://github.com/zrg-team/ethereum-contract-manager/blob/develop/src/assets/data/test.json)
+  [rosten_project](https://raw.githubusercontent.com/zrg-team/ethereum-contract-manager/develop/src/assets/data/test.json)
+  
   password: test123
+  
   powered by: etherscan
