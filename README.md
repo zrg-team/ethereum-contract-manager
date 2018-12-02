@@ -21,7 +21,7 @@ You Can Create and encrypt **Project's** file with your password and share it to
 ![alt sandbox](https://raw.githubusercontent.com/zrg-team/ethereum-contract-manager/develop/documents/images/sandbox.gif "Sandbox Screen")
 
 ## Test Data
-  [rosten_project](https://raw.githubusercontent.com/zrg-team/ethereum-contract-manager/develop/src/assets/data/test.json)
+  [rosten_project](https://raw.githubusercontent.com/zrg-team/ethereum-contract-manager/develop/src/assets/data/ETHERSCAN_ROSTEN_API.json)
   
   password: test123
   
