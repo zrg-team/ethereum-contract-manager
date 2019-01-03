@@ -137,7 +137,7 @@ export function parseTransactionParams (item) {
       value = [...`${item.value}`.split(',')]
       break
     case 'bytes32[]':
-    case 'arrayByte32':
+    case 'arrayBytes32':
       type = 'bytes32[]'
       value = [...`${item.value}`.split(',')]
       break

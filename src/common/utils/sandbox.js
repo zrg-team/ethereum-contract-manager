@@ -8,7 +8,7 @@ import { TYPES, covertMessage } from './message'
 import plugin, { pluginName } from '../../libraries/babel-plugin-convert-call'
 
 const babel = require('@babel/standalone')
-const sanboxEngine = require('../../libraries/sanbox-core-engine')
+const sanboxEngine = require('../../libraries/sandbox-core-engine')
 const chai = require('chai')
 const expect = chai.expect
 const should = chai.should()
