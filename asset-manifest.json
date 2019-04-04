@@ -1,12 +1,12 @@
 {
-  "main.css": "/ethereum-contract-manager/static/css/main.62c2305c.chunk.css",
-  "main.js": "/ethereum-contract-manager/static/js/main.339eed01.chunk.js",
-  "static/css/1.8fa8fb8c.chunk.css": "/ethereum-contract-manager/static/css/1.8fa8fb8c.chunk.css",
-  "static/js/1.1bca26bb.chunk.js": "/ethereum-contract-manager/static/js/1.1bca26bb.chunk.js",
+  "main.css": "/ethereum-contract-manager/static/css/main.fdde6d49.chunk.css",
+  "main.js": "/ethereum-contract-manager/static/js/main.031b95fc.chunk.js",
+  "static/css/1.cfd467db.chunk.css": "/ethereum-contract-manager/static/css/1.cfd467db.chunk.css",
+  "static/js/1.61f7b386.chunk.js": "/ethereum-contract-manager/static/js/1.61f7b386.chunk.js",
   "runtime~main.js": "/ethereum-contract-manager/static/js/runtime~main.f814758f.js",
   "static/media/account.png": "/ethereum-contract-manager/static/media/account.fa01cf7e.png",
   "static/media/project_banner.png": "/ethereum-contract-manager/static/media/project_banner.19ea70b0.png",
   "index.html": "/ethereum-contract-manager/index.html",
-  "precache-manifest.fc563d361ef43b54637a2ab7fc8c9e8b.js": "/ethereum-contract-manager/precache-manifest.fc563d361ef43b54637a2ab7fc8c9e8b.js",
+  "precache-manifest.372086841ed8cd5f2a547c89c84994b0.js": "/ethereum-contract-manager/precache-manifest.372086841ed8cd5f2a547c89c84994b0.js",
   "service-worker.js": "/ethereum-contract-manager/service-worker.js"
 }
