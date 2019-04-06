@@ -1,5 +1,4 @@
 import React from 'react'
-import I18n from 'i18n-js'
 import {
   Divider,
   Collapse,
@@ -23,7 +22,7 @@ class CodeResult extends React.Component {
   }
   componentWillReceiveProps (nextProps) {
     const { runtime } = nextProps
-    const { runtim: currentRuntime } = this.props
+    const { runtime: currentRuntime } = this.props
     if (runtime && !currentRuntime) {
       setTimeout(() => this.onChangeHelpType('api', 'Project API'), 100)
     }
@@ -39,7 +38,7 @@ class CodeResult extends React.Component {
 | Index | Name | Name | Address |
 | ------- | ------- | ------- | ------- |
 `
-      runtime.accounts.forEach((item, index) => {
+      runtime.accounts && runtime.accounts.forEach((item, index) => {
         data += `| ${index} | ${item.name} | ${item.key} | ${item.address} |\n`
       })
       data += `
@@ -47,7 +46,7 @@ class CodeResult extends React.Component {
 
 ## Contracts:
 `
-      runtime.contracts.forEach((item) => {
+      runtime.contracts && runtime.contracts.forEach((item) => {
         data += `
 ---
 

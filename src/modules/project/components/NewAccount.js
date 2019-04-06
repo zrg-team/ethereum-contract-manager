@@ -30,6 +30,7 @@ class NewAccount extends React.Component {
             if (!wallet && ethereumAccount.validateSeed(values.accountPrivate)) {
               wallet = ethereumAccount.restoreWalletFromSeed(values.accountPrivate)
             } else if (!wallet) {
+              console.log('values.accountPrivate', values.accountPrivate, values.accountPassword)
               wallet = ethereumAccount.fromKeystore(values.accountPrivate, values.accountPassword)
             }
             onSubmit && onSubmit({

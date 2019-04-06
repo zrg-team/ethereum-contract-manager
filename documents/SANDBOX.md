@@ -191,6 +191,13 @@ async function main () {
 ## Global Functions:
   * $view: get data from contract
   * $submit: submit transaction
+  * $ethereumAbi: instance of module 'ethereumjs-abi'
+  * $ethereumTransaction: instance of module 'ethereumjs-tx'
+  * $ethereumWallet: instance of module 'ethereumjs-wallet'
+  * $ethereumUtil: instance of module 'ethereumjs-util'
+  * $ethereumTxDecoder: instance of module 'ethereum-tx-decoder'
+  * $web3: instance of web3 connect if using fullnode connection
+  * $coinselect: instance of bitcoin coinselect library
 
 ### Example:
 ```javascript
@@ -285,7 +292,7 @@ var assert = require('chai').assert
 assert.typeOf(foo, 'string'); // without optional message
 assert.typeOf(foo, 'string', 'foo is a string'); // with optional message
 assert.equal(foo, 'bar', 'foo equal "bar"');
-assert.lengthOf(foo, 3, 'foo's value has a length of 3');
+assert.lengthOf(foo, 3, "foo's value has a length of 3");
 assert.lengthOf(beverages.tea, 3, 'beverages has 3 types of tea');
 ```
 

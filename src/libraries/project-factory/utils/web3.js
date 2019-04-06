@@ -116,6 +116,12 @@ export default {
     const { web3, injected } = await getWeb3(url, useWeb3)
     instance = web3
     this.injected = injected
+    return instance
+  },
+  getInit: function () {
+    if (instance) {
+      return instance
+    }
   },
   getBalance,
   stopProcess,

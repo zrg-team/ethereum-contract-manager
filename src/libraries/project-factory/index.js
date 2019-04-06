@@ -18,9 +18,9 @@ export class ProjectFactory {
     this.processIntance = null
     this.web3 = null
   }
-  init () {
+  async init () {
     this.responseSubject = new Subject()
-    this.process()
+    await this.process()
     return true
   }
   reset () {
@@ -41,7 +41,7 @@ export class ProjectFactory {
         this.processTimeout.stopWatching()
         this.processTimeout = null
       }
-      web3.init(this.project.general.fullnode)
+      this.web3 = await web3.init(this.project.general.fullnode)
       const blockNumber = web3.getCurrentBlock()
       this.processTimeout = web3.newBlockListener((data) => {
         if (this.transactions.includes(data.transactionHash)) {
@@ -79,12 +79,12 @@ export class ProjectFactory {
     this.process()
   }
   prepareContract () {
-    this.contracts = this.project.contracts.reduce((all, item) => {
+    this.contracts = this.project.contracts && this.project.contracts.reduce((all, item) => {
       return { ...all, [item.key]: new Contract(item) }
     }, {})
   }
   prepareAccount () {
-    this.accounts = this.project.accounts.reduce((all, item) => {
+    this.accounts = this.project.accounts && this.project.accounts.reduce((all, item) => {
       return { ...all, [item.key]: new Account(item) }
     }, {})
   }

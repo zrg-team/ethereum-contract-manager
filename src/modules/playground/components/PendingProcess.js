@@ -98,7 +98,7 @@ ${JSON.stringify(item.response || {})}
         <List
           dataSource={transactions}
           renderItem={this.renderItem}
-          
+
         >
           {loading && hasMore && (
             <div className='demo-loading-container'>

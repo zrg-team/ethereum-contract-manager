@@ -9,13 +9,20 @@ import { ProjectFactory } from '../../../libraries/project-factory'
 import { MODULE_NAME as MODULE_PROJECT } from '../../project/model'
 import { MODULE_NAME as MODULE_COMPILER } from '../model'
 
+const Transaction = require('ethereumjs-tx')
+const Abi = require('ethereumjs-abi')
+const Wallet = require('ethereumjs-wallet')
+const Util = require('ethereumjs-util')
+const txDecoder = require('ethereum-tx-decoder')
+const coinSelect = require('coinselect')
+
 const mapDispatchToProps = (dispatch, props) => ({
   compileSource: async (code, compiler) => {
     dispatch(setOutput([]))
     // Clear last status
     if (compiler && compiler.global && compiler.global.factory) {
       compiler.global.factory.reset()
-      compiler.global.factory.process()
+      await compiler.global.factory.process()
     }
     const error = compiler.exec(code, {
       onMessage: (message) => {
@@ -26,13 +33,19 @@ const mapDispatchToProps = (dispatch, props) => ({
       dispatch(appendOutput(error))
     }
   },
-  createFactory: (project) => {
+  createFactory: async (project) => {
     const factory = new ProjectFactory(project)
-    factory.init()
+    await factory.init()
     return factory
   },
   createSanboxCompiler: (factory) => {
     const global = {
+      $ethereumAbi: Abi,
+      $ethereumTransaction: Transaction,
+      $ethereumWallet: Wallet,
+      $ethereumUtil: Util,
+      $ethereumTxDecoder: txDecoder,
+      $coinSelect: coinSelect
     }
     if (factory) {
       return new Sandbox({
@@ -44,6 +57,7 @@ const mapDispatchToProps = (dispatch, props) => ({
         $subscribers: factory.subscribers,
         $transactions: factory.transactions,
         $responseObservable: factory.responseObservable,
+        $web3: factory.web3,
         ...factory.contracts,
         ...global
       })
@@ -57,6 +71,8 @@ const mapDispatchToProps = (dispatch, props) => ({
       if (password) {
         scripts = JSON.parse(descrypt(data.encrypted, password))
         delete data.encrypted
+      } else {
+        scripts = data.encrypted
       }
       const runtime = {
         ...data,

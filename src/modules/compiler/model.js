@@ -269,6 +269,12 @@ async function main () {
 ## Global Functions:
   * $view: get data from contract
   * $submit: submit transaction
+  * $ethereumAbi: instance of module 'ethereumjs-abi'
+  * $ethereumTransaction: instance of module 'ethereumjs-tx'
+  * $ethereumWallet: instance of module 'ethereumjs-wallet'
+  * $ethereumUtil: instance of module 'ethereumjs-util'
+  * $ethereumTxDecoder: instance of module 'ethereum-tx-decoder'
+  * $web3: instance of web3 connect if using fullnode connection
 
 ### Example:
 \`\`\`javascript

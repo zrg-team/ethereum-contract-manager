@@ -10,16 +10,16 @@ import {
 import storeAccessible from '../utils/storeAccessible'
 
 export async function loading (fetchingProcess, done = undefined) {
-  storeAccessible.dispatch(loadStart({config: {key: 'loading'}}))
+  storeAccessible.dispatch(loadStart({ config: { key: 'loading' } }))
   try {
     const ret = await fetchingProcess()
-    storeAccessible.dispatch(loadEnd({config: {key: 'loading'}}))
+    storeAccessible.dispatch(loadEnd({ config: { key: 'loading' } }))
     if (done) {
       await done()
     }
     return ret
   } catch (error) {
-    storeAccessible.dispatch(loadEnd({config: {key: 'loading'}}))
+    storeAccessible.dispatch(loadEnd({ config: { key: 'loading' } }))
     console.error('ERROR', error)
     throw error
   }
@@ -45,17 +45,17 @@ export function fetchLoading ({ url, options = {} }, dispatch = null) {
   if (!url) {
     return false
   }
-  dispatch && dispatch(fetchStart({config: { key: url }}))
+  dispatch && dispatch(fetchStart({ config: { key: url } }))
   return axios({
     method: 'get',
     timeout: TIMEOUT,
     url,
     ...options
   }).then((response) => {
-    dispatch && dispatch(fetchSuccess({config: { key: url }}))
+    dispatch && dispatch(fetchSuccess({ config: { key: url } }))
     return response
   }).catch(() => {
-    dispatch && dispatch(fetchFailure({config: { key: url }}))
+    dispatch && dispatch(fetchFailure({ config: { key: url } }))
     throw new Error('Timeout')
   })
 }

@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch, props) => ({
           key: new Date().getTime(),
           description: newScript.general.name
         }
-        
+
         await store.setItem(`project_${newDefaultData.key}`, {
           ...newDefaultData,
           encrypted

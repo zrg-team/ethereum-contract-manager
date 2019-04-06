@@ -300,7 +300,7 @@ ${raw}
               optionFilterProp='children'
               onChange={this.handleChangeContract}
             >
-              {currentProject.contracts.map(item => {
+              {currentProject.contracts && currentProject.contracts.map(item => {
                 return (
                   <Select.Option key={item.address} value={item.address}>
                     {item.name}
@@ -396,7 +396,7 @@ ${raw}
               optionFilterProp='children'
               onChange={this.handleChangeAccount}
             >
-              {currentProject.accounts.map(item => {
+              {currentProject.accounts && currentProject.accounts.map(item => {
                 return (
                   <Select.Option key={item.address} value={item.address}>
                     {item.name}

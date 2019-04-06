@@ -151,7 +151,7 @@ class Send extends React.Component {
           style={{ width: 500, display: 'flex', flexDirection: 'column' }}
           actions={[<Button type='primary' size='large' onClick={this.onSubmit}><Icon type='check-circle' />Send</Button>]}
           bodyStyle={{ flex: 1, overflowY: 'auto' }}
-          >
+        >
           <Card.Meta
             title={I18n.t('playground.send_transaction')}
           />
@@ -164,7 +164,7 @@ class Send extends React.Component {
               placeholder={I18n.t('playground.select_account')}
               onChange={this.selectAccount}
             >
-              {accounts.map(item => {
+              {accounts && accounts.map(item => {
                 return (
                   <Select.Option value={item.address} key={item.address}>{item.name}</Select.Option>
                 )

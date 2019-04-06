@@ -32,12 +32,15 @@ class UnitConvert extends React.Component {
     }
     this.onChangeValue = this.onChangeValue.bind(this)
   }
+  validateDotNumber (value) {
+    return /^(\d+\.\d+[1-9])$|^(\d+)$|^(\.\d+)?$|^(\d+\.[1-9]+)$/.test(`${value}`)
+  }
   onChangeValue (e, editKey) {
     let { values } = this.state
     try {
       const value = e.target.value
-      if (isNaN(value)) {
-        return false
+      if (isNaN(value) || !this.validateDotNumber(value)) {
+        values[editKey] = value
       } else if (!value || !`${value}`.trim()) {
         values = UNITS.reduce((all, item) => {
           return { ...all, [item.key]: '' }
@@ -48,7 +51,9 @@ class UnitConvert extends React.Component {
         }, {})
       }
       this.setState({
-        values
+        values: {
+          ...values
+        }
       })
     } catch (err) {
     }

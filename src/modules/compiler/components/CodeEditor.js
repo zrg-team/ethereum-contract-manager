@@ -108,8 +108,9 @@ class CodeEditor extends React.Component {
         const { projects, getProjectRuntime, createFactory, createSanboxCompiler } = this.props
         const project = projects.find(item => item.key === value)
         const descrypedProject = await getProjectRuntime(project, password)
+        console.log('descrypedProject', descrypedProject)
         Modal.hide()
-        if (descrypedProject && descrypedProject.accounts && descrypedProject.contracts) {
+        if (descrypedProject) {
           this.factory = await createFactory(descrypedProject)
           this.compiler = createSanboxCompiler(this.factory)
           return this.setState({
